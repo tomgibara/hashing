@@ -260,11 +260,6 @@ public class PerfectStringHasher implements Hasher<String> {
 		return range;
 	}
 	
-	@Override
-	public BigInteger bigHashValue(String value) {
-		return BigInteger.valueOf(hash(value));
-	}
-	
 	//TODO decide whether to throw an IAE if -1 is returned from hash
 	@Override
 	public int intHashValue(String value) {
@@ -274,6 +269,16 @@ public class PerfectStringHasher implements Hasher<String> {
 	@Override
 	public long longHashValue(String value) {
 		return hash(value);
+	}
+	
+	@Override
+	public BigInteger bigHashValue(String value) {
+		return BigInteger.valueOf(hash(value));
+	}
+	
+	@Override
+	public HashValue hashValue(String value) {
+		return new IntHashValue(hash(value));
 	}
 	
 	/**

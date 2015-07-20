@@ -2,6 +2,7 @@ package com.tomgibara.hashing;
 
 import java.math.BigInteger;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public interface HashValue extends Iterator<HashValue> {
 
@@ -16,16 +17,13 @@ public interface HashValue extends Iterator<HashValue> {
 	}
 
 	@Override
-	boolean hasNext();
-	
-	@Override
-	default HashValue next() {
-		return this;
+	default boolean hasNext() {
+		return false;
 	}
 	
 	@Override
-	default void remove() {
-		throw new UnsupportedOperationException();
+	default HashValue next() {
+		throw new NoSuchElementException();
 	}
 	
 }

@@ -26,16 +26,11 @@ import java.math.BigInteger;
  * 
  */
 
-public class ObjectHasher<T> extends AbstractHash<T> {
+public class ObjectHasher<T> implements Hasher<T> {
 
 	@Override
 	public HashRange getRange() {
 		return HashRange.FULL_INT_RANGE;
-	}
-
-	@Override
-	public BigInteger bigHashValue(T value) {
-		return BigInteger.valueOf(intHashValue(value));
 	}
 	
 	@Override
@@ -48,4 +43,14 @@ public class ObjectHasher<T> extends AbstractHash<T> {
 		return intHashValue(value);
 	}
 	
+	@Override
+	public BigInteger bigHashValue(T value) {
+		return BigInteger.valueOf(intHashValue(value));
+	}
+	
+	@Override
+	public HashValue hashValue(T value) {
+		return new IntHashValue(intHashValue(value));
+	}
+
 }
