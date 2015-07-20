@@ -30,10 +30,10 @@ public class DistinctMultiHash<E> extends AbstractMultiHash<E> {
 	//TODO could keep reference to choices instead
 	private final Choose choose;
 	private final HashRange range;
-	private final Hash<E> hash;
+	private final Hasher<E> hash;
 	private final boolean longSized;
 	
-	public DistinctMultiHash(int max, int multiplicity, Hash<E> hash) {
+	public DistinctMultiHash(int max, int multiplicity, Hasher<E> hash) {
 		if (max < 0) throw new IllegalArgumentException();
 		if (multiplicity > max) throw new IllegalArgumentException();
 		
@@ -60,9 +60,9 @@ public class DistinctMultiHash<E> extends AbstractMultiHash<E> {
 	public int[] hashAsInts(E value, int[] array) {
 		Choices choices = choose.choices();
 		if (longSized) {
-			choices.choiceAsArray(hash.hashAsLong(value), array);
+			choices.choiceAsArray(hash.longHashValue(value), array);
 		} else {
-			choices.choiceAsArray(hash.hashAsBigInt(value), array);
+			choices.choiceAsArray(hash.bigHashValue(value), array);
 		}
 		return array;
 	}

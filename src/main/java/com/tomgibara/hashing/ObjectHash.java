@@ -34,18 +34,18 @@ public class ObjectHash<T> extends AbstractHash<T> {
 	}
 
 	@Override
-	public BigInteger hashAsBigInt(T value) {
-		return BigInteger.valueOf(hashAsInt(value));
+	public BigInteger bigHashValue(T value) {
+		return BigInteger.valueOf(intHashValue(value));
 	}
 	
 	@Override
-	public int hashAsInt(T value) {
+	public int intHashValue(T value) {
 		return value == null ? 0 : value.hashCode();
 	}
 	
 	@Override
-	public long hashAsLong(T value) {
-		return hashAsInt(value);
+	public long longHashValue(T value) {
+		return intHashValue(value);
 	}
 	
 }

@@ -19,8 +19,8 @@ package com.tomgibara.hashing;
 import java.math.BigInteger;
 
 /**
- * Convenience base class for implementing the {@link Hash} interface. At a
- * minimum, one of {@link #hashAsBigInt(Object)} or {@link #hashAsLong(Object)}
+ * Convenience base class for implementing the {@link Hasher} interface. At a
+ * minimum, one of {@link #bigHashValue(Object)} or {@link #longHashValue(Object)}
  * needs to be implemented in addition to the {@link #getRange()} method.
  * 
  * @author tomgibara
@@ -28,21 +28,21 @@ import java.math.BigInteger;
  * @param <T> the type of object over which hashes may be generated
  */
 
-public abstract class AbstractHash<T> implements Hash<T> {
+public abstract class AbstractHash<T> implements Hasher<T> {
 
 	@Override
-	public BigInteger hashAsBigInt(T value) {
-		return BigInteger.valueOf(hashAsLong(value));
+	public BigInteger bigHashValue(T value) {
+		return BigInteger.valueOf(longHashValue(value));
 	}
 
 	@Override
-	public int hashAsInt(T value) {
-		return hashAsBigInt(value).intValue();
+	public int intHashValue(T value) {
+		return bigHashValue(value).intValue();
 	}
 
 	@Override
-	public long hashAsLong(T value) {
-		return hashAsBigInt(value).longValue();
+	public long longHashValue(T value) {
+		return bigHashValue(value).longValue();
 	}
 
 }

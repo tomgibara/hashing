@@ -20,7 +20,7 @@ import java.math.BigInteger;
 
 /**
  * A {@link MultiHash} implementation that returns the single hash value
- * produced by an arbitrary {@link Hash} instance.
+ * produced by an arbitrary {@link Hasher} instance.
  * 
  * @author tomgibara
  * 
@@ -32,11 +32,11 @@ public class SingletonMultiHash<T> extends AbstractMultiHash<T> {
 
 	// fields
 	
-	private final Hash<T> hash;
+	private final Hasher<T> hash;
 
 	// constructors
 	
-	public SingletonMultiHash(Hash<T> hash) {
+	public SingletonMultiHash(Hasher<T> hash) {
 		if (hash == null) throw new IllegalArgumentException("null hash");
 		this.hash = hash;
 	}
@@ -49,18 +49,18 @@ public class SingletonMultiHash<T> extends AbstractMultiHash<T> {
 	}
 
 	@Override
-	public BigInteger hashAsBigInt(T value) {
-		return hash.hashAsBigInt(value);
+	public BigInteger bigHashValue(T value) {
+		return hash.bigHashValue(value);
 	}
 
 	@Override
-	public int hashAsInt(T value) {
-		return hash.hashAsInt(value);
+	public int intHashValue(T value) {
+		return hash.intHashValue(value);
 	}
 
 	@Override
-	public long hashAsLong(T value) {
-		return hash.hashAsLong(value);
+	public long longHashValue(T value) {
+		return hash.longHashValue(value);
 	}
 	
 	// object methods

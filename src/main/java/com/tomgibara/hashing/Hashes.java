@@ -34,7 +34,7 @@ public class Hashes {
 	 * no guarantee that every value in the new range will be used. If the new
 	 * range is equal to that of the supplied {@link MultiHash}, the original
 	 * hash will be returned, unmodified. To use this method with a plain
-	 * {@link Hash}, first pass it to {@link #asMultiHash(Hash)}.
+	 * {@link Hasher}, first pass it to {@link #asMultiHash(Hasher)}.
 	 * 
 	 * @param <T>
 	 *            the type of objects for which hashes may be generated
@@ -59,7 +59,7 @@ public class Hashes {
 	}
 	
 	/**
-	 * Adapts a {@link Hash} implementation into a {@link MultiHash}
+	 * Adapts a {@link Hasher} implementation into a {@link MultiHash}
 	 * implementation. If the supplied object already implements the
 	 * {@link MultiHash} interface, the original object is returned, otherwise,
 	 * a new object will be created that returns the same hash values through
@@ -68,15 +68,15 @@ public class Hashes {
 	 * @param <T>
 	 *            the type of objects for which hashes may be generated
 	 * @param hash
-	 *            the {@link Hash} implementation for which a {@link MultiHash}
+	 *            the {@link Hasher} implementation for which a {@link MultiHash}
 	 *            is needed
 	 * @return a {@link MultiHash} implementation that returns the hash values
-	 *         from the supplied {@link Hash}
+	 *         from the supplied {@link Hasher}
 	 * @throws IllegalArgumentException
 	 *             if the supplied hash is null
 	 */
 	
-	public static <T> MultiHash<T> asMultiHash(Hash<T> hash) {
+	public static <T> MultiHash<T> asMultiHash(Hasher<T> hash) {
 		if (hash == null) throw new IllegalArgumentException("null hash");
 		if (hash instanceof MultiHash<?>) return (MultiHash<T>) hash;
 		return new SingletonMultiHash<T>(hash);

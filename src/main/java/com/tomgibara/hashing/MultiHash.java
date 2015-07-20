@@ -20,18 +20,18 @@ import java.math.BigInteger;
 import java.util.List;
 
 /**
- * Extends the {@link Hash} to allow implementations to return multiple hash
+ * Extends the {@link Hasher} to allow implementations to return multiple hash
  * values for a single object. This is useful in data structures that require
  * multiple hash values for their operation (eg. Bloom filters). It is
  * anticipated, though not required, that the hash values returned through the
- * methods defined on {@link Hash} will be those at the first index in the
+ * methods defined on {@link Hasher} will be those at the first index in the
  * {@link HashList} returned by {@link #hashAsList(Object, int)}.
  * 
  * @author tomgibara
  * 
  * @param <T>
  */
-public interface MultiHash<T> extends Hash<T> {
+public interface MultiHash<T> extends Hasher<T> {
 
 	/**
 	 * The greatest number of hash values that this object can create for a

@@ -25,8 +25,8 @@ class BigIntRerangedHash<T> extends RerangedHash<T> {
 	}
 
 	@Override
-	public int hashAsInt(T value) {
-		return hashAsBigInt(value).intValue();
+	public int intHashValue(T value) {
+		return bigHashValue(value).intValue();
 	}
 	
 	@Override
@@ -43,8 +43,8 @@ class BigIntRerangedHash<T> extends RerangedHash<T> {
 	}
 	
 	@Override
-	public long hashAsLong(T value) {
-		return hashAsBigInt(value).longValue();
+	public long longHashValue(T value) {
+		return bigHashValue(value).longValue();
 	}
 	
 	@Override

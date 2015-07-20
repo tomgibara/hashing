@@ -32,8 +32,8 @@ class LongRerangedHash<T> extends RerangedHash<T> {
 	}
 
 	@Override
-	public int hashAsInt(T value) {
-		return (int) hashAsLong(value);
+	public int intHashValue(T value) {
+		return (int) longHashValue(value);
 	}
 	
 	@Override

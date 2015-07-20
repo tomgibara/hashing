@@ -78,17 +78,17 @@ public abstract class AbstractMultiHash<T> implements MultiHash<T> {
 	}
 	
 	@Override
-	public int hashAsInt(T value) {
+	public int intHashValue(T value) {
 		return hashAsInts(value, 1)[0];
 	}
 
 	@Override
-	public long hashAsLong(T value) {
+	public long longHashValue(T value) {
 		return hashAsLongs(value, 1)[0];
 	}
 
 	@Override
-	public BigInteger hashAsBigInt(T value) {
+	public BigInteger bigHashValue(T value) {
 		return hashAsBigInts(value, 1)[0];
 	}
 
@@ -103,7 +103,7 @@ public abstract class AbstractMultiHash<T> implements MultiHash<T> {
 	public int[] hashAsInts(T value, int[] array) throws IllegalArgumentException {
 		if (array == null) throw new IllegalArgumentException("null array");
 		if (array.length != 1) throw new IllegalArgumentException("only one hash supported");
-		array[0] = hashAsInt(value);
+		array[0] = intHashValue(value);
 		return array;
 	}
 	
@@ -118,7 +118,7 @@ public abstract class AbstractMultiHash<T> implements MultiHash<T> {
 	public long[] hashAsLongs(T value, long[] array) throws IllegalArgumentException {
 		if (array == null) throw new IllegalArgumentException("null array");
 		if (array.length != 1) throw new IllegalArgumentException("only one hash supported");
-		array[0] = hashAsLong(value);
+		array[0] = longHashValue(value);
 		return array;
 	}
 	
@@ -133,7 +133,7 @@ public abstract class AbstractMultiHash<T> implements MultiHash<T> {
 	public BigInteger[] hashAsBigInts(T value, BigInteger[] array) throws IllegalArgumentException {
 		if (array == null) throw new IllegalArgumentException("null array");
 		if (array.length != 1) throw new IllegalArgumentException("only one hash supported");
-		array[0] = hashAsBigInt(value);
+		array[0] = bigHashValue(value);
 		return array;
 	}
 	

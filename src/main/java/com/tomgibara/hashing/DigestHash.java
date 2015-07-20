@@ -124,7 +124,7 @@ public class DigestHash<T> extends AbstractHash<T> {
 	}
 	
 	@Override
-	public BigInteger hashAsBigInt(T value) {
+	public BigInteger bigHashValue(T value) {
 		MessageDigest digest = digestSource.createDigest();
 		DigestWriteStream stream = new DigestWriteStream(digest);
 		hashSource.sourceData(value, stream);

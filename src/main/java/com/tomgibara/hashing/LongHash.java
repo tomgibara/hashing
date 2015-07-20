@@ -55,7 +55,7 @@ public class LongHash<T> extends AbstractHash<T> {
 	}
 	
 	@Override
-	public long hashAsLong(T value) {
+	public long longHashValue(T value) {
 		CondensingWriteStream out = new CondensingWriteStream();
 		source.sourceData(value, out);
 		return out.getCondensedValue();

@@ -55,7 +55,7 @@ import java.util.Comparator;
  * @author Tom Gibara
  */
 
-public class PerfectStringHash implements Hash<String> {
+public class PerfectStringHash implements Hasher<String> {
 
 	// statics
 	
@@ -261,18 +261,18 @@ public class PerfectStringHash implements Hash<String> {
 	}
 	
 	@Override
-	public BigInteger hashAsBigInt(String value) {
+	public BigInteger bigHashValue(String value) {
 		return BigInteger.valueOf(hash(value));
 	}
 	
 	//TODO decide whether to throw an IAE if -1 is returned from hash
 	@Override
-	public int hashAsInt(String value) {
+	public int intHashValue(String value) {
 		return hash(value);
 	}
 	
 	@Override
-	public long hashAsLong(String value) {
+	public long longHashValue(String value) {
 		return hash(value);
 	}
 	

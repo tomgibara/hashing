@@ -47,18 +47,18 @@ public class AdaptedMultiHash<T> implements MultiHash<T> {
 	}
 
 	@Override
-	public int hashAsInt(T value) {
-		return adapt(multiHash.hashAsInt(value));
+	public int intHashValue(T value) {
+		return adapt(multiHash.intHashValue(value));
 	}
 
 	@Override
-	public long hashAsLong(T value) {
-		return adapt(multiHash.hashAsLong(value));
+	public long longHashValue(T value) {
+		return adapt(multiHash.longHashValue(value));
 	}
 
 	@Override
-	public BigInteger hashAsBigInt(T value) {
-		return adapt(multiHash.hashAsBigInt(value));
+	public BigInteger bigHashValue(T value) {
+		return adapt(multiHash.bigHashValue(value));
 	}
 
 	public int[] hashAsInts(T value, int multiplicity) {

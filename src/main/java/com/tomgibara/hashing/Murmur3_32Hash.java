@@ -33,7 +33,7 @@ public class Murmur3_32Hash<T> extends AbstractHash<T> {
 	}
 	
 	@Override
-	public int hashAsInt(T value) {
+	public int intHashValue(T value) {
 		MurmurStream stream = new MurmurStream();
 		stream.reset(seed);
 		source.sourceData(value, stream);
@@ -41,8 +41,8 @@ public class Murmur3_32Hash<T> extends AbstractHash<T> {
 	}
 	
 	@Override
-	public long hashAsLong(T value) {
-		return hashAsInt(value) & 0xffffffffL;
+	public long longHashValue(T value) {
+		return intHashValue(value) & 0xffffffffL;
 	}
 	
 	// inner classes 

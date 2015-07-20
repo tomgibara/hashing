@@ -81,7 +81,7 @@ public class PRNGMultiHash<T> extends AbstractMultiHash<T> {
 	}
 
 	@Override
-	public int hashAsInt(T value) {
+	public int intHashValue(T value) {
 		if (!range.isIntBounded()) throw new IllegalStateException("not int bounded");
 		if (isFullIntRange) {
 			return getRandom(value).nextInt() & 0x7fffffff;
@@ -92,14 +92,14 @@ public class PRNGMultiHash<T> extends AbstractMultiHash<T> {
 	
 	//TODO biased
 	@Override
-	public long hashAsLong(T value) {
+	public long longHashValue(T value) {
 		if (!range.isLongBounded()) throw new IllegalStateException("not long bounded");
 		return range.getMinimum().longValue() + getRandom(value).nextLong() % range.getSize().longValue();
 	}
 
 	//TODO biased
 	@Override
-	public BigInteger hashAsBigInt(T value) {
+	public BigInteger bigHashValue(T value) {
 		return hashAsBigInt(getRandom(value));
 	}
 	

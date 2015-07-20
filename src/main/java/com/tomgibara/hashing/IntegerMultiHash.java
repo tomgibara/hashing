@@ -34,11 +34,11 @@ import java.math.BigInteger;
 
 public class IntegerMultiHash<T> extends AbstractMultiHash<T> {
 
-	private final Hash<T> hash;
+	private final Hasher<T> hash;
 	private final HashRange range;
 	private final int size;
 
-	public IntegerMultiHash(Hash<T> hash, int max) {
+	public IntegerMultiHash(Hasher<T> hash, int max) {
 		if (hash == null) throw new IllegalArgumentException("null hash");
 		if (!hash.getRange().equals(HashRange.FULL_INT_RANGE)) throw new IllegalArgumentException("hash does not have full integer range");
 		if (max < 0) throw new IllegalArgumentException();
@@ -60,7 +60,7 @@ public class IntegerMultiHash<T> extends AbstractMultiHash<T> {
 	@Override
 	public int[] hashAsInts(T value, int[] array) {
         // Double hashing allows calculating multiple index locations
-        int hashCode = hash.hashAsInt(value);
+        int hashCode = hash.intHashValue(value);
         int probe = 1 + Math.abs(hashCode % size);
         int h = spread(hashCode);
         for (int i = 0; i < array.length; i++) {
