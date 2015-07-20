@@ -32,6 +32,50 @@ import java.math.BigInteger;
 
 public interface Hasher<T> {
 
+	static <T> Hasher<T> from(final Hash hash, final HashStreamer<T> source) {
+		if (hash == null) throw new IllegalArgumentException("null hash");
+		if (source == null) throw new IllegalArgumentException("null source");
+		return new Hasher<T>() {
+			
+			@Override
+			public HashRange getRange() {
+				return hash.getRange();
+			}
+			
+			@Override
+			public HashValue hashValue(T value) {
+				return stream(value).hashValue();
+			}
+			
+			@Override
+			public BigInteger bigHashValue(T value) {
+				return stream(value).bigHashValue();
+			}
+			
+			@Override
+			public long longHashValue(T value) {
+				return stream(value).longHashValue();
+			}
+			
+			@Override
+			public int intHashValue(T value) {
+				return stream(value).intHashValue();
+			}
+			
+			private HashStream stream(T value) {
+				HashStream stream = hash.newStream();
+				source.stream(value, stream);
+				return stream;
+			}
+			
+			@Override
+			public int getQuantity() {
+				return hash.getQuantity();
+			}
+			
+		};
+	}
+	
 	HashRange getRange();
 
 	default int getQuantity() {

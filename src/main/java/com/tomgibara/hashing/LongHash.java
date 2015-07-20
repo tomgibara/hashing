@@ -18,7 +18,7 @@ package com.tomgibara.hashing;
 
 /**
  * Hashes objects into the full range of longs, rather than Java's more limited
- * int ranged hash. Hashing null is supported if the supplied {@link HashSource}
+ * int ranged hash. Hashing null is supported if the supplied {@link HashStreamer}
  * also supports null values.
  * 
  * @author tomgibara
@@ -29,7 +29,7 @@ package com.tomgibara.hashing;
 
 public class LongHash<T> extends AbstractHash<T> {
 
-	private final HashSource<T> source;
+	private final HashStreamer<T> source;
 	
 	/**
 	 * Creates a new hash using the supplied source.
@@ -40,7 +40,7 @@ public class LongHash<T> extends AbstractHash<T> {
 	 *             if the source is null
 	 */
 	
-	public LongHash(HashSource<T> source) {
+	public LongHash(HashStreamer<T> source) {
 		if (source == null) throw new IllegalArgumentException("null source");
 		this.source = source;
 	}
@@ -57,7 +57,7 @@ public class LongHash<T> extends AbstractHash<T> {
 	@Override
 	public long longHashValue(T value) {
 		CondensingWriteStream out = new CondensingWriteStream();
-		source.sourceData(value, out);
+		source.stream(value, out);
 		return out.getCondensedValue();
 	}
 	

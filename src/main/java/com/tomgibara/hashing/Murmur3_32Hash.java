@@ -10,14 +10,14 @@ public class Murmur3_32Hash<T> extends AbstractHash<T> {
 	static final int c1 = 0xcc9e2d51;
 	static final int c2 = 0x1b873593;
 
-	private final HashSource<T> source;
+	private final HashStreamer<T> source;
 	private final int seed;
 	
-	public Murmur3_32Hash(HashSource<T> source) {
+	public Murmur3_32Hash(HashStreamer<T> source) {
 		this(source, 0);
 	}
 	
-	public Murmur3_32Hash(HashSource<T> source, int seed) {
+	public Murmur3_32Hash(HashStreamer<T> source, int seed) {
 		if (source == null) throw new IllegalArgumentException("null source");
 		this.source = source;
 		this.seed = seed;
@@ -36,7 +36,7 @@ public class Murmur3_32Hash<T> extends AbstractHash<T> {
 	public int intHashValue(T value) {
 		MurmurStream stream = new MurmurStream();
 		stream.reset(seed);
-		source.sourceData(value, stream);
+		source.stream(value, stream);
 		return stream.hash();
 	}
 	

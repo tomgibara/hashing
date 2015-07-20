@@ -19,16 +19,16 @@ package com.tomgibara.hashing;
 import com.tomgibara.streams.WriteStream;
 
 /**
- * A generic {@link HashSource} implementation that simply uses the {@link #hashCode()} value to generate byte data.
+ * A generic {@link HashStreamer} implementation that simply uses the {@link #hashCode()} value to generate byte data.
  * 
  * @author tomgibara
  *
  */
 
-public class ObjectHashSource implements HashSource<Object> {
+public class ObjectHashSource implements HashStreamer<Object> {
 
 	@Override
-	public void sourceData(Object value, WriteStream out) {
+	public void stream(Object value, WriteStream out) {
 		out.writeInt(value.hashCode());
 	}
 	

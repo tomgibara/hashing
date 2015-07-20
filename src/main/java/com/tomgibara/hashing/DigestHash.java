@@ -107,10 +107,10 @@ public class DigestHash<T> extends AbstractHash<T> {
 	}
 	
 	private final DigestSource digestSource;
-	private final HashSource<T> hashSource;
+	private final HashStreamer<T> hashSource;
 	private final HashRange range;
 	
-	public DigestHash(DigestSource digestSource, HashSource<T> hashSource) {
+	public DigestHash(DigestSource digestSource, HashStreamer<T> hashSource) {
 		if (digestSource == null) throw new IllegalArgumentException("null digestSource");
 		if (hashSource == null) throw new IllegalArgumentException("null source");
 		this.digestSource = digestSource;
@@ -127,7 +127,7 @@ public class DigestHash<T> extends AbstractHash<T> {
 	public BigInteger bigHashValue(T value) {
 		MessageDigest digest = digestSource.createDigest();
 		DigestWriteStream stream = new DigestWriteStream(digest);
-		hashSource.sourceData(value, stream);
+		hashSource.stream(value, stream);
 		return new BigInteger(1, digest.digest());
 	}
 	

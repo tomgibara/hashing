@@ -18,18 +18,18 @@ package com.tomgibara.hashing;
 
 import com.tomgibara.streams.WriteStream;
 
-public abstract class SeededHashSource<T> implements HashSource<T> {
+public abstract class SeededHashSource<T> implements HashStreamer<T> {
 
-	private final HashSource<T> source;
+	private final HashStreamer<T> source;
 	
-	public SeededHashSource(HashSource<T> source) {
+	public SeededHashSource(HashStreamer<T> source) {
 		if (source == null) throw new IllegalArgumentException("null source");
 		this.source = source;
 	}
 	
-	public void sourceData(T value, WriteStream out) {
+	public void stream(T value, WriteStream out) {
 		seed(out);
-		source.sourceData(value, out);
+		source.stream(value, out);
 	}
 	
 	protected abstract void seed(WriteStream out);

@@ -22,7 +22,7 @@ public class LongSeededHashSource<T> extends SeededHashSource<T> {
 
 	private final long seed;
 	
-	public LongSeededHashSource(HashSource<T> source, long seed) {
+	public LongSeededHashSource(HashStreamer<T> source, long seed) {
 		super(source);
 		this.seed = seed;
 	}

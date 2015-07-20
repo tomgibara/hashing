@@ -42,20 +42,20 @@ public class PRNGMultiHash<T> extends AbstractMultiHash<T> {
 	
 	private final String algorithm;
 	private final String provider;
-	private final HashSource<T> source;
+	private final HashStreamer<T> source;
 	private final HashRange range;
 	private final boolean isFullIntRange;
 
-	public PRNGMultiHash(HashSource<T> source, HashRange range) {
+	public PRNGMultiHash(HashStreamer<T> source, HashRange range) {
 		this(null, null, source, range);
 	}
 
 	//max is inclusive
-	public PRNGMultiHash(String algorithm, HashSource<T> source, HashRange range) {
+	public PRNGMultiHash(String algorithm, HashStreamer<T> source, HashRange range) {
 		this(algorithm, null, source, range);
 	}
 
-	public PRNGMultiHash(String algorithm, String provider, HashSource<T> source, HashRange range) {
+	public PRNGMultiHash(String algorithm, String provider, HashStreamer<T> source, HashRange range) {
 		if (source == null) throw new IllegalArgumentException("null source");
 		if (range == null) throw new IllegalArgumentException("null range");
 
@@ -154,11 +154,11 @@ public class PRNGMultiHash<T> extends AbstractMultiHash<T> {
 		final Random random = getRandom();
 		if (algorithm == null) {
 			final CondensingWriteStream out = new CondensingWriteStream();
-			source.sourceData(value, out);
+			source.stream(value, out);
 			random.setSeed(out.getCondensedValue());
 		} else {
 			final ByteWriteStream out = new ByteWriteStream();
-			source.sourceData(value, out);
+			source.stream(value, out);
 			((SecureRandom)random).setSeed(out.getBytes());
 		}
 		return random;

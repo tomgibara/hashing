@@ -26,9 +26,8 @@ import com.tomgibara.streams.WriteStream;
  * @param <T> the type of object that will be be the source of hash data
  */
 
-//TODO rename this class and its methods, but to what?
-public interface HashSource<T> {
+public interface HashStreamer<T> {
 
-	void sourceData(T value, WriteStream out);
+	void stream(T value, WriteStream stream);
 	
 }
