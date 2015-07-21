@@ -13,6 +13,11 @@ public interface HashValue extends Iterator<HashValue> {
 	
 	static HashValue fromBig(BigInteger bigValue) { return new BigHashValue(bigValue); }
 	
+	static HashValue fromInts(int... intValues) {
+		if (intValues == null) throw new IllegalArgumentException("null intValues");
+		return new IntsHashValue(intValues);
+	}
+	
 	BigInteger bigValue();
 	
 	default long longValue() {

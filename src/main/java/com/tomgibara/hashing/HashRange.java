@@ -118,6 +118,12 @@ public final class HashRange {
 		return isZeroBased() ? this : new HashRange(BigInteger.ZERO, maximum.subtract(minimum));
 	}
 	
+	public boolean contains(HashRange range) {
+		return
+				this.minimum.compareTo(range.minimum) <= 0 &&
+				range.maximum.compareTo(this.maximum) <= 0;
+	}
+	
 	// object methods
 	
 	@Override

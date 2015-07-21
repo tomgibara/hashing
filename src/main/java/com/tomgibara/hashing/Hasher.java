@@ -16,9 +16,6 @@
  */
 package com.tomgibara.hashing;
 
-import java.math.BigInteger;
-
-import com.tomgibara.streams.WriteStream;
 
 /**
  * <p>
@@ -34,4 +31,23 @@ import com.tomgibara.streams.WriteStream;
 
 public interface Hasher<T> extends Hashing<T> {
 
+	// TODO can we stretch to make hash fit larger range?
+	default Hasher<T> ranged(HashRange newRange) {
+		if (newRange == null) throw new IllegalArgumentException("null newRange");
+		final HashRange oldRange = getRange();
+		if (oldRange.equals(newRange)) return this;
+		if (newRange.isIntBounded() && newRange.isIntSized() && oldRange.isIntBounded() && oldRange.isIntSized()) return new IntRerangedHasher<T>(this, newRange);
+		if (newRange.isLongBounded() && newRange.isLongSized() && oldRange.isLongBounded() && oldRange.isLongSized()) return new LongRerangedHasher<T>(this, newRange);
+		return new BigRerangedHasher<T>(this, newRange);
+	}
+	
+	default Hasher<T> distinct(int quantity, HashRange range) {
+		if (quantity < 1) throw new IllegalArgumentException("non-positive quantity");
+		if (range == null) throw new IllegalArgumentException("null range");
+		if (!range.isIntSized()) throw new IllegalArgumentException("range not int sized");
+		if (!range.isIntBounded()) throw new IllegalArgumentException("range not int bounded");
+		if (quantity > range.getSize().intValue()) throw new IllegalArgumentException("quantity exceeds size of range");
+		return new DistinctHasher<T>(range, quantity, this);
+	}
+	
 }

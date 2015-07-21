@@ -4,7 +4,7 @@ abstract class AbstractHashValue implements HashValue {
 
 	@Override
 	public int hashCode() {
-		return bigValue().hashCode();
+		return intValue();
 	}
 	
 	@Override

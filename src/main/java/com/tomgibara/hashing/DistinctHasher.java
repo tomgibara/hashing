@@ -21,7 +21,7 @@ import java.math.BigInteger;
 import com.tomgibara.choose.Choices;
 import com.tomgibara.choose.Choose;
 
-public class DistinctMultiHash<E> extends AbstractMultiHash<E> {
+class DistinctHasher<E> implements Hasher<E> {
 
 	public static BigInteger requiredHashSize(int max, int multiplicity) {
 		return Choose.from(max, multiplicity).asBigInt();
@@ -30,19 +30,17 @@ public class DistinctMultiHash<E> extends AbstractMultiHash<E> {
 	//TODO could keep reference to choices instead
 	private final Choose choose;
 	private final HashRange range;
-	private final Hasher<E> hash;
+	private final int offset;
+	private final Hasher<E> hasher;
 	private final boolean longSized;
 	
-	public DistinctMultiHash(int max, int multiplicity, Hasher<E> hash) {
-		if (max < 0) throw new IllegalArgumentException();
-		if (multiplicity > max) throw new IllegalArgumentException();
-		
-		final Choose choose = Choose.from(max, multiplicity);
-		final HashRange range = new HashRange(BigInteger.ZERO, choose.asBigInt().subtract(BigInteger.ONE));
-		
-		this.choose = choose;
-		this.range = new HashRange(0, max);
-		this.hash = Hashes.rangeAdjust(range, Hashes.asMultiHash(hash));
+	DistinctHasher(HashRange range, int multiplicity, Hasher<E> hasher) {
+		int size = range.getSize().intValue();
+		this.choose = Choose.from(size, multiplicity);
+		HashRange choiceRange = new HashRange(BigInteger.ZERO, choose.asBigInt().subtract(BigInteger.ONE));
+		this.hasher = hasher.ranged(choiceRange);
+		this.range = range;
+		this.offset = range.getMinimum().intValue();
 		longSized = range.isLongSized();
 	}
 	
@@ -52,29 +50,21 @@ public class DistinctMultiHash<E> extends AbstractMultiHash<E> {
 	}
 	
 	@Override
-	public int getMaxMultiplicity() {
+	public int getQuantity() {
 		return choose.getK();
 	}
-
+	
 	@Override
-	public int[] hashAsInts(E value, int[] array) {
+	public HashValue hashValue(E value) throws IllegalArgumentException {
 		Choices choices = choose.choices();
-		if (longSized) {
-			choices.choiceAsArray(hash.longHashValue(value), array);
-		} else {
-			choices.choiceAsArray(hash.bigHashValue(value), array);
+		int[] intValues = longSized ?
+				choices.choiceAsArray(hasher.longHashValue(value)) :
+				choices.choiceAsArray(hasher.bigHashValue(value));
+		if (offset != 0) {
+			for (int i = 0; i < intValues.length; i++) {
+				intValues[i] += offset;
+			}
 		}
-		return array;
+		return new IntsHashValue(intValues);
 	}
-	
-	@Override
-	public long[] hashAsLongs(E value, long[] array) {
-		return copy(hashAsInts(value, array.length), array);
-	}
-	
-	@Override
-	public BigInteger[] hashAsBigInts(E value, BigInteger[] array) {
-		return copy(hashAsInts(value, array.length), array);
-	}
-	
 }

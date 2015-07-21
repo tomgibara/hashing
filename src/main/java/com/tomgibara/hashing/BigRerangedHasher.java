@@ -20,7 +20,7 @@ import java.math.BigInteger;
 
 class BigRerangedHasher<T> extends RerangedHasher<T> {
 
-	public BigRerangedHasher(MultiHash<T> hashing, HashRange newRange) {
+	public BigRerangedHasher(Hashing<T> hashing, HashRange newRange) {
 		super(hashing, newRange);
 	}
 
