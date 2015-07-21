@@ -7,6 +7,12 @@ import java.util.NoSuchElementException;
 //TODO should note possible arithmetic exceptions
 public interface HashValue extends Iterator<HashValue> {
 
+	static HashValue fromInt(int intValue) { return new IntHashValue(intValue); }
+	
+	static HashValue fromLong(long longValue) { return new LongHashValue(longValue); }
+	
+	static HashValue fromBig(BigInteger bigValue) { return new BigHashValue(bigValue); }
+	
 	BigInteger bigValue();
 	
 	default long longValue() {

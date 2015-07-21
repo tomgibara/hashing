@@ -107,7 +107,6 @@ public class DigestHash implements Hash<DigestWriteStream> {
 	}
 	
 	private final DigestSource digestSource;
-	private final HashStreamer<T> hashSource;
 	private final HashRange range;
 	
 	public DigestHash(DigestSource digestSource) {

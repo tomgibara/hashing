@@ -6,7 +6,7 @@ final class LongHashValue extends AbstractHashValue {
 
 	private final long longValue;
 	
-	public LongHashValue(int longValue) {
+	public LongHashValue(long longValue) {
 		this.longValue = longValue;
 	}
 	
