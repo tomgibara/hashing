@@ -1,11 +1,9 @@
 package com.tomgibara.hashing;
 
-public interface Hash {
+import com.tomgibara.streams.WriteStream;
 
-	HashRange getRange();
-	
-	int getQuantity();
-	
-	HashStream newStream();
+public interface Hash<S extends WriteStream> extends Hashing<S> {
+
+	S newStream();
 	
 }

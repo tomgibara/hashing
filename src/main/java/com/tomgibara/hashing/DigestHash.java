@@ -7,7 +7,7 @@ import java.security.NoSuchProviderException;
 
 import com.tomgibara.streams.DigestWriteStream;
 
-public class DigestHash<T> extends AbstractHash<T> {
+public class DigestHash implements Hash<DigestWriteStream> {
 
 	public interface DigestSource {
 		
@@ -110,11 +110,9 @@ public class DigestHash<T> extends AbstractHash<T> {
 	private final HashStreamer<T> hashSource;
 	private final HashRange range;
 	
-	public DigestHash(DigestSource digestSource, HashStreamer<T> hashSource) {
+	public DigestHash(DigestSource digestSource) {
 		if (digestSource == null) throw new IllegalArgumentException("null digestSource");
-		if (hashSource == null) throw new IllegalArgumentException("null source");
 		this.digestSource = digestSource;
-		this.hashSource = hashSource;
 		this.range = new HashRange(BigInteger.ZERO, BigInteger.ONE.shiftLeft(8 * digestSource.getLengthInBytes()).subtract(BigInteger.ONE));
 	}
 	
@@ -124,11 +122,29 @@ public class DigestHash<T> extends AbstractHash<T> {
 	}
 	
 	@Override
-	public BigInteger bigHashValue(T value) {
+	public DigestWriteStream newStream() {
 		MessageDigest digest = digestSource.createDigest();
-		DigestWriteStream stream = new DigestWriteStream(digest);
-		hashSource.stream(value, stream);
-		return new BigInteger(1, digest.digest());
+		return new DigestWriteStream(digest);
 	}
 	
+	@Override
+	public HashValue hashValue(DigestWriteStream stream) {
+		return new BigHashValue(bigHashValue(stream));
+	}
+	
+	@Override
+	public BigInteger bigHashValue(DigestWriteStream stream) {
+		return new BigInteger(1, stream.getDigest().digest());
+	}
+	
+	@Override
+	public long longHashValue(DigestWriteStream stream) {
+		return bigHashValue(stream).longValueExact();
+	}
+	
+	@Override
+	public int intHashValue(DigestWriteStream stream) {
+		return bigHashValue(stream).intValueExact();
+	}
+
 }

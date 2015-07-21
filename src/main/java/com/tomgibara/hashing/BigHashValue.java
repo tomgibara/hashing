@@ -2,45 +2,45 @@ package com.tomgibara.hashing;
 
 import java.math.BigInteger;
 
-public final class IntHashValue implements HashValue {
+public final class BigHashValue implements HashValue {
 
-	private final int intValue;
+	private final BigInteger bigValue;
 	
-	public IntHashValue(int intValue) {
-		this.intValue = intValue;
+	public BigHashValue(BigInteger bigValue) {
+		if (bigValue == null) throw new IllegalArgumentException("null bigValue");
+		this.bigValue = bigValue;
 	}
 	
 	@Override
 	public int intValue() {
-		return intValue;
+		return bigValue.intValueExact();
 	}
 
 	@Override
 	public long longValue() {
-		return intValue;
+		return bigValue.longValueExact();
 	}
 
 	@Override
 	public BigInteger bigValue() {
-		return BigInteger.valueOf(intValue);
+		return bigValue;
 	}
 	
 	@Override
 	public int hashCode() {
-		return bigValue().hashCode();
+		return bigValue.hashCode();
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) return true;
-		if (obj instanceof IntHashValue) return this.intValue == ((IntHashValue) obj).intValue;
 		if (!(obj instanceof HashValue)) return false;
 		return this.bigValue().equals(((HashValue) obj).bigValue());
 	}
 	
 	@Override
 	public String toString() {
-		return Integer.toString(intValue);
+		return bigValue.toString();
 	}
 
 }
