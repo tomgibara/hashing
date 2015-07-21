@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+//TODO should note possible arithmetic exceptions
 public interface HashValue extends Iterator<HashValue> {
 
 	BigInteger bigValue();
