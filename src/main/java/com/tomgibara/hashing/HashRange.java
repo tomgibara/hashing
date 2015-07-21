@@ -40,6 +40,11 @@ public final class HashRange {
 	public static HashRange FULL_LONG_RANGE = new HashRange(LONG_MINIMUM, LONG_MAXIMUM);
 	public static HashRange POSITIVE_LONG_RANGE = new HashRange(BigInteger.ONE, LONG_MAXIMUM);
 	
+	//TODO could cache common low values
+	public static HashRange fromByteLength(int byteLength) {
+		return new HashRange(BigInteger.ZERO, BigInteger.ONE.shiftLeft(8 * byteLength).subtract(BigInteger.ONE));
+	}
+	
 	// fields
 	
 	private final BigInteger minimum;

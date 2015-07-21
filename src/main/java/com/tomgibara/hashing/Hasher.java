@@ -34,48 +34,4 @@ import com.tomgibara.streams.WriteStream;
 
 public interface Hasher<T> extends Hashing<T> {
 
-	static <S extends WriteStream,T> Hasher<T> from(final Hash<S> hash, final HashStreamer<T> streamer) {
-		if (hash == null) throw new IllegalArgumentException("null hash");
-		if (streamer == null) throw new IllegalArgumentException("null streamer");
-		return new Hasher<T>() {
-			
-			@Override
-			public HashRange getRange() {
-				return hash.getRange();
-			}
-			
-			@Override
-			public HashValue hashValue(T value) {
-				return hash.hashValue(stream(value));
-			}
-			
-			@Override
-			public BigInteger bigHashValue(T value) {
-				return hash.bigHashValue(stream(value));
-			}
-			
-			@Override
-			public long longHashValue(T value) {
-				return hash.longHashValue(stream(value));
-			}
-			
-			@Override
-			public int intHashValue(T value) {
-				return hash.intHashValue(stream(value));
-			}
-			
-			private S stream(T value) {
-				S stream = hash.newStream();
-				streamer.stream(value, stream);
-				return stream;
-			}
-			
-			@Override
-			public int getQuantity() {
-				return hash.getQuantity();
-			}
-			
-		};
-	}
-	
 }
