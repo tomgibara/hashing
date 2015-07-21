@@ -18,7 +18,7 @@ package com.tomgibara.hashing;
 
 import java.math.BigInteger;
 
-class RerangedHash<T> extends AdaptedMultiHash<T> {
+class RerangedHasher<T> extends AdaptedHashing<T> implements Hasher<T> {
 
 	final HashRange oldRange;
 	final HashRange newRange;
@@ -29,15 +29,37 @@ class RerangedHash<T> extends AdaptedMultiHash<T> {
 	final BigInteger bigNewSize;
 
 
-	RerangedHash(MultiHash<T> hash, HashRange newRange) {
-		super(hash);
+	RerangedHasher(Hashing<T> hashing, HashRange newRange) {
+		super(hashing);
 		this.newRange = newRange;
-		oldRange = hash.getRange();
+		oldRange = hashing.getRange();
 		isSmaller = newRange.getSize().compareTo(oldRange.getSize()) < 0;
 		
 		bigOldMin = oldRange.getMinimum();
 		bigNewMin = newRange.getMinimum();
 		bigNewSize = newRange.getSize();
+	}
+	
+	@Override
+	public HashValue hashValue(T value) {
+		HashValue hashValue = hashing.hashValue(value);
+		return new AbstractHashValue() {
+
+			@Override
+			public BigInteger bigValue() {
+				return adapt(hashValue.bigValue());
+			}
+			
+			@Override
+			public long longValue() {
+				return adapt(hashValue.longValue());
+			}
+			
+			@Override
+			public int intValue() {
+				return adapt(hashValue.intValue());
+			}
+		};
 	}
 	
 	@Override

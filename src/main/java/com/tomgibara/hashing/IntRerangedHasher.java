@@ -18,14 +18,14 @@ package com.tomgibara.hashing;
 
 import java.math.BigInteger;
 
-class IntRerangedHash<T> extends RerangedHash<T> {
+class IntRerangedHasher<T> extends RerangedHasher<T> {
 
 	private final int intOldMin;
 	private final int intNewMin;
 	private final int intNewSize;
 	
-	public IntRerangedHash(MultiHash<T> hash, HashRange newRange) {
-		super(hash, newRange);
+	public IntRerangedHasher(Hashing<T> hashing, HashRange newRange) {
+		super(hashing, newRange);
 		intOldMin = bigOldMin.intValue();
 		intNewMin = bigNewMin.intValue();
 		intNewSize = bigNewSize.intValue();

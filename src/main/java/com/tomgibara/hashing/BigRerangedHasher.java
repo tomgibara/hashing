@@ -18,35 +18,20 @@ package com.tomgibara.hashing;
 
 import java.math.BigInteger;
 
-class LongRerangedHash<T> extends RerangedHash<T> {
+class BigRerangedHasher<T> extends RerangedHasher<T> {
 
-	private final long lngOldMin;
-	private final long lngNewMin;
-	private final long lngNewSize;
-	
-	public LongRerangedHash(MultiHash<T> hash, HashRange newRange) {
-		super(hash, newRange);
-		lngOldMin = bigOldMin.longValue();
-		lngNewMin = bigNewMin.longValue();
-		lngNewSize = bigNewSize.longValue();
+	public BigRerangedHasher(MultiHash<T> hashing, HashRange newRange) {
+		super(hashing, newRange);
 	}
 
 	@Override
 	public int intHashValue(T value) {
-		return (int) longHashValue(value);
+		return bigHashValue(value).intValue();
 	}
 	
 	@Override
-	public int[] hashAsInts(T value, int multiplicity) {
-		long[] longs = multiHash.hashAsLongs(value, multiplicity);
-		int[] array = new int[longs.length];
-		return AbstractMultiHash.copy(longs, array);
-	}
-	
-	@Override
-	public int[] hashAsInts(T value, int[] array) {
-		long[] longs = multiHash.hashAsLongs(value, new long[array.length]);
-		return AbstractMultiHash.copy(longs, array);
+	public long longHashValue(T value) {
+		return bigHashValue(value).longValue();
 	}
 	
 	@Override
@@ -56,9 +41,7 @@ class LongRerangedHash<T> extends RerangedHash<T> {
 
 	@Override
 	protected long adapt(long h) {
-		h -= lngOldMin;
-		if (isSmaller) h = h % lngNewSize;
-		return h + lngNewMin;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -67,5 +50,5 @@ class LongRerangedHash<T> extends RerangedHash<T> {
 		if (isSmaller) h = h.mod(bigNewSize);
 		return h.add(bigNewMin);
 	}
-	
+
 }

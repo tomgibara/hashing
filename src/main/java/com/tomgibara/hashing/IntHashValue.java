@@ -2,7 +2,7 @@ package com.tomgibara.hashing;
 
 import java.math.BigInteger;
 
-public final class IntHashValue implements HashValue {
+final class IntHashValue extends AbstractHashValue {
 
 	private final int intValue;
 	
@@ -26,16 +26,10 @@ public final class IntHashValue implements HashValue {
 	}
 	
 	@Override
-	public int hashCode() {
-		return bigValue().hashCode();
-	}
-	
-	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) return true;
 		if (obj instanceof IntHashValue) return this.intValue == ((IntHashValue) obj).intValue;
-		if (!(obj instanceof HashValue)) return false;
-		return this.bigValue().equals(((HashValue) obj).bigValue());
+		return super.equals(obj);
 	}
 	
 	@Override

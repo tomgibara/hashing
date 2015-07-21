@@ -53,9 +53,9 @@ public class Hashes {
 		if (multiHash == null) throw new IllegalArgumentException("null multiHash");
 		final HashRange oldRange = multiHash.getRange();
 		if (oldRange.equals(newRange)) return multiHash;
-		if (newRange.isIntBounded() && newRange.isIntSized() && oldRange.isIntBounded() && oldRange.isIntSized()) return new IntRerangedHash<T>(multiHash, newRange);
-		if (newRange.isLongBounded() && newRange.isLongSized() && oldRange.isLongBounded() && oldRange.isLongSized()) return new LongRerangedHash<T>(multiHash, newRange);
-		return new BigIntRerangedHash<T>(multiHash, newRange);
+		if (newRange.isIntBounded() && newRange.isIntSized() && oldRange.isIntBounded() && oldRange.isIntSized()) return new IntRerangedHasher<T>(multiHash, newRange);
+		if (newRange.isLongBounded() && newRange.isLongSized() && oldRange.isLongBounded() && oldRange.isLongSized()) return new LongRerangedHasher<T>(multiHash, newRange);
+		return new BigRerangedHasher<T>(multiHash, newRange);
 	}
 	
 	/**
