@@ -34,7 +34,7 @@ import com.tomgibara.hashing.legacy.AbstractMultiHash;
  *            the type of objects for which hashes will be generated
  */
 
-class IntMultiHasher<T> implements Hasher<T> {
+class IntsHasher<T> implements Hasher<T> {
 
 	private static int spread(int hashCode) {
 		// Spread bits using variant of single-word Wang/Jenkins hash
@@ -48,7 +48,7 @@ class IntMultiHasher<T> implements Hasher<T> {
 	
 	private final Hasher<T> hasher;
 
-	public IntMultiHasher(Hasher<T> hasher) {
+	public IntsHasher(Hasher<T> hasher) {
 		hasher = hasher.ranged(HashRange.FULL_INT_RANGE);
 		this.hasher = hasher;
 	}
@@ -115,8 +115,8 @@ class IntMultiHasher<T> implements Hasher<T> {
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) return true;
-		if (!(obj instanceof IntMultiHasher<?>)) return false;
-		IntMultiHasher<?> that = (IntMultiHasher<?>) obj;
+		if (!(obj instanceof IntsHasher<?>)) return false;
+		IntsHasher<?> that = (IntsHasher<?>) obj;
 		return this.hasher.equals(that.hasher);
 	}
 	

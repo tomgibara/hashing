@@ -38,7 +38,7 @@ public interface Hasher<T> extends Hashing<T> {
 		if (oldRange.equals(newRange)) return this;
 		if (newRange.isIntBounded() && newRange.isIntSized() && oldRange.isIntBounded() && oldRange.isIntSized()) return new IntRerangedHasher<T>(this, newRange);
 		if (newRange.isLongBounded() && newRange.isLongSized() && oldRange.isLongBounded() && oldRange.isLongSized()) return new LongRerangedHasher<T>(this, newRange);
-		return new BigRerangedHasher<T>(this, newRange);
+		return new BigRerangedHasher<>(this, newRange);
 	}
 	
 	default Hasher<T> distinct(int quantity, HashRange range) {
@@ -47,7 +47,11 @@ public interface Hasher<T> extends Hashing<T> {
 		if (!range.isIntSized()) throw new IllegalArgumentException("range not int sized");
 		if (!range.isIntBounded()) throw new IllegalArgumentException("range not int bounded");
 		if (quantity > range.getSize().intValue()) throw new IllegalArgumentException("quantity exceeds size of range");
-		return new DistinctHasher<T>(range, quantity, this);
+		return new DistinctHasher<>(range, quantity, this);
+	}
+	
+	default Hasher<T> ints() {
+		return new IntsHasher<>(this);
 	}
 	
 }
