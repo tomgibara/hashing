@@ -36,80 +36,88 @@ import com.tomgibara.hashing.legacy.AbstractMultiHash;
 
 class IntMultiHasher<T> implements Hasher<T> {
 
+	private static int spread(int hashCode) {
+		// Spread bits using variant of single-word Wang/Jenkins hash
+		hashCode += (hashCode <<  15) ^ 0xffffcd7d;
+		hashCode ^= (hashCode >>> 10);
+		hashCode += (hashCode <<   3);
+		hashCode ^= (hashCode >>>  6);
+		hashCode += (hashCode <<   2) + (hashCode << 14);
+		return hashCode ^ (hashCode >>> 16);
+	}
+	
 	private final Hasher<T> hasher;
-	private final HashRange range;
-	private final int offset;
-	private final int size;
 
-	public IntMultiHasher(Hasher<T> hasher, HashRange range) {
+	public IntMultiHasher(Hasher<T> hasher) {
 		hasher = hasher.ranged(HashRange.FULL_INT_RANGE);
 		this.hasher = hasher;
-		this.range = range;
-		offset = range.getMinimum().intValue();
-		size = range.getSize().intValue();
 	}
 	
 	@Override
 	public HashRange getRange() {
-		return range;
+		return HashRange.FULL_INT_RANGE;
 	}
 	
 	@Override
 	public int getQuantity() {
 		return Integer.MAX_VALUE;
 	}
+	
+	@Override
+	public HashValue hashValue(T value) {
+		return new MultiHashValue(hasher.hashValue(value).intValue());
+	}
+	
+	private static class MultiHashValue extends AbstractHashValue {
+
+		private final int probe;
+		private final int h;
+		private int i = 0;
+
+		MultiHashValue(int hashCode) {
+			probe = hashCode == Integer.MIN_VALUE ? 1 : 1 + Math.abs(hashCode);
+			h = spread(hashCode);
+		}
+
+		@Override
+		public int intValue() {
+			return h ^ i * probe;
+		}
+
+		@Override
+		public long longValue() {
+			return intValue();
+		}
+
+		@Override
+		public BigInteger bigValue() {
+			return BigInteger.valueOf(intValue());
+		}
+
+		@Override
+		public MultiHashValue next() {
+			i++;
+			return this;
+		}
+
+		@Override
+		public boolean hasNext() {
+			return true;
+		}
+
+	}
 
 	@Override
-	public int[] hashAsInts(T value, int[] array) {
-        // Double hashing allows calculating multiple index locations
-        int hashCode = hasher.intHashValue(value);
-        int probe = 1 + Math.abs(hashCode % size);
-        int h = spread(hashCode);
-        for (int i = 0; i < array.length; i++) {
-            array[i] = Math.abs(h ^ i * probe) % size;
-        }
-        return array;
+	public int hashCode() {
+		return hasher.hashCode();
 	}
 	
 	@Override
-	public long[] hashAsLongs(T value, long[] array) {
-		return copy(hashAsInts(value, array.length), array);
+	public boolean equals(Object obj) {
+		if (obj == this) return true;
+		if (!(obj instanceof IntMultiHasher<?>)) return false;
+		IntMultiHasher<?> that = (IntMultiHasher<?>) obj;
+		return this.hasher.equals(that.hasher);
 	}
 	
-	@Override
-	public BigInteger[] hashAsBigInts(T value, BigInteger[] array) {
-		return copy(hashAsInts(value, array.length), array);
-	}
-	
-    private int spread(int hashCode) {
-        // Spread bits using variant of single-word Wang/Jenkins hash
-        hashCode += (hashCode <<  15) ^ 0xffffcd7d;
-        hashCode ^= (hashCode >>> 10);
-        hashCode += (hashCode <<   3);
-        hashCode ^= (hashCode >>>  6);
-        hashCode += (hashCode <<   2) + (hashCode << 14);
-        return hashCode ^ (hashCode >>> 16);
-    }
-    
-    @Override
-    public int hashCode() {
-    	return hasher.hashCode() ^ size;
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-    	if (obj == this) return true;
-    	if (!(obj instanceof IntMultiHasher<?>)) return false;
-    	IntMultiHasher<?> that = (IntMultiHasher<?>) obj;
-    	if (this.size != that.size) return false;
-    	if (!this.hasher.equals(that.hasher)) return false;
-    	return true;
-    }
-    
-    @Override
-    public String toString() {
-    	return "ObjectMultiHash size: " + size;
-    }
-    
-    
 }
