@@ -52,7 +52,7 @@ class LongsHasher<T> implements Hasher<T> {
 		return new MultiHashValue(hasher.hashValue(value).intValue());
 	}
 	
-	private static class MultiHashValue extends AbstractHashValue {
+	private final static class MultiHashValue extends AbstractHashValue {
 
 		private final long probe;
 		private final long h;

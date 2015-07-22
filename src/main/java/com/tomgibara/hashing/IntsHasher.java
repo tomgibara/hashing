@@ -68,7 +68,7 @@ class IntsHasher<T> implements Hasher<T> {
 		return new MultiHashValue(hasher.hashValue(value).intValue());
 	}
 	
-	private static class MultiHashValue extends AbstractHashValue {
+	private final static class MultiHashValue extends AbstractHashValue {
 
 		private final int probe;
 		private final int h;
