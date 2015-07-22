@@ -44,8 +44,12 @@ class StandardHasher<S extends WriteStream,T> implements Hasher<T> {
 		return hash.intHashValue(stream(value));
 	}
 	
+	S newStream() {
+		return hash.newStream();
+	}
+	
 	private S stream(T value) {
-		S stream = hash.newStream();
+		S stream = newStream();
 		streamer.stream(value, stream);
 		return stream;
 	}

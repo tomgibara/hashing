@@ -55,7 +55,7 @@ public interface Hasher<T> extends Hashing<T> {
 	}
 	
 	default Hasher<T> longs() {
-		return new LongsHasher<>(hasher);
+		return new LongsHasher<>(this);
 	}
 	
 }
