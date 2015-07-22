@@ -14,7 +14,7 @@
  * limitations under the License.
  * 
  */
-package com.tomgibara.hashing;
+package com.tomgibara.hashing.legacy;
 
 import com.tomgibara.streams.AbstractWriteStream;
 

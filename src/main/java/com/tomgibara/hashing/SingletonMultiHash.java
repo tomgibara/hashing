@@ -18,6 +18,8 @@ package com.tomgibara.hashing;
 
 import java.math.BigInteger;
 
+import com.tomgibara.hashing.legacy.AbstractMultiHash;
+
 /**
  * A {@link MultiHash} implementation that returns the single hash value
  * produced by an arbitrary {@link Hasher} instance.

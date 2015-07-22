@@ -18,7 +18,9 @@ package com.tomgibara.hashing;
 
 import java.math.BigInteger;
 
-class RerangedHasher<T> extends AdaptedHashing<T> implements Hasher<T> {
+class RerangedHasher<T> implements Hasher<T> {
+
+	final Hashing<T> hashing;
 
 	final HashRange oldRange;
 	final HashRange newRange;
@@ -30,41 +32,63 @@ class RerangedHasher<T> extends AdaptedHashing<T> implements Hasher<T> {
 
 
 	RerangedHasher(Hashing<T> hashing, HashRange newRange) {
-		super(hashing);
+		this.hashing = hashing;
 		this.newRange = newRange;
 		oldRange = hashing.getRange();
 		isSmaller = newRange.getSize().compareTo(oldRange.getSize()) < 0;
-		
+
 		bigOldMin = oldRange.getMinimum();
 		bigNewMin = newRange.getMinimum();
 		bigNewSize = newRange.getSize();
 	}
-	
-	@Override
-	public HashValue hashValue(T value) {
-		HashValue hashValue = hashing.hashValue(value);
-		return new AbstractHashValue() {
 
-			@Override
-			public BigInteger bigValue() {
-				return adapt(hashValue.bigValue());
-			}
-			
-			@Override
-			public long longValue() {
-				return adapt(hashValue.longValue());
-			}
-			
-			@Override
-			public int intValue() {
-				return adapt(hashValue.intValue());
-			}
-		};
-	}
-	
 	@Override
 	public HashRange getRange() {
 		return newRange;
 	}
 
+	@Override
+	public int getQuantity() {
+		return hashing.getQuantity();
+	}
+
+	@Override
+	public int intHashValue(T value) {
+		return bigHashValue(value).intValue();
+	}
+	
+	@Override
+	public long longHashValue(T value) {
+		return bigHashValue(value).longValue();
+	}
+	
+	@Override
+	public BigInteger bigHashValue(T value) {
+		BigInteger h = hashing.bigHashValue(value);
+		h = h.subtract(bigOldMin);
+		if (isSmaller) h = h.mod(bigNewSize);
+		return h.add(bigNewMin);
+	}
+
+	@Override
+	public HashValue hashValue(T value) {
+		return new AbstractHashValue() {
+
+			@Override
+			public BigInteger bigValue() {
+				return bigHashValue(value);
+			}
+
+			@Override
+			public long longValue() {
+				return longHashValue(value);
+			}
+
+			@Override
+			public int intValue() {
+				return intHashValue(value);
+			}
+		};
+	}
+	
 }

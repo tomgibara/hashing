@@ -14,9 +14,11 @@
  * limitations under the License.
  * 
  */
-package com.tomgibara.hashing;
+package com.tomgibara.hashing.legacy;
 
 import java.math.BigInteger;
+
+import com.tomgibara.hashing.MultiHash;
 
 /**
  * Convenience base class for implementing the {@link MultiHash} interface.

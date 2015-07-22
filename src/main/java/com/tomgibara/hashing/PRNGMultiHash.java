@@ -22,6 +22,8 @@ import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import java.util.Random;
 
+import com.tomgibara.hashing.legacy.AbstractMultiHash;
+import com.tomgibara.hashing.legacy.CondensingWriteStream;
 import com.tomgibara.streams.ByteWriteStream;
 
 /**

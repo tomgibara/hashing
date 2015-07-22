@@ -20,6 +20,11 @@ class StandardHasher<S extends WriteStream,T> implements Hasher<T> {
 	}
 	
 	@Override
+	public int getQuantity() {
+		return hash.getQuantity();
+	}
+	
+	@Override
 	public HashValue hashValue(T value) {
 		return hash.hashValue(stream(value));
 	}
@@ -43,11 +48,6 @@ class StandardHasher<S extends WriteStream,T> implements Hasher<T> {
 		S stream = hash.newStream();
 		streamer.stream(value, stream);
 		return stream;
-	}
-	
-	@Override
-	public int getQuantity() {
-		return hash.getQuantity();
 	}
 	
 }

@@ -16,39 +16,10 @@
  */
 package com.tomgibara.hashing;
 
-import java.math.BigInteger;
-
-class BigRerangedHasher<T> extends RerangedHasher<T> {
+final class BigRerangedHasher<T> extends RerangedHasher<T> {
 
 	public BigRerangedHasher(Hashing<T> hashing, HashRange newRange) {
 		super(hashing, newRange);
-	}
-
-	@Override
-	public int intHashValue(T value) {
-		return bigHashValue(value).intValue();
-	}
-	
-	@Override
-	public long longHashValue(T value) {
-		return bigHashValue(value).longValue();
-	}
-	
-	@Override
-	protected int adapt(int h) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected long adapt(long h) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected BigInteger adapt(BigInteger h) {
-		h = h.subtract(bigOldMin);
-		if (isSmaller) h = h.mod(bigNewSize);
-		return h.add(bigNewMin);
 	}
 
 }

@@ -16,8 +16,6 @@
  */
 package com.tomgibara.hashing;
 
-import java.math.BigInteger;
-
 final class LongRerangedHasher<T> extends RerangedHasher<T> {
 
 	private final long lngOldMin;
@@ -35,24 +33,13 @@ final class LongRerangedHasher<T> extends RerangedHasher<T> {
 	public int intHashValue(T value) {
 		return (int) longHashValue(value);
 	}
-	
-	@Override
-	protected int adapt(int h) {
-		throw new UnsupportedOperationException();
-	}
 
 	@Override
-	protected long adapt(long h) {
+	public long longHashValue(T value) {
+		long h = hashing.longHashValue(value);
 		h -= lngOldMin;
 		if (isSmaller) h = h % lngNewSize;
 		return h + lngNewMin;
 	}
 
-	@Override
-	protected BigInteger adapt(BigInteger h) {
-		h = h.subtract(bigOldMin);
-		if (isSmaller) h = h.mod(bigNewSize);
-		return h.add(bigNewMin);
-	}
-	
 }

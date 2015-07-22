@@ -27,6 +27,7 @@ import java.math.BigInteger;
  * @param <T> the type of object over which hashes may be generated
  */
 
+//TODO consider eliminating
 public class AdaptedHashing<T> implements Hashing<T> {
 
 	protected final Hashing<T> hashing;

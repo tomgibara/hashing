@@ -18,6 +18,8 @@ package com.tomgibara.hashing;
 
 import java.math.BigInteger;
 
+import com.tomgibara.hashing.legacy.AbstractMultiHash;
+
 /**
  * A MultiHash implementation that uses double-hashing to generate an arbitrary
  * number of hash-values based on an integer hash value. This implementation is
@@ -32,18 +34,18 @@ import java.math.BigInteger;
  *            the type of objects for which hashes will be generated
  */
 
-public class IntegerMultiHash<T> extends AbstractMultiHash<T> {
+class IntMultiHasher<T> implements Hasher<T> {
 
-	private final Hasher<T> hash;
+	private final Hasher<T> hasher;
 	private final HashRange range;
+	private final int offset;
 	private final int size;
 
-	public IntegerMultiHash(Hasher<T> hash, int max) {
-		if (hash == null) throw new IllegalArgumentException("null hash");
-		if (!hash.getRange().equals(HashRange.FULL_INT_RANGE)) throw new IllegalArgumentException("hash does not have full integer range");
-		if (max < 0) throw new IllegalArgumentException();
-		this.hash = hash;
-		range = new HashRange(0, max);
+	public IntMultiHasher(Hasher<T> hasher, HashRange range) {
+		hasher = hasher.ranged(HashRange.FULL_INT_RANGE);
+		this.hasher = hasher;
+		this.range = range;
+		offset = range.getMinimum().intValue();
 		size = range.getSize().intValue();
 	}
 	
@@ -51,16 +53,16 @@ public class IntegerMultiHash<T> extends AbstractMultiHash<T> {
 	public HashRange getRange() {
 		return range;
 	}
-
+	
 	@Override
-	public int getMaxMultiplicity() {
+	public int getQuantity() {
 		return Integer.MAX_VALUE;
 	}
 
 	@Override
 	public int[] hashAsInts(T value, int[] array) {
         // Double hashing allows calculating multiple index locations
-        int hashCode = hash.intHashValue(value);
+        int hashCode = hasher.intHashValue(value);
         int probe = 1 + Math.abs(hashCode % size);
         int h = spread(hashCode);
         for (int i = 0; i < array.length; i++) {
@@ -91,16 +93,16 @@ public class IntegerMultiHash<T> extends AbstractMultiHash<T> {
     
     @Override
     public int hashCode() {
-    	return hash.hashCode() ^ size;
+    	return hasher.hashCode() ^ size;
     }
     
     @Override
     public boolean equals(Object obj) {
     	if (obj == this) return true;
-    	if (!(obj instanceof IntegerMultiHash<?>)) return false;
-    	IntegerMultiHash<?> that = (IntegerMultiHash<?>) obj;
+    	if (!(obj instanceof IntMultiHasher<?>)) return false;
+    	IntMultiHasher<?> that = (IntMultiHasher<?>) obj;
     	if (this.size != that.size) return false;
-    	if (!this.hash.equals(that.hash)) return false;
+    	if (!this.hasher.equals(that.hasher)) return false;
     	return true;
     }
     

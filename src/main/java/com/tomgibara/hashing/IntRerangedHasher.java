@@ -16,9 +16,7 @@
  */
 package com.tomgibara.hashing;
 
-import java.math.BigInteger;
-
-class IntRerangedHasher<T> extends RerangedHasher<T> {
+final class IntRerangedHasher<T> extends RerangedHasher<T> {
 
 	private final int intOldMin;
 	private final int intNewMin;
@@ -30,26 +28,21 @@ class IntRerangedHasher<T> extends RerangedHasher<T> {
 		intNewMin = bigNewMin.intValue();
 		intNewSize = bigNewSize.intValue();
 	}
-
+	
 	@Override
-	protected int adapt(int h) {
+	public int intHashValue(T value) {
+		int h = hashing.intHashValue(value);
 		h -= intOldMin;
 		if (isSmaller) h = h % intNewSize;
 		return h + intNewMin;
 	}
 
 	@Override
-	protected long adapt(long h) {
+	public long longHashValue(T value) {
+		long h = hashing.longHashValue(value);
 		h -= intOldMin;
 		if (isSmaller) h = h % intNewSize;
 		return h + intNewMin;
-	}
-
-	@Override
-	protected BigInteger adapt(BigInteger h) {
-		h = h.subtract(bigOldMin);
-		if (isSmaller) h = h.mod(bigNewSize);
-		return h.add(bigNewMin);
 	}
 	
 }

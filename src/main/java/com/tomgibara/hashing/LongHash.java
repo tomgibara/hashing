@@ -16,6 +16,8 @@
  */
 package com.tomgibara.hashing;
 
+import com.tomgibara.hashing.legacy.CondensingWriteStream;
+
 /**
  * Hashes objects into the full range of longs, rather than Java's more limited
  * int ranged hash. Hashing null is supported if the supplied {@link HashStreamer}
