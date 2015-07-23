@@ -55,7 +55,7 @@ import java.util.Comparator;
  * @author Tom Gibara
  */
 
-public class PerfectStringHasher implements Hasher<String> {
+class PerfectStringHasher implements Hasher<String> {
 
 	// statics
 	
@@ -184,9 +184,8 @@ public class PerfectStringHasher implements Hasher<String> {
 	 *            such that <code>hash(values[i]) == i</code>.
 	 */
 	
-	public PerfectStringHasher(final String... values) {
+	PerfectStringHasher(final String... values) {
 		final int length = values.length;
-		if (length == 0) throw new IllegalArgumentException("No values supplied");
 		
 		final int[] hashes = new int[length];
 		final int[] offsets = new int[2 * length];

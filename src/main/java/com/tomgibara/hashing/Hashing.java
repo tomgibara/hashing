@@ -38,6 +38,12 @@ public interface Hashing<T> {
 		return new RandomHash(algorithm, provider, size);
 	}
 	
+	static Hasher<String> perfect(String... values) {
+		if (values == null) throw new IllegalArgumentException("null values");
+		if (values.length == 0) throw new IllegalArgumentException("no values");
+		return new PerfectStringHasher(values);
+	}
+	
 	HashSize getSize();
 	
 	default int getQuantity() {
