@@ -18,8 +18,6 @@ package com.tomgibara.hashing;
 
 import java.math.BigInteger;
 
-import com.tomgibara.hashing.legacy.AbstractMultiHash;
-
 class LongsHasher<T> implements Hasher<T> {
 
 	//https://code.google.com/p/fast-hash/

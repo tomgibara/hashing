@@ -18,8 +18,6 @@ package com.tomgibara.hashing;
 
 import java.math.BigInteger;
 
-import com.tomgibara.hashing.legacy.AbstractMultiHash;
-
 /**
  * A MultiHash implementation that uses double-hashing to generate an arbitrary
  * number of hash-values based on an integer hash value. This implementation is
