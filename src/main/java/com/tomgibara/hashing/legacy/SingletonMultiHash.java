@@ -14,12 +14,12 @@
  * limitations under the License.
  * 
  */
-package com.tomgibara.hashing;
+package com.tomgibara.hashing.legacy;
 
 import java.math.BigInteger;
 
-import com.tomgibara.hashing.legacy.AbstractMultiHash;
-import com.tomgibara.hashing.legacy.MultiHash;
+import com.tomgibara.hashing.HashRange;
+import com.tomgibara.hashing.Hasher;
 
 /**
  * A {@link MultiHash} implementation that returns the single hash value

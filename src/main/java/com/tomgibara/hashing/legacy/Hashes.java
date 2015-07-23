@@ -21,7 +21,6 @@ import com.tomgibara.hashing.HashRange;
 import com.tomgibara.hashing.Hasher;
 import com.tomgibara.hashing.IntRerangedHasher;
 import com.tomgibara.hashing.LongRerangedHasher;
-import com.tomgibara.hashing.SingletonMultiHash;
 
 /**
  * Utility methods for working with objects in this package.

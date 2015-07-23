@@ -11,7 +11,6 @@ final class DigestHash implements Hash<DigestWriteStream> {
 	private final HashRange range;
 	
 	DigestHash(HashDigestSource digestSource) {
-		if (digestSource == null) throw new IllegalArgumentException("null digestSource");
 		this.digestSource = digestSource;
 		range = HashRange.fromByteLength(digestSource.newDigest().getDigestLength());
 	}
