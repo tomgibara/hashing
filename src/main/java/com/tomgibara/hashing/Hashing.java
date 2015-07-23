@@ -20,6 +20,24 @@ public interface Hashing<T> {
 		return MurmurIntHash.instance(seed);
 	}
 	
+	static Hash<?> prng(HashSize size) {
+		if (size == null) throw new IllegalArgumentException("null size");
+		return new RandomHash(null, null, size);
+	}
+	
+	static Hash<?> prng(String algorithm, HashSize size) {
+		if (algorithm == null) throw new IllegalArgumentException("null algorithm");
+		if (size == null) throw new IllegalArgumentException("null size");
+		return new RandomHash(algorithm, null, size);
+	}
+	
+	static Hash<?> prng(String algorithm, String provider, HashSize size) {
+		if (algorithm == null) throw new IllegalArgumentException("null algorithm");
+		if (provider == null) throw new IllegalArgumentException("null provider");
+		if (size == null) throw new IllegalArgumentException("null size");
+		return new RandomHash(algorithm, provider, size);
+	}
+	
 	HashSize getSize();
 	
 	default int getQuantity() {
