@@ -14,10 +14,12 @@
  * limitations under the License.
  * 
  */
-package com.tomgibara.hashing;
+package com.tomgibara.hashing.legacy;
 
 import java.math.BigInteger;
 import java.util.List;
+
+import com.tomgibara.hashing.Hasher;
 
 /**
  * Extends the {@link Hasher} to allow implementations to return multiple hash

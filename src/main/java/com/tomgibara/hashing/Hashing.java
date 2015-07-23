@@ -2,9 +2,16 @@ package com.tomgibara.hashing;
 
 import java.math.BigInteger;
 
-//TODO may want to eliminate this and move methods back to hasher
 public interface Hashing<T> {
 
+	static <T> Hasher<T> objectHasher() {
+		return JavaHasher.object();
+	}
+	
+	static <T> Hasher<T> identityHasher() {
+		return JavaHasher.identity();
+	}
+	
 	HashRange getRange();
 	
 	default int getQuantity() {

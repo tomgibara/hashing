@@ -14,8 +14,9 @@
  * limitations under the License.
  * 
  */
-package com.tomgibara.hashing;
+package com.tomgibara.hashing.legacy;
 
+import com.tomgibara.hashing.HashStreamer;
 import com.tomgibara.streams.WriteStream;
 
 public abstract class SeededHashSource<T> implements HashStreamer<T> {

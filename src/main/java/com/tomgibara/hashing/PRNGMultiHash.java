@@ -24,6 +24,7 @@ import java.util.Random;
 
 import com.tomgibara.hashing.legacy.AbstractMultiHash;
 import com.tomgibara.hashing.legacy.CondensingWriteStream;
+import com.tomgibara.hashing.legacy.MultiHash;
 import com.tomgibara.streams.ByteWriteStream;
 
 /**

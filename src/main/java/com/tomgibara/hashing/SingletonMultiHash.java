@@ -19,6 +19,7 @@ package com.tomgibara.hashing;
 import java.math.BigInteger;
 
 import com.tomgibara.hashing.legacy.AbstractMultiHash;
+import com.tomgibara.hashing.legacy.MultiHash;
 
 /**
  * A {@link MultiHash} implementation that returns the single hash value

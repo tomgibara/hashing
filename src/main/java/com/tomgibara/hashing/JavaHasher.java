@@ -26,8 +26,24 @@ import java.math.BigInteger;
  * 
  */
 
-public class ObjectHasher<T> implements Hasher<T> {
+abstract class JavaHasher<T> implements Hasher<T> {
 
+	private static ObjectHasher<?> object = new ObjectHasher<>();
+	private static IdentityHasher<?> identity = new IdentityHasher<>();
+	
+	@SuppressWarnings("unchecked")
+	static <T> JavaHasher<T> object() {
+		return (JavaHasher<T>) object;
+	}
+	
+	@SuppressWarnings("unchecked")
+	static <T> JavaHasher<T> identity() {
+		return (JavaHasher<T>) identity;
+	}
+	
+	private JavaHasher() {
+	}
+	
 	@Override
 	public HashRange getRange() {
 		return HashRange.FULL_INT_RANGE;
@@ -35,7 +51,7 @@ public class ObjectHasher<T> implements Hasher<T> {
 	
 	@Override
 	public int intHashValue(T value) {
-		return value == null ? 0 : value.hashCode();
+		return hash(value);
 	}
 	
 	@Override
@@ -53,4 +69,23 @@ public class ObjectHasher<T> implements Hasher<T> {
 		return new IntHashValue(intHashValue(value));
 	}
 
+	abstract int hash(T value);
+
+	private final static class ObjectHasher<T> extends JavaHasher<T> {
+
+		@Override
+		int hash(T value) {
+			return value == null ? 0 : value.hashCode();
+		}
+
+	}
+
+	private final static class IdentityHasher<T> extends JavaHasher<T> {
+
+		@Override
+		int hash(T value) {
+			return System.identityHashCode(value);
+		}
+
+	}
 }

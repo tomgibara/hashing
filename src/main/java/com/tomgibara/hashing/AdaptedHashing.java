@@ -18,6 +18,8 @@ package com.tomgibara.hashing;
 
 import java.math.BigInteger;
 
+import com.tomgibara.hashing.legacy.MultiHash;
+
 /**
  * Convenience base class for creating {@link MultiHash} implementations that
  * adjust the hash values returned by another {@link MultiHash} implementation.
