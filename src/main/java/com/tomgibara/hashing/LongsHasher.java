@@ -33,13 +33,13 @@ class LongsHasher<T> implements Hasher<T> {
 	private final Hasher<T> hasher;
 
 	public LongsHasher(Hasher<T> hasher) {
-		hasher = hasher.ranged(HashRange.FULL_LONG_RANGE);
+		hasher = hasher.sized(HashSize.LONG_SIZE);
 		this.hasher = hasher;
 	}
 	
 	@Override
-	public HashRange getRange() {
-		return HashRange.FULL_LONG_RANGE;
+	public HashSize getSize() {
+		return HashSize.LONG_SIZE;
 	}
 	
 	@Override

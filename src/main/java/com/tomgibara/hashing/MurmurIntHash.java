@@ -25,8 +25,8 @@ final class MurmurIntHash implements Hash<MurmurIntHash.MurmurStream> {
 	}
 	
 	@Override
-	public HashRange getRange() {
-		return HashRange.FULL_INT_RANGE;
+	public HashSize getSize() {
+		return HashSize.INT_SIZE;
 	}
 	
 	@Override

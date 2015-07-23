@@ -16,11 +16,11 @@
  */
 package com.tomgibara.hashing.legacy;
 
-import com.tomgibara.hashing.BigRerangedHasher;
-import com.tomgibara.hashing.HashRange;
+import com.tomgibara.hashing.BigResizedHasher;
+import com.tomgibara.hashing.HashSize;
 import com.tomgibara.hashing.Hasher;
-import com.tomgibara.hashing.IntRerangedHasher;
-import com.tomgibara.hashing.LongRerangedHasher;
+import com.tomgibara.hashing.IntReszedHasher;
+import com.tomgibara.hashing.LongResizedHasher;
 
 /**
  * Utility methods for working with objects in this package.
@@ -54,10 +54,10 @@ public class Hashes {
 	 *             if any of the arguments to the method is null
 	 */
 	
-	public static <T> MultiHash<T> rangeAdjust(HashRange newRange, MultiHash<T> multiHash) throws IllegalArgumentException {
+	public static <T> MultiHash<T> rangeAdjust(HashSize newRange, MultiHash<T> multiHash) throws IllegalArgumentException {
 		if (newRange == null) throw new IllegalArgumentException("null newRange");
 		if (multiHash == null) throw new IllegalArgumentException("null multiHash");
-		final HashRange oldRange = multiHash.getRange();
+		final HashSize oldRange = multiHash.getSize();
 		if (oldRange.equals(newRange)) return multiHash;
 		if (newRange.isIntBounded() && newRange.isIntSized() && oldRange.isIntBounded() && oldRange.isIntSized()) return new IntRerangedHasher<T>(multiHash, newRange);
 		if (newRange.isLongBounded() && newRange.isLongSized() && oldRange.isLongBounded() && oldRange.isLongSized()) return new LongRerangedHasher<T>(multiHash, newRange);

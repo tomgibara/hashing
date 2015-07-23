@@ -171,10 +171,10 @@ public class PerfectStringHasher implements Hasher<String> {
 	private final int[] pivots;
 
 	/**
-	 * Cache a range object which indicates the range of hash values generated.
+	 * Cache a size object which indicates the size of hash values generated.
 	 */
 	
-	private final HashRange range;
+	private final HashSize size;
 	
 	/**
 	 * Constructs a minimal perfect string hashing over the supplied strings.
@@ -234,7 +234,7 @@ public class PerfectStringHasher implements Hasher<String> {
 			this.hashes = hashes;
 			this.offsets = null;
 			this.pivots = null;
-			this.range = new HashRange(0, length - 1);
+			this.size = new HashSize(length);
 			return;
 		}
 
@@ -250,14 +250,14 @@ public class PerfectStringHasher implements Hasher<String> {
 		this.pivots = pivots;
 		this.offsets = offsets;
 		this.hashes = hashes;
-		this.range = new HashRange(0, length - 1);
+		this.size = new HashSize(length);
 	}
 	
 	// hash generator methods
 	
 	@Override
-	public HashRange getRange() {
-		return range;
+	public HashSize getSize() {
+		return size;
 	}
 	
 	//TODO decide whether to throw an IAE if -1 is returned from hash

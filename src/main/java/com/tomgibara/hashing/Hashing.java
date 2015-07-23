@@ -20,7 +20,7 @@ public interface Hashing<T> {
 		return MurmurIntHash.instance(seed);
 	}
 	
-	HashRange getRange();
+	HashSize getSize();
 	
 	default int getQuantity() {
 		return 1;
@@ -46,8 +46,8 @@ public interface Hashing<T> {
 
 	/**
 	 * The hash value as a long. This method should provide better performance
-	 * for long-ranged hashes. This value is not guaranteed to lie within the
-	 * indicated {@link HashRange} unless {@link HashRange#isLongRange()} is
+	 * for long-capacity hashes. This value is not guaranteed to lie within the
+	 * indicated {@link HashSize} unless {@link HashSize#isLongCapacity()} is
 	 * true.
 	 * 
 	 * @param value
@@ -63,8 +63,8 @@ public interface Hashing<T> {
 
 	/**
 	 * The hash value as an int. This method should provide better performance
-	 * for integer-ranged hashes. This value is not guaranteed to lie within the
-	 * indicated {@link HashRange} unless {@link HashRange#isIntRange()} is
+	 * for integer-capacity hashes. This value is not guaranteed to lie within the
+	 * indicated {@link HashSize} unless {@link HashSize#isIntCapacity()} is
 	 * true.
 	 * 
 	 * @param value

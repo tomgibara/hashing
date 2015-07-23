@@ -16,7 +16,7 @@
  */
 package com.tomgibara.hashing.legacy;
 
-import com.tomgibara.hashing.HashRange;
+import com.tomgibara.hashing.HashSize;
 import com.tomgibara.hashing.HashStreamer;
 
 /**
@@ -49,12 +49,12 @@ public class LongHash<T> extends AbstractHash<T> {
 	}
 	
 	/**
-	 * @return {@linkplain HashRange.FULL_LONG_RANGE}
+	 * @return {@linkplain HashSize.LONG_SIZE}
 	 */
 	
 	@Override
-	public HashRange getRange() {
-		return HashRange.FULL_LONG_RANGE;
+	public HashSize getSize() {
+		return HashSize.LONG_SIZE;
 	}
 	
 	@Override

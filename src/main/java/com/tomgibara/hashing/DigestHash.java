@@ -8,21 +8,21 @@ import com.tomgibara.streams.DigestWriteStream;
 final class DigestHash implements Hash<DigestWriteStream> {
 
 	private final HashDigestSource digestSource;
-	private final HashRange range;
+	private final HashSize size;
 	
 	DigestHash(HashDigestSource digestSource) {
 		this.digestSource = digestSource;
-		range = HashRange.fromByteLength(digestSource.newDigest().getDigestLength());
+		size = HashSize.fromByteLength(digestSource.newDigest().getDigestLength());
 	}
 	
 	DigestHash(StandardHashDigestSource digestSource) {
 		this.digestSource = digestSource;
-		range = digestSource.range;
+		size = digestSource.size;
 	}
 	
 	@Override
-	public HashRange getRange() {
-		return range;
+	public HashSize getSize() {
+		return size;
 	}
 	
 	@Override

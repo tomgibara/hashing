@@ -41,24 +41,24 @@ import com.tomgibara.streams.ByteWriteStream;
 
 public class PRNGMultiHash<T> extends AbstractMultiHash<T> {
 
-	private static final HashRange sFullIntRange = new HashRange(BigInteger.ZERO, BigInteger.valueOf(Integer.MAX_VALUE));
+	private static final HashSize sFullIntRange = new HashSize(BigInteger.ZERO, BigInteger.valueOf(Integer.MAX_VALUE));
 	
 	private final String algorithm;
 	private final String provider;
 	private final HashStreamer<T> source;
-	private final HashRange range;
+	private final HashSize range;
 	private final boolean isFullIntRange;
 
-	public PRNGMultiHash(HashStreamer<T> source, HashRange range) {
+	public PRNGMultiHash(HashStreamer<T> source, HashSize range) {
 		this(null, null, source, range);
 	}
 
 	//max is inclusive
-	public PRNGMultiHash(String algorithm, HashStreamer<T> source, HashRange range) {
+	public PRNGMultiHash(String algorithm, HashStreamer<T> source, HashSize range) {
 		this(algorithm, null, source, range);
 	}
 
-	public PRNGMultiHash(String algorithm, String provider, HashStreamer<T> source, HashRange range) {
+	public PRNGMultiHash(String algorithm, String provider, HashStreamer<T> source, HashSize range) {
 		if (source == null) throw new IllegalArgumentException("null source");
 		if (range == null) throw new IllegalArgumentException("null range");
 
@@ -74,7 +74,7 @@ public class PRNGMultiHash<T> extends AbstractMultiHash<T> {
 	}
 
 	@Override
-	public HashRange getRange() {
+	public HashSize getSize() {
 		return range;
 	}
 	

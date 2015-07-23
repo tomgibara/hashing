@@ -15,8 +15,8 @@ class StandardHasher<S extends WriteStream,T> implements Hasher<T> {
 	}
 	
 	@Override
-	public HashRange getRange() {
-		return hash.getRange();
+	public HashSize getSize() {
+		return hash.getSize();
 	}
 	
 	@Override

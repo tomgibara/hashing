@@ -16,30 +16,25 @@
  */
 package com.tomgibara.hashing;
 
-final class LongRerangedHasher<T> extends RerangedHasher<T> {
+final class IntReszedHasher<T> extends ResizedHasher<T> {
 
-	private final long lngOldMin;
-	private final long lngNewMin;
-	private final long lngNewSize;
+	private final int intNewSize;
 	
-	public LongRerangedHasher(Hashing<T> hashing, HashRange newRange) {
-		super(hashing, newRange);
-		lngOldMin = bigOldMin.longValue();
-		lngNewMin = bigNewMin.longValue();
-		lngNewSize = bigNewSize.longValue();
+	public IntReszedHasher(Hashing<T> hashing, HashSize newSize) {
+		super(hashing, newSize);
+		intNewSize = newSize.getSize().intValue();
 	}
-
+	
 	@Override
 	public int intHashValue(T value) {
-		return (int) longHashValue(value);
+		int h = hashing.intHashValue(value);
+		return isSmaller ? h = h % intNewSize : h;
 	}
 
 	@Override
 	public long longHashValue(T value) {
 		long h = hashing.longHashValue(value);
-		h -= lngOldMin;
-		if (isSmaller) h = h % lngNewSize;
-		return h + lngNewMin;
+		return isSmaller ? h = h % intNewSize : h;
 	}
-
+	
 }

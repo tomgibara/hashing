@@ -16,10 +16,10 @@
  */
 package com.tomgibara.hashing;
 
-final class BigRerangedHasher<T> extends RerangedHasher<T> {
+final class BigResizedHasher<T> extends ResizedHasher<T> {
 
-	public BigRerangedHasher(Hashing<T> hashing, HashRange newRange) {
-		super(hashing, newRange);
+	public BigResizedHasher(Hashing<T> hashing, HashSize newSized) {
+		super(hashing, newSized);
 	}
 
 }

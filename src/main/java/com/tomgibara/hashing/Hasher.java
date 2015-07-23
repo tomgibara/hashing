@@ -31,23 +31,22 @@ package com.tomgibara.hashing;
 
 public interface Hasher<T> extends Hashing<T> {
 
-	// TODO can we stretch to make hash fit larger range?
-	default Hasher<T> ranged(HashRange newRange) {
-		if (newRange == null) throw new IllegalArgumentException("null newRange");
-		final HashRange oldRange = getRange();
-		if (oldRange.equals(newRange)) return this;
-		if (newRange.isIntBounded() && newRange.isIntSized() && oldRange.isIntBounded() && oldRange.isIntSized()) return new IntRerangedHasher<T>(this, newRange);
-		if (newRange.isLongBounded() && newRange.isLongSized() && oldRange.isLongBounded() && oldRange.isLongSized()) return new LongRerangedHasher<T>(this, newRange);
-		return new BigRerangedHasher<>(this, newRange);
+	// TODO can we stretch to make hash fit larger size?
+	default Hasher<T> sized(HashSize newSize) {
+		if (newSize == null) throw new IllegalArgumentException("null newSize");
+		final HashSize oldSize = getSize();
+		if (oldSize.equals(newSize)) return this;
+		if (newSize.isIntSized() && oldSize.isIntSized()) return new IntReszedHasher<>(this, newSize);
+		if (newSize.isLongSized() && oldSize.isLongSized()) return new LongResizedHasher<>(this, newSize);
+		return new BigResizedHasher<>(this, newSize);
 	}
 	
-	default Hasher<T> distinct(int quantity, HashRange range) {
+	default Hasher<T> distinct(int quantity, HashSize size) {
 		if (quantity < 1) throw new IllegalArgumentException("non-positive quantity");
-		if (range == null) throw new IllegalArgumentException("null range");
-		if (!range.isIntSized()) throw new IllegalArgumentException("range not int sized");
-		if (!range.isIntBounded()) throw new IllegalArgumentException("range not int bounded");
-		if (quantity > range.getSize().intValue()) throw new IllegalArgumentException("quantity exceeds size of range");
-		return new DistinctHasher<>(range, quantity, this);
+		if (size == null) throw new IllegalArgumentException("null size");
+		if (!size.isIntSized()) throw new IllegalArgumentException("size not int sized");
+		if (quantity > size.getSize().intValue()) throw new IllegalArgumentException("quantity exceeds size of size");
+		return new DistinctHasher<>(size, quantity, this);
 	}
 	
 	default Hasher<T> ints() {

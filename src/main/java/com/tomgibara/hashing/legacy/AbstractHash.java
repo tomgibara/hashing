@@ -23,7 +23,7 @@ import com.tomgibara.hashing.Hasher;
 /**
  * Convenience base class for implementing the {@link Hasher} interface. At a
  * minimum, one of {@link #bigHashValue(Object)} or {@link #longHashValue(Object)}
- * needs to be implemented in addition to the {@link #getRange()} method.
+ * needs to be implemented in addition to the {@link #getSize()} method.
  * 
  * @author tomgibara
  * 

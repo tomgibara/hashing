@@ -39,7 +39,7 @@ class StandardHashDigestSource implements HashDigestSource {
 	private final String algorithm;
 	private final Provider provider;
 	private final MessageDigest digest;
-	final HashRange range;
+	final HashSize size;
 
 	StandardHashDigestSource(String algorithm) throws NoSuchAlgorithmException {
 		this( MessageDigest.getInstance(algorithm) );
@@ -53,7 +53,7 @@ class StandardHashDigestSource implements HashDigestSource {
 		algorithm = digest.getAlgorithm();
 		provider = digest.getProvider();
 		if (isCloneable(digest)) throw new IllegalArgumentException("digest not cloneable");
-		range = HashRange.fromByteLength( lengthInBytes(digest) );
+		size = HashSize.fromByteLength( lengthInBytes(digest) );
 		this.digest = isCloneable(digest) ? digest : null;
 	}
 	

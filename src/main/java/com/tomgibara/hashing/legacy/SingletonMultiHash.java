@@ -18,7 +18,7 @@ package com.tomgibara.hashing.legacy;
 
 import java.math.BigInteger;
 
-import com.tomgibara.hashing.HashRange;
+import com.tomgibara.hashing.HashSize;
 import com.tomgibara.hashing.Hasher;
 
 /**
@@ -47,8 +47,8 @@ public class SingletonMultiHash<T> extends AbstractMultiHash<T> {
 	// hash methods
 	
 	@Override
-	public HashRange getRange() {
-		return hash.getRange();
+	public HashSize getSize() {
+		return hash.getSize();
 	}
 
 	@Override

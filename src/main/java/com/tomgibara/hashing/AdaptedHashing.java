@@ -40,8 +40,8 @@ public class AdaptedHashing<T> implements Hashing<T> {
 	}
 
 	@Override
-	public HashRange getRange() {
-		return hashing.getRange();
+	public HashSize getSize() {
+		return hashing.getSize();
 	}
 	
 	@Override

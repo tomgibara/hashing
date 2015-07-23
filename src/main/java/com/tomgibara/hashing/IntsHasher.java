@@ -49,13 +49,13 @@ class IntsHasher<T> implements Hasher<T> {
 	private final Hasher<T> hasher;
 
 	public IntsHasher(Hasher<T> hasher) {
-		hasher = hasher.ranged(HashRange.FULL_INT_RANGE);
+		hasher = hasher.sized(HashSize.INT_SIZE);
 		this.hasher = hasher;
 	}
 	
 	@Override
-	public HashRange getRange() {
-		return HashRange.FULL_INT_RANGE;
+	public HashSize getSize() {
+		return HashSize.INT_SIZE;
 	}
 	
 	@Override

@@ -18,33 +18,25 @@ package com.tomgibara.hashing;
 
 import java.math.BigInteger;
 
-class RerangedHasher<T> implements Hasher<T> {
+class ResizedHasher<T> implements Hasher<T> {
 
 	final Hashing<T> hashing;
 
-	final HashRange oldRange;
-	final HashRange newRange;
+	//TODO remove?
+	final HashSize oldSize;
+	final HashSize newSize;
 	final boolean isSmaller;
 
-	final BigInteger bigOldMin;
-	final BigInteger bigNewMin;
-	final BigInteger bigNewSize;
-
-
-	RerangedHasher(Hashing<T> hashing, HashRange newRange) {
+	ResizedHasher(Hashing<T> hashing, HashSize newSize) {
 		this.hashing = hashing;
-		this.newRange = newRange;
-		oldRange = hashing.getRange();
-		isSmaller = newRange.getSize().compareTo(oldRange.getSize()) < 0;
-
-		bigOldMin = oldRange.getMinimum();
-		bigNewMin = newRange.getMinimum();
-		bigNewSize = newRange.getSize();
+		this.newSize = newSize;
+		oldSize = hashing.getSize();
+		isSmaller = newSize.getSize().compareTo(oldSize.getSize()) < 0;
 	}
 
 	@Override
-	public HashRange getRange() {
-		return newRange;
+	public HashSize getSize() {
+		return newSize;
 	}
 
 	@Override
@@ -65,9 +57,7 @@ class RerangedHasher<T> implements Hasher<T> {
 	@Override
 	public BigInteger bigHashValue(T value) {
 		BigInteger h = hashing.bigHashValue(value);
-		h = h.subtract(bigOldMin);
-		if (isSmaller) h = h.mod(bigNewSize);
-		return h.add(bigNewMin);
+		return isSmaller ? h.mod(newSize.getSize()) : h;
 	}
 
 	@Override

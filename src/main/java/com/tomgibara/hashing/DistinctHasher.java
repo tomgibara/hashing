@@ -29,24 +29,22 @@ class DistinctHasher<E> implements Hasher<E> {
 	
 	//TODO could keep reference to choices instead
 	private final Choose choose;
-	private final HashRange range;
-	private final int offset;
+	private final HashSize size;
 	private final Hasher<E> hasher;
 	private final boolean longSized;
 	
-	DistinctHasher(HashRange range, int multiplicity, Hasher<E> hasher) {
-		int size = range.getSize().intValue();
-		this.choose = Choose.from(size, multiplicity);
-		HashRange choiceRange = new HashRange(BigInteger.ZERO, choose.asBigInt().subtract(BigInteger.ONE));
-		this.hasher = hasher.ranged(choiceRange);
-		this.range = range;
-		this.offset = range.getMinimum().intValue();
-		longSized = range.isLongSized();
+	DistinctHasher(HashSize size, int multiplicity, Hasher<E> hasher) {
+		int intSize = size.getSize().intValue();
+		this.choose = Choose.from(intSize, multiplicity);
+		HashSize choiceSize = new HashSize(choose.asBigInt());
+		this.hasher = hasher.sized(choiceSize);
+		this.size = size;
+		longSized = choiceSize.isLongSized();
 	}
 	
 	@Override
-	public HashRange getRange() {
-		return range;
+	public HashSize getSize() {
+		return size;
 	}
 	
 	@Override
@@ -60,11 +58,6 @@ class DistinctHasher<E> implements Hasher<E> {
 		int[] intValues = longSized ?
 				choices.choiceAsArray(hasher.longHashValue(value)) :
 				choices.choiceAsArray(hasher.bigHashValue(value));
-		if (offset != 0) {
-			for (int i = 0; i < intValues.length; i++) {
-				intValues[i] += offset;
-			}
-		}
 		return new IntsHashValue(intValues);
 	}
 }
