@@ -16,10 +16,30 @@
  */
 package com.tomgibara.hashing;
 
-final class BigResizedHasher<T> extends ResizedHasher<T> {
+import java.math.BigInteger;
 
-	public BigResizedHasher(Hashing<T> hashing, HashSize newSized) {
-		super(hashing, newSized);
+final class SizedIntHasher<T> extends SizedHasher<T> {
+
+	public SizedIntHasher(Hashing<T> hashing, HashSize newSize) {
+		super(hashing, newSize);
 	}
 
+	@Override
+	public int intHashValue(T value) {
+		int h = hashing.intHashValue(value);
+		return isSmaller ? newSize.mapInt(h) : h;
+	}
+
+	@Override
+	public long longHashValue(T value) {
+		long h = hashing.longHashValue(value);
+		return isSmaller ? newSize.mapLong(h) : h;
+	}
+
+	@Override
+	public BigInteger bigHashValue(T value) {
+		BigInteger h = hashing.bigHashValue(value);
+		return isSmaller ? newSize.mapBig(h) : h;
+	}
+	
 }

@@ -16,11 +16,11 @@
  */
 package com.tomgibara.hashing.legacy;
 
-import com.tomgibara.hashing.BigResizedHasher;
+import com.tomgibara.hashing.SizedBigHasher;
 import com.tomgibara.hashing.HashSize;
 import com.tomgibara.hashing.Hasher;
-import com.tomgibara.hashing.IntReszedHasher;
-import com.tomgibara.hashing.LongResizedHasher;
+import com.tomgibara.hashing.SizedIntHasher;
+import com.tomgibara.hashing.SizedLongHasher;
 
 /**
  * Utility methods for working with objects in this package.

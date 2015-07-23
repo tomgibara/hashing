@@ -83,43 +83,84 @@ public final class HashSize implements Comparable<HashSize> {
 	}
 	
 	// fields
+	// masks only a valid mask if powerOfTwo and suitable capacity
 	
 	private final BigInteger size;
+	private final int bits;
+	private final boolean powerOfTwo;
+	private final BigInteger mask;
+
 	private final boolean intSized;
 	private final boolean intCapacity;
+	private final int intSize;
+	private final int intMask;
+
 	private final boolean longSized;
 	private final boolean longCapacity;
+	private final long longSize;
+	private final long longMask;
 	
 	// constructors
 	
 	HashSize(BigInteger size) {
 		this.size = size;
-		intSized = size.compareTo(BIG_SINT) <= 0;
-		intCapacity = intSized || size.compareTo(BIG_UINT) <= 0;
-		longSized = intCapacity || size.compareTo(BIG_SLONG) <= 0;
-		longCapacity = longSized || size.compareTo(BIG_ULONG) <= 0;
+		//TODO is there a faster way than this?
+		BigInteger sizeMinusOne = size.subtract(BigInteger.ONE);
+		bits = sizeMinusOne.bitLength();
+		powerOfTwo = size.bitCount() == 1;
+		mask = powerOfTwo ? sizeMinusOne : BigInteger.ONE.shiftLeft(bits).subtract(BigInteger.ONE);
+		intSized = bits < 32;
+		intCapacity = bits <= 32;
+		intSize = size.intValue();
+		intMask = intSize - 1;
+		longSized = bits < 64;
+		longCapacity = bits <= 64;
+		longSize = size.longValue();
+		longMask = longSize - 1;
 	}
 
 	HashSize(int size) {
 		this.size = BigInteger.valueOf(size);
+		bits = 32 - Integer.numberOfLeadingZeros(size - 1);
+		powerOfTwo = Integer.highestOneBit(size) == size;
+		mask = (powerOfTwo ? this.size : BigInteger.ONE.shiftLeft(bits)).subtract(BigInteger.ONE);
 		intSized = true;
 		intCapacity = true;
+		intSize = size;
+		intMask = size - 1;
 		longSized = true;
 		longCapacity = true;
+		longSize = size;
+		longMask = size - 1;
 	}
 	
 	HashSize(long size) {
 		this.size = BigInteger.valueOf(size);
-		intSized = size <= LONG_SINT;
-		intCapacity = size <= LONG_UINT;
+		bits = 64 - Long.numberOfLeadingZeros(size - 1L);
+		powerOfTwo = Long.highestOneBit(size) == size;
+		mask = (powerOfTwo ? this.size : BigInteger.ONE.shiftLeft(bits)).subtract(BigInteger.ONE);
+		intSized = bits < 32;
+		intCapacity = bits <= 32;
+		intSize = (int) size;
+		intMask = intSize - 1;
 		longSized = true;
 		longCapacity = true;
+		longSize = size;
+		longMask = size - 1;
 	}
 
 	// accessors
 	
 	public BigInteger getSize() {
 		return size;
+	}
+	
+	public int getBits() {
+		return bits;
+	}
+	
+	public boolean isPowerOfTwo() {
+		return powerOfTwo;
 	}
 	
 	public boolean isIntSized() {
@@ -136,6 +177,26 @@ public final class HashSize implements Comparable<HashSize> {
 	
 	public boolean isLongCapacity() {
 		return longCapacity;
+	}
+	
+	// methods
+	
+	public int mapInt(int value) {
+		if (!intCapacity) return value;
+		if (powerOfTwo) return value & intMask;
+		if (intSized && value >= 0) return value % intSize;
+		return (int) ((LONG_UINT - value) % longSize);
+	}
+	
+	public long mapLong(long value) {
+		if (!longCapacity) return value;
+		if (powerOfTwo) return value & longMask;
+		if (longSized & value >= 0L) return value % longSize;
+		return BigInteger.valueOf(value).mod(size).longValue();
+	}
+	
+	public BigInteger mapBig(BigInteger value) {
+		return powerOfTwo ? value.and(mask) : value.mod(size);
 	}
 	
 	// comparable methods

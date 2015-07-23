@@ -14,7 +14,7 @@
  * limitations under the License.
  * 
  */
-package com.tomgibara.hashing;
+package com.tomgibara.hashing.legacy;
 
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
@@ -22,9 +22,8 @@ import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import java.util.Random;
 
-import com.tomgibara.hashing.legacy.AbstractMultiHash;
-import com.tomgibara.hashing.legacy.CondensingWriteStream;
-import com.tomgibara.hashing.legacy.MultiHash;
+import com.tomgibara.hashing.HashSize;
+import com.tomgibara.hashing.HashStreamer;
 import com.tomgibara.streams.ByteWriteStream;
 
 /**

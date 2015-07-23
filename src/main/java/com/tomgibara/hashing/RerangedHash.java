@@ -18,7 +18,7 @@ package com.tomgibara.hashing;
 
 import java.math.BigInteger;
 
-class ResizedHasher<T> implements Hasher<T> {
+abstract class SizedHasher<T> implements Hasher<T> {
 
 	final Hashing<T> hashing;
 
@@ -27,7 +27,7 @@ class ResizedHasher<T> implements Hasher<T> {
 	final HashSize newSize;
 	final boolean isSmaller;
 
-	ResizedHasher(Hashing<T> hashing, HashSize newSize) {
+	SizedHasher(Hashing<T> hashing, HashSize newSize) {
 		this.hashing = hashing;
 		this.newSize = newSize;
 		oldSize = hashing.getSize();
@@ -42,22 +42,6 @@ class ResizedHasher<T> implements Hasher<T> {
 	@Override
 	public int getQuantity() {
 		return hashing.getQuantity();
-	}
-
-	@Override
-	public int intHashValue(T value) {
-		return bigHashValue(value).intValue();
-	}
-	
-	@Override
-	public long longHashValue(T value) {
-		return bigHashValue(value).longValue();
-	}
-	
-	@Override
-	public BigInteger bigHashValue(T value) {
-		BigInteger h = hashing.bigHashValue(value);
-		return isSmaller ? h.mod(newSize.getSize()) : h;
 	}
 
 	@Override

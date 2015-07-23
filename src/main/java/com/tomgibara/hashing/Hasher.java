@@ -36,9 +36,9 @@ public interface Hasher<T> extends Hashing<T> {
 		if (newSize == null) throw new IllegalArgumentException("null newSize");
 		final HashSize oldSize = getSize();
 		if (oldSize.equals(newSize)) return this;
-		if (newSize.isIntSized() && oldSize.isIntSized()) return new IntReszedHasher<>(this, newSize);
-		if (newSize.isLongSized() && oldSize.isLongSized()) return new LongResizedHasher<>(this, newSize);
-		return new BigResizedHasher<>(this, newSize);
+		if (oldSize.isIntCapacity()) return new SizedIntHasher<>(this, newSize);
+		if (oldSize.isLongCapacity()) return new SizedLongHasher<>(this, newSize);
+		return new SizedBigHasher<>(this, newSize);
 	}
 	
 	default Hasher<T> distinct(int quantity, HashSize size) {
