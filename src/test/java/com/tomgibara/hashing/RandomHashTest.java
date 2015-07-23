@@ -1,6 +1,6 @@
 /*
  * Copyright 2010 Tom Gibara
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 package com.tomgibara.hashing;
 
@@ -25,13 +25,13 @@ import junit.framework.TestCase;
 public class RandomHashTest extends TestCase {
 
 	private static final HashStreamer<Integer> streamer = new HashStreamer<Integer>() {
-		
+
 		@Override
 		public void stream(Integer value, WriteStream stream) {
 			stream.writeInt(value);
 		}
 	};
-	
+
 	public void testBasic() throws Exception {
 		test(HashSize.fromIntSize(50), 10);
 		test(HashSize.fromLongSize(1L << 48), 10);
@@ -39,7 +39,7 @@ public class RandomHashTest extends TestCase {
 		test(HashSize.fromBigSize(BigInteger.ONE.shiftLeft(175)), 10);
 		test(HashSize.fromBigSize(new BigInteger("237497854858736458783445")), 10);
 	}
-	
+
 	private void test(HashSize size, int quantity) {
 		test(Hashing.prng(size), 10);
 		test(Hashing.prng("SHA1PRNG", size), 10);

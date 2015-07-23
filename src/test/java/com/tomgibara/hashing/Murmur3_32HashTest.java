@@ -13,13 +13,13 @@ public class Murmur3_32HashTest extends TestCase {
 		Random r = new Random(0L);
 		Hasher<byte[]> hasher = Hashing.murmur3Int().hasher(new ByteStreamer());
 		HashFunction hash = com.google.common.hash.Hashing.murmur3_32();
-		
+
 		// test empty
 		{
 			byte[] b = new byte[0];
 			assertEquals(hash.hashBytes(b).asInt(), hasher.intHashValue(b));
 		}
-		
+
 		// test single byte
 		{
 			byte[] b = new byte[1];
@@ -28,7 +28,7 @@ public class Murmur3_32HashTest extends TestCase {
 				assertEquals(hash.hashBytes(b).asInt(), hasher.intHashValue(b));
 			}
 		}
-		
+
 		for (int i = 0; i < 10000; i++) {
 			byte[] bytes = new byte[r.nextInt(100)];
 			r.nextBytes(bytes);
@@ -37,14 +37,14 @@ public class Murmur3_32HashTest extends TestCase {
 			assertEquals(h1, h2);
 		}
 	}
-	
+
 	private static class ByteStreamer implements HashStreamer<byte[]> {
-		
+
 		@Override
 		public void stream(byte[] value, WriteStream stream) {
 			stream.writeBytes(value);
 		}
-		
+
 	}
-	
+
 }

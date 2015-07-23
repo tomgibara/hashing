@@ -5,12 +5,12 @@ import java.math.BigInteger;
 final class BigHashValue extends AbstractHashValue {
 
 	private final BigInteger bigValue;
-	
+
 	public BigHashValue(BigInteger bigValue) {
 		if (bigValue == null) throw new IllegalArgumentException("null bigValue");
 		this.bigValue = bigValue;
 	}
-	
+
 	@Override
 	public int intValue() {
 		return bigValue.intValueExact();
@@ -25,5 +25,5 @@ final class BigHashValue extends AbstractHashValue {
 	public BigInteger bigValue() {
 		return bigValue;
 	}
-	
+
 }

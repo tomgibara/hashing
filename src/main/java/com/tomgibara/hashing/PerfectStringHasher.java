@@ -1,6 +1,6 @@
 /*
  * Copyright 2010 Tom Gibara
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 package com.tomgibara.hashing;
 
@@ -28,7 +28,7 @@ import java.util.Comparator;
  * array. A negative has value will typically be returned for a string that is
  * not in the array.
  * </p>
- * 
+ *
  * <p>
  * However, the supplied array is <em>not</em> retained. This means that the
  * implementation cannot necessarily confirm that a string is not in the
@@ -37,35 +37,35 @@ import java.util.Comparator;
  * circumstances will a hash value be returned that is greater than or equal to
  * <em>n</em>.
  * </p>
- * 
+ *
  * <p>
  * <strong>IMPORTANT NOTE:<strong> The array of strings supplied to the
  * constructor will be mutated: it is re-ordered so that
  * <code>hash(a[i]) == i</code>. Application code must generally use this
  * information to map hash values back onto the appropriate string value.
  * </p>
- * 
+ *
  * <p>
  * <strong>NOTE:<strong> Good performance of this algorithm is predicated on
  * string hash values being cached by the <code>String</code> class. Experience
  * indicates that is is a good assumption.
  * </p>
- * 
- * 
+ *
+ *
  * @author Tom Gibara
  */
 
 class PerfectStringHasher implements Hasher<String> {
 
 	// statics
-	
+
 	/**
 	 * Comparator used to order the supplied string array. Hashcodes take
 	 * priority, we will do a binary search on those. Otherwise, lengths take
 	 * priority over character ordering because the hash algorithm prefers to
 	 * compare lengths, it's faster.
 	 */
-	
+
 	private static final Comparator<String> comparator = new Comparator<String>() {
 		@Override
 		public int compare(String s1, String s2) {
@@ -82,7 +82,7 @@ class PerfectStringHasher implements Hasher<String> {
 	/**
 	 * Builds a (typically v. small) decision tree for distinguishing strings
 	 * that share the same hash value.
-	 * 
+	 *
 	 * @param values
 	 *            the string values to distinguish
 	 * @param start
@@ -145,58 +145,58 @@ class PerfectStringHasher implements Hasher<String> {
 			}
 		}
 	}
-	
+
 	// fields
-	
+
 	/**
 	 * The hashcodes of the supplied strings.
 	 */
-	
+
 	private final int[] hashes;
-	
+
 	/**
 	 * Stores two ints for every string, an offset into the pivot array (-1 if
 	 * not necessary) and the depth of the decision tree that is rooted there.
 	 */
-	
+
 	private final int[] offsets;
-	
+
 	/**
 	 * Stores two ints for every decision, the index at which a character
 	 * comparison needs to be made, followed by the character value to be
 	 * compared against; or -1 to indicate a length comparison, followed by the
 	 * length to be compared against.
 	 */
-	
+
 	private final int[] pivots;
 
 	/**
 	 * Cache a size object which indicates the size of hash values generated.
 	 */
-	
+
 	private final HashSize size;
-	
+
 	/**
 	 * Constructs a minimal perfect string hashing over the supplied strings.
-	 * 
+	 *
 	 * @param values
 	 *            an array of unique non-null strings that will be reordered
 	 *            such that <code>hash(values[i]) == i</code>.
 	 */
-	
+
 	PerfectStringHasher(final String... values) {
 		final int length = values.length;
-		
+
 		final int[] hashes = new int[length];
 		final int[] offsets = new int[2 * length];
 		final int[] runLengths = new int[length];
-		
+
 		//sort values so that we can assume ordering by hashcode, length and char[]
 		Arrays.sort(values, comparator);
-		
+
 		//pull the hashcodes into an array for analysis
 		for (int i = 0; i < length; i++) hashes[i] = values[i].hashCode();
-		
+
 		//test for unique hashes
 		int offset = 0;
 		if (length > 1) {
@@ -241,48 +241,48 @@ class PerfectStringHasher implements Hasher<String> {
 		final int[] pivots = new int[offset * 2];
 		for (int i = 0; i < length;) {
 			final int runLength = runLengths[i];
-			if (runLength > 1)  generatePivots(values, i, runLength, pivots, (int) offsets[i << 1]);
+			if (runLength > 1)  generatePivots(values, i, runLength, pivots, offsets[i << 1]);
 			i += runLength;
 		}
-		
+
 		//setup our state
 		this.pivots = pivots;
 		this.offsets = offsets;
 		this.hashes = hashes;
 		this.size = new HashSize(length);
 	}
-	
+
 	// hash generator methods
-	
+
 	@Override
 	public HashSize getSize() {
 		return size;
 	}
-	
+
 	//TODO decide whether to throw an IAE if -1 is returned from hash
 	@Override
 	public int intHashValue(String value) {
 		return hash(value);
 	}
-	
+
 	@Override
 	public long longHashValue(String value) {
 		return hash(value);
 	}
-	
+
 	@Override
 	public BigInteger bigHashValue(String value) {
 		return BigInteger.valueOf(hash(value));
 	}
-	
+
 	@Override
 	public HashValue hashValue(String value) {
 		return new IntHashValue(hash(value));
 	}
-	
+
 	/**
 	 * Generates a hashcode for the supplied string.
-	 * 
+	 *
 	 * @param value
 	 *            any string, not null
 	 * @return a minimal hashcode for the supplied string, or -1
@@ -296,7 +296,7 @@ class PerfectStringHasher implements Hasher<String> {
 
 		final int offset = offsets[index << 1];
 		if (offset == -1) return index;
-		
+
 		final int depth = pivots[(offset << 1)    ];
 		final int count = pivots[(offset << 1) + 1];
 		int i = 0;
@@ -317,5 +317,5 @@ class PerfectStringHasher implements Hasher<String> {
 		}
 		return i >= count ? -1 : index + i - offsets[(index << 1) + 1];
 	}
-	
+
 }

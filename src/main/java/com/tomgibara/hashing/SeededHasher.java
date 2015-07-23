@@ -10,7 +10,7 @@ class SeededHasher<S extends WriteStream,T> extends StandardHasher<S,T> {
 		super(hash, streamer);
 		this.seed = seed;
 	}
-	
+
 	@Override
 	S newStream() {
 		S stream = super.newStream();

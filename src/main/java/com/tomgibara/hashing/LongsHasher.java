@@ -1,6 +1,6 @@
 /*
  * Copyright 2015 Tom Gibara, Benjamin Manes
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 package com.tomgibara.hashing;
 
@@ -27,29 +27,29 @@ class LongsHasher<T> implements Hasher<T> {
 		hashCode ^= hashCode >> 47;
 		return hashCode;
 	}
-	
+
 	private final Hasher<T> hasher;
 
 	public LongsHasher(Hasher<T> hasher) {
 		hasher = hasher.sized(HashSize.LONG_SIZE);
 		this.hasher = hasher;
 	}
-	
+
 	@Override
 	public HashSize getSize() {
 		return HashSize.LONG_SIZE;
 	}
-	
+
 	@Override
 	public int getQuantity() {
 		return Integer.MAX_VALUE;
 	}
-	
+
 	@Override
 	public HashValue hashValue(T value) {
 		return new MultiHashValue(hasher.hashValue(value).intValue());
 	}
-	
+
 	private final static class MultiHashValue extends AbstractHashValue {
 
 		private final long probe;
@@ -96,7 +96,7 @@ class LongsHasher<T> implements Hasher<T> {
 	public int hashCode() {
 		return hasher.hashCode();
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) return true;
@@ -104,5 +104,5 @@ class LongsHasher<T> implements Hasher<T> {
 		LongsHasher<?> that = (LongsHasher<?>) obj;
 		return this.hasher.equals(that.hasher);
 	}
-	
+
 }

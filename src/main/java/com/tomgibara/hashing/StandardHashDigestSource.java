@@ -15,13 +15,13 @@ class StandardHashDigestSource implements HashDigestSource {
 			return false;
 		}
 	}
-	
+
 	private static int lengthInBytes(MessageDigest digest) {
 		int length = digest.getDigestLength();
 		if (length < 1) throw new IllegalArgumentException("digest length unknown");
 		return length;
 	}
-	
+
 	private static HashDigestSource getDigestSource(String algorithm) {
 		try {
 			return new StandardHashDigestSource(algorithm);
@@ -30,7 +30,7 @@ class StandardHashDigestSource implements HashDigestSource {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	private static HashDigestSource sha1 = null;
 
 	static HashDigestSource SHA1() { return sha1 == null ? sha1 = getDigestSource("SHA1") : sha1; }
@@ -56,7 +56,7 @@ class StandardHashDigestSource implements HashDigestSource {
 		size = HashSize.fromByteLength( lengthInBytes(digest) );
 		this.digest = isCloneable(digest) ? digest : null;
 	}
-	
+
 	@Override
 	public MessageDigest newDigest() {
 		if (digest == null) {
@@ -74,7 +74,7 @@ class StandardHashDigestSource implements HashDigestSource {
 			}
 		}
 	}
-	
+
 	@Override
 	public Hash<?> asHash() {
 		return new DigestHash(this);

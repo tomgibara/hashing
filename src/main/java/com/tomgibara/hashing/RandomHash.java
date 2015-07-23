@@ -15,7 +15,7 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 
 	private enum Type {
 		INT, FULL_INT, LONG, LONG_BITS, FULL_LONG, BIG_BITS, BIG;
-		
+
 		static Type from(HashSize size) {
 			if (size.isIntSized()) return INT;
 			int bits = size.getBits();
@@ -29,14 +29,14 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 			return BIG;
 		}
 	}
-	
+
 	private final String algorithm;
 	private final String provider;
 	private final HashSize size;
 	private final Type type;
 
 	// constructors
-	
+
 	RandomHash(String algorithm, String provider, HashSize size) {
 		this.algorithm = algorithm;
 		this.provider = provider;
@@ -45,7 +45,7 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 		//verify algorithm exists
 		if (algorithm != null) newRandom();
 	}
-	
+
 	@Override
 	public SeedingStream newStream() {
 		if (algorithm == null) {
@@ -54,12 +54,12 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 			return new BytesSeedingStream(newRandom());
 		}
 	}
-	
+
 	@Override
 	public HashSize getSize() {
 		return size;
 	}
-	
+
 	@Override
 	public HashValue hashValue(SeedingStream value) {
 		final Random random = value.getRandom();
@@ -93,7 +93,7 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 					default: throw new IllegalStateException();
 				}
 			}
-			
+
 			@Override
 			public long longValue() {
 				switch (type) {
@@ -117,7 +117,7 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 					default: throw new IllegalStateException();
 				}
 			}
-			
+
 			@Override
 			public BigInteger bigValue() {
 				switch (type) {
@@ -138,9 +138,9 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 			}
 		};
 	}
-	
+
 	// private methods
-	
+
 	private SecureRandom newRandom() {
 		try {
 			return provider == null ? SecureRandom.getInstance(algorithm) : SecureRandom.getInstance(algorithm, provider);
@@ -150,13 +150,13 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	// inner classes
-	
+
 	interface SeedingStream extends WriteStream {
-		
+
 		Random getRandom();
-		
+
 	}
 
 	private static class LongSeedingStream extends AbstractWriteStream implements SeedingStream {
@@ -167,7 +167,7 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 		LongSeedingStream(Random random) {
 			this.random = random;
 		}
-		
+
 		@Override
 		public void writeByte(byte v) {
 			seed = seed * 31 + v & 0xff;
@@ -182,7 +182,7 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 		public void writeShort(short v) {
 			seed = seed * 31 + v & 0xffff;
 		}
-		
+
 		@Override
 		public void writeInt(int v) {
 			seed = seed * 31 + v & 0xffffffffL;
@@ -192,7 +192,7 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 		public void writeLong(long v) {
 			seed = seed * 31 + v;
 		}
-		
+
 		@Override
 		public Random getRandom() {
 			random.setSeed(seed);
@@ -200,21 +200,21 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 		}
 
 	}
-	
+
 	private static class BytesSeedingStream extends WrappedWriteStream<ByteWriteStream> implements SeedingStream {
-		
+
 		private final SecureRandom random;
-		
+
 		BytesSeedingStream(SecureRandom random) {
 			super(new ByteWriteStream());
 			this.random = random;
 		}
-		
+
 		@Override
 		public Random getRandom() {
 			random.setSeed(wrapped.getBytes());
 			return random;
 		}
-		
+
 	}
 }
