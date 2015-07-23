@@ -1,30 +1,27 @@
 package com.tomgibara.hashing;
 
+import java.math.BigInteger;
+
 import com.tomgibara.streams.AbstractWriteStream;
 
 // See http://smhasher.googlecode.com/svn/trunk/MurmurHash3.cpp
 // based on http://guava-libraries.googlecode.com/git/guava/src/com/google/common/hash/Murmur3_32HashFunction.java
 
-public class Murmur3_32Hash<T> extends AbstractHash<T> {
+final class MurmurIntHash implements Hash<MurmurIntHash.MurmurStream> {
 
 	static final int c1 = 0xcc9e2d51;
 	static final int c2 = 0x1b873593;
 
-	private final HashStreamer<T> source;
+	private static MurmurIntHash instance = new MurmurIntHash(0);
+
+	static MurmurIntHash instance() { return instance; }
+
+	static MurmurIntHash instance(int seed) { return seed == 0 ? instance : new MurmurIntHash(seed); }
+
 	private final int seed;
 	
-	public Murmur3_32Hash(HashStreamer<T> source) {
-		this(source, 0);
-	}
-	
-	public Murmur3_32Hash(HashStreamer<T> source, int seed) {
-		if (source == null) throw new IllegalArgumentException("null source");
-		this.source = source;
+	private MurmurIntHash(int seed) {
 		this.seed = seed;
-	}
-	
-	public int getSeed() {
-		return seed;
 	}
 	
 	@Override
@@ -33,31 +30,44 @@ public class Murmur3_32Hash<T> extends AbstractHash<T> {
 	}
 	
 	@Override
-	public int intHashValue(T value) {
-		MurmurStream stream = new MurmurStream();
-		stream.reset(seed);
-		source.stream(value, stream);
-		return stream.hash();
+	public MurmurStream newStream() {
+		return new MurmurStream(seed);
 	}
 	
 	@Override
-	public long longHashValue(T value) {
-		return intHashValue(value) & 0xffffffffL;
+	public int intHashValue(MurmurStream s) {
+		return s.hash();
+	}
+	
+	@Override
+	public long longHashValue(MurmurStream s) {
+		return s.hash();
+	}
+	
+	@Override
+	public BigInteger bigHashValue(MurmurStream s) {
+		return BigInteger.valueOf(s.hash());
+	}
+	
+	@Override
+	public HashValue hashValue(MurmurStream s) {
+		return new IntHashValue(s.hash());
 	}
 	
 	// inner classes 
 	
-	private static class MurmurStream extends AbstractWriteStream {
+	static class MurmurStream extends AbstractWriteStream {
 		
 		private int k1;
 		private int h1;
 		private int len;
 		
-		void reset(int seed) {
+		MurmurStream(int seed) {
+			k1 = 0;
 			h1 = seed;
 			len = 0;
 		}
-
+		
 		@Override
 		public void writeByte(byte v) {
 			k1 = (v << 24) | (k1 >>> 8);

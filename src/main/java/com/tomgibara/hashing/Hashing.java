@@ -12,6 +12,14 @@ public interface Hashing<T> {
 		return JavaHasher.identity();
 	}
 	
+	static Hash<?> murmur3Int() {
+		return MurmurIntHash.instance();
+	}
+	
+	static Hash<?> murmur3Int(int seed) {
+		return MurmurIntHash.instance(seed);
+	}
+	
 	HashRange getRange();
 	
 	default int getQuantity() {

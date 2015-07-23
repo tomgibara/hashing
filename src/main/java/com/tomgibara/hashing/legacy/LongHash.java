@@ -14,9 +14,10 @@
  * limitations under the License.
  * 
  */
-package com.tomgibara.hashing;
+package com.tomgibara.hashing.legacy;
 
-import com.tomgibara.hashing.legacy.CondensingWriteStream;
+import com.tomgibara.hashing.HashRange;
+import com.tomgibara.hashing.HashStreamer;
 
 /**
  * Hashes objects into the full range of longs, rather than Java's more limited
