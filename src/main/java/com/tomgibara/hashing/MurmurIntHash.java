@@ -41,12 +41,12 @@ final class MurmurIntHash implements Hash<MurmurIntHash.MurmurStream> {
 	
 	@Override
 	public long longHashValue(MurmurStream s) {
-		return s.hash();
+		return s.hash() & 0xffffffffL;
 	}
 	
 	@Override
 	public BigInteger bigHashValue(MurmurStream s) {
-		return BigInteger.valueOf(s.hash());
+		return BigInteger.valueOf(longHashValue(s));
 	}
 	
 	@Override
