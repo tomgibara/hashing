@@ -1,11 +1,9 @@
 package com.tomgibara.hashing;
 
-import junit.framework.TestCase;
 
-public class TestDistinctHasher extends TestCase {
+public class TestDistinctHasher extends HashingTest {
 
-	public void testObjectHash() {
-
+	public void testDistinct() {
 		Hasher<Object> hasher = Hashing.identityHasher().distinct(3, HashSize.fromIntSize(1000));
 		int[] ints = new int[3];
 		for (int i = 0; i < 100000; i++) {
@@ -18,7 +16,15 @@ public class TestDistinctHasher extends TestCase {
 			assertFalse(value.hasNext());
 			checkDistinct3(ints);
 		}
-
+	}
+	
+	public void testCorrectlySized() {
+		Hasher<Object> hasher = Hashing.identityHasher().distinct(3, HashSize.fromIntSize(1000));
+		for (int i = 0; i < 1000; i++) {
+			testCorrectlySizedInts(hasher.hashValue(i), hasher.getSize(), 3);
+			testCorrectlySizedLongs(hasher.hashValue(i), hasher.getSize(), 3);
+			testCorrectlySizedBigs(hasher.hashValue(i), hasher.getSize(), 3);
+		}
 	}
 
 	private void checkDistinct3(int[] ints) {

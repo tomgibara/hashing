@@ -16,9 +16,15 @@
  */
 package com.tomgibara.hashing;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+
 import junit.framework.TestCase;
 
-public class PerfectStringHashTest extends TestCase {
+public class PerfectStringHashTest extends HashingTest {
 
 //	//TODO can't readily support because of inclusive ranges of HashRange - need to resolve this issue
 //	public void disabledTestEmpty() {
@@ -72,6 +78,41 @@ public class PerfectStringHashTest extends TestCase {
 			fail();
 		} catch (IllegalArgumentException e) {
 			//expected
+		}
+	}
+	
+	public void testCorrectlySized() {
+		Random r = new Random(0);
+		for (int i = 0; i < 100; i++) {
+			int s = 1 + r.nextInt(1000);
+			testCorrectlySized(s);
+		}
+	}
+
+	private void testCorrectlySized(int s) {
+		// create s distinct random strings
+		Random r = new Random(s);
+		Set<String> set = new HashSet<String>();
+		List<String> list = new ArrayList<String>(s);
+		for (int i = 0; i < s; i++) {
+			while (true) {
+				String str = Integer.toString( r.nextInt(1000000) );
+				if (set.add(str)) {
+					list.add(str);
+					break;
+				}
+			}
+		}
+		// create a hasher from them
+		String[] strs = (String[]) list.toArray(new String[list.size()]);
+		Hasher<String> hasher = Hashing.perfect(strs);
+		//test the values
+		HashSize size = hasher.getSize();
+		for (int i = 0; i < strs.length; i++) {
+			String str = strs[i];
+			testCorrectlySizedInts(hasher.hashValue(str), size, 1);
+			testCorrectlySizedLongs(hasher.hashValue(str), size, 1);
+			testCorrectlySizedBigs(hasher.hashValue(str), size, 1);
 		}
 	}
 

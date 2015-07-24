@@ -7,11 +7,11 @@ import com.tomgibara.streams.WriteStream;
 
 import junit.framework.TestCase;
 
-public class Murmur3_32HashTest extends TestCase {
+public class Murmur3IntHashTest extends HashingTest {
 
 	public void testMatchesGuava() {
 		Random r = new Random(0L);
-		Hasher<byte[]> hasher = Hashing.murmur3Int().hasher(new ByteStreamer());
+		Hasher<byte[]> hasher = Hashing.murmur3Int().hasher((bs, s) -> s.writeBytes(bs));
 		HashFunction hash = com.google.common.hash.Hashing.murmur3_32();
 
 		// test empty
@@ -38,13 +38,13 @@ public class Murmur3_32HashTest extends TestCase {
 		}
 	}
 
-	private static class ByteStreamer implements HashStreamer<byte[]> {
-
-		@Override
-		public void stream(byte[] value, WriteStream stream) {
-			stream.writeBytes(value);
+	public void testCorrectlySized() {
+		Hasher<Integer> hasher = Hashing.murmur3Int().hasher((i, s) -> s.writeInt(i));
+		HashSize size = hasher.getSize();
+		for (int i = 0; i < 1000; i++) {
+			testCorrectlySizedInts(hasher.hashValue(i), size, 1);
+			testCorrectlySizedLongs(hasher.hashValue(i), size, 1);
+			testCorrectlySizedBigs(hasher.hashValue(i), size, 1);
 		}
-
 	}
-
 }

@@ -17,12 +17,12 @@ final class IntHashValue extends AbstractHashValue {
 
 	@Override
 	public long longValue() {
-		return intValue;
+		return intValue & 0xffffffffL;
 	}
 
 	@Override
 	public BigInteger bigValue() {
-		return BigInteger.valueOf(intValue);
+		return BigInteger.valueOf(longValue());
 	}
 
 	@Override

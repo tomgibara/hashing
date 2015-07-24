@@ -20,9 +20,7 @@ import java.math.BigInteger;
 
 import com.tomgibara.streams.WriteStream;
 
-import junit.framework.TestCase;
-
-public class RandomHashTest extends TestCase {
+public class RandomHashTest extends HashingTest {
 
 	private static final HashStreamer<Integer> streamer = new HashStreamer<Integer>() {
 
@@ -50,36 +48,9 @@ public class RandomHashTest extends TestCase {
 		final BigInteger s = hasher.getSize().getSize();
 		for (int i = 0; i < 10000; i++) {
 			HashValue h = hasher.hashValue(i);
-			// test ints
-			int[] ints = new int[quantity];
-			for (int j = 0; j < quantity; j++) {
-				ints[j] = h.intValue();
-			}
-			for (int j = 0; j < quantity; j++) {
-				BigInteger big = BigInteger.valueOf(ints[j] & 0xffffffffL);
-				assertTrue(big.compareTo(s) < 0);
-				assertTrue(big.signum() >= 0);
-			}
-			// test longs
-			long[] longs = new long[quantity];
-			for (int j = 0; j < quantity; j++) {
-				longs[j] = h.longValue();
-			}
-			for (int j = 0; j < quantity; j++) {
-				BigInteger big = new BigInteger(Long.toUnsignedString(longs[j]));
-				assertTrue(big.compareTo(s) < 0);
-				assertTrue(big.signum() >= 0);
-			}
-			// test bigs
-			BigInteger[] bigs = new BigInteger[quantity];
-			for (int j = 0; j < quantity; j++) {
-				bigs[j] = h.bigValue();
-			}
-			for (int j = 0; j < quantity; j++) {
-				BigInteger big = bigs[j];
-				assertTrue(big.compareTo(s) < 0);
-				assertTrue(big.signum() >= 0);
-			}
+			testCorrectlySizedInts(h, hasher.getSize(), quantity);
+			testCorrectlySizedLongs(h, hasher.getSize(), quantity);
+			testCorrectlySizedBigs(h, hasher.getSize(), quantity);
 			//TODO need to execute a statistical test for uniform distribution here
 		}
 	}
