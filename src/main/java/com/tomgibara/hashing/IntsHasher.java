@@ -79,7 +79,7 @@ class IntsHasher<T> implements Hasher<T> {
 
 		@Override
 		public int intValue() {
-			return h ^ i * probe;
+			return h ^ (i++) * probe;
 		}
 
 		@Override
@@ -90,12 +90,6 @@ class IntsHasher<T> implements Hasher<T> {
 		@Override
 		public BigInteger bigValue() {
 			return BigInteger.valueOf(intValue());
-		}
-
-		@Override
-		public MultiHashValue next() {
-			i++;
-			return this;
 		}
 
 		@Override

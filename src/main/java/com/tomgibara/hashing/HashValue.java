@@ -2,10 +2,9 @@ package com.tomgibara.hashing;
 
 import java.math.BigInteger;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 //TODO should note possible arithmetic exceptions
-public interface HashValue extends Iterator<HashValue> {
+public interface HashValue {
 
 	static HashValue fromInt(int intValue) { return new IntHashValue(intValue); }
 
@@ -28,14 +27,8 @@ public interface HashValue extends Iterator<HashValue> {
 		return bigValue().intValueExact();
 	}
 
-	@Override
 	default boolean hasNext() {
 		return false;
-	}
-
-	@Override
-	default HashValue next() {
-		throw new NoSuchElementException();
 	}
 
 }

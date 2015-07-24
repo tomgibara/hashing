@@ -35,13 +35,6 @@ final class IntsHashValue extends AbstractHashValue {
 		return index < intValues.length;
 	}
 
-	@Override
-	public HashValue next() {
-		checkIndex();
-		index ++;
-		return this;
-	}
-
 	private void checkIndex() {
 		if (index == intValues.length) throw new NoSuchElementException();
 	}

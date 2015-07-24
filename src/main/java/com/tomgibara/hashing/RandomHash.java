@@ -71,11 +71,6 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 			}
 
 			@Override
-			public HashValue next() {
-				return this;
-			}
-
-			@Override
 			public int intValue() {
 				switch (type) {
 				case INT:

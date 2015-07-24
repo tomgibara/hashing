@@ -71,18 +71,12 @@ class LongsHasher<T> implements Hasher<T> {
 
 		@Override
 		public long longValue() {
-			return h ^ i * probe;
+			return h ^ (i++) * probe;
 		}
 
 		@Override
 		public BigInteger bigValue() {
 			return BigInteger.valueOf(longValue());
-		}
-
-		@Override
-		public MultiHashValue next() {
-			i++;
-			return this;
 		}
 
 		@Override
