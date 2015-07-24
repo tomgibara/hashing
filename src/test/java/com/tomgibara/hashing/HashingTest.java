@@ -1,6 +1,7 @@
 package com.tomgibara.hashing;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 
 import junit.framework.TestCase;
 
@@ -44,6 +45,20 @@ public abstract class HashingTest extends TestCase {
 			BigInteger big = bigs[j];
 			assertTrue(big + " < " + s, big.compareTo(s) < 0);
 			assertTrue(big + " +ve", big.signum() >= 0);
+		}
+	}
+	
+	void testDistribution(int... values) {
+		int[] counts = new int[32];
+		for (int value : values) {
+			for (int i = 0; i < 32; i++) {
+				if ((value & (1 << i)) != 0) counts[i]++;
+			}
+		}
+		int expected = values.length / 2;
+		int bound = values.length / 20;
+		for (int i = 0; i < counts.length; i++) {
+			assert(Math.abs(counts[i] - expected) <= bound);
 		}
 	}
 }
