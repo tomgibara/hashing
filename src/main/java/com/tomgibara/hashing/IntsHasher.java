@@ -32,7 +32,7 @@ import java.math.BigInteger;
  *            the type of objects for which hashes will be generated
  */
 
-class IntsHasher<T> implements Hasher<T> {
+final class IntsHasher<T> implements Hasher<T> {
 
 	private static int spread(int hashCode) {
 		// Spread bits using variant of single-word Wang/Jenkins hash
@@ -46,7 +46,7 @@ class IntsHasher<T> implements Hasher<T> {
 
 	private final Hasher<T> hasher;
 
-	public IntsHasher(Hasher<T> hasher) {
+	IntsHasher(Hasher<T> hasher) {
 		hasher = hasher.sized(HashSize.INT_SIZE);
 		this.hasher = hasher;
 	}

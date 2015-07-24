@@ -65,6 +65,18 @@ public final class HashSize implements Comparable<HashSize> {
 		}
 	}
 
+	public static HashSize fromBitLength(int bitLength) {
+		if (bitLength <= 0) throw new IllegalArgumentException("non-positive bit length");
+		switch (bitLength) {
+		case  8: return BYTE_SIZE;
+		case 16: return SHORT_SIZE;
+		case 32: return INT_SIZE;
+		case 64: return LONG_SIZE;
+		default:
+			return new HashSize(BigInteger.ONE.shiftLeft(bitLength));
+		}
+	}
+
 	public static HashSize fromBigSize(BigInteger size) {
 		if (size == null) throw new IllegalArgumentException("null size");
 		if (size.signum() <= 0) throw new IllegalArgumentException("non-positive size");

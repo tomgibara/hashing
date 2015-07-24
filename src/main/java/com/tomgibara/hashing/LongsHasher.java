@@ -18,7 +18,7 @@ package com.tomgibara.hashing;
 
 import java.math.BigInteger;
 
-class LongsHasher<T> implements Hasher<T> {
+final class LongsHasher<T> implements Hasher<T> {
 
 	//https://code.google.com/p/fast-hash/
 	private static long spread(long hashCode) {
@@ -30,7 +30,7 @@ class LongsHasher<T> implements Hasher<T> {
 
 	private final Hasher<T> hasher;
 
-	public LongsHasher(Hasher<T> hasher) {
+	LongsHasher(Hasher<T> hasher) {
 		hasher = hasher.sized(HashSize.LONG_SIZE);
 		this.hasher = hasher;
 	}
