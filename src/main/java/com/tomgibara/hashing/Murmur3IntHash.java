@@ -7,20 +7,20 @@ import com.tomgibara.streams.AbstractWriteStream;
 // See http://smhasher.googlecode.com/svn/trunk/MurmurHash3.cpp
 // based on http://guava-libraries.googlecode.com/git/guava/src/com/google/common/hash/Murmur3_32HashFunction.java
 
-final class MurmurIntHash implements Hash<MurmurIntHash.MurmurStream> {
+final class Murmur3IntHash implements Hash<Murmur3IntHash.MurmurStream> {
 
 	static final int c1 = 0xcc9e2d51;
 	static final int c2 = 0x1b873593;
 
-	private static MurmurIntHash instance = new MurmurIntHash(0);
+	private static Murmur3IntHash instance = new Murmur3IntHash(0);
 
-	static MurmurIntHash instance() { return instance; }
+	static Murmur3IntHash instance() { return instance; }
 
-	static MurmurIntHash instance(int seed) { return seed == 0 ? instance : new MurmurIntHash(seed); }
+	static Murmur3IntHash instance(int seed) { return seed == 0 ? instance : new Murmur3IntHash(seed); }
 
 	private final int seed;
 
-	private MurmurIntHash(int seed) {
+	private Murmur3IntHash(int seed) {
 		this.seed = seed;
 	}
 

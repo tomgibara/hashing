@@ -13,11 +13,11 @@ public interface Hashing<T> {
 	}
 
 	static Hash<?> murmur3Int() {
-		return MurmurIntHash.instance();
+		return Murmur3IntHash.instance();
 	}
 
 	static Hash<?> murmur3Int(int seed) {
-		return MurmurIntHash.instance(seed);
+		return Murmur3IntHash.instance(seed);
 	}
 
 	static Hash<?> prng(HashSize size) {
