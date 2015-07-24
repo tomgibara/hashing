@@ -17,6 +17,7 @@
 package com.tomgibara.hashing;
 
 import java.math.BigInteger;
+import java.util.Random;
 
 import com.tomgibara.streams.WriteStream;
 
@@ -30,28 +31,46 @@ public class RandomHashTest extends HashingTest {
 		}
 	};
 
-	public void testBasic() throws Exception {
-		test(HashSize.fromIntSize(50), 10);
-		test(HashSize.fromLongSize(1L << 48), 10);
-		test(HashSize.fromLongSize(0x51de5add1eL), 10);
-		test(HashSize.fromBigSize(BigInteger.ONE.shiftLeft(175)), 10);
-		test(HashSize.fromBigSize(new BigInteger("237497854858736458783445")), 10);
+	public void testSize() throws Exception {
+		testSize(HashSize.fromIntSize(50));
+		testSize(HashSize.fromLongSize(1L << 48));
+		testSize(HashSize.fromLongSize(0x51de5add1eL));
+		testSize(HashSize.fromBigSize(BigInteger.ONE.shiftLeft(175)));
+		testSize(HashSize.fromBigSize(new BigInteger("237497854858736458783445")));
 	}
 
-	private void test(HashSize size, int quantity) {
-		test(Hashing.prng(size), 10);
-		test(Hashing.prng("SHA1PRNG", size), 10);
+	private void testSize(HashSize size) {
+		testSize(Hashing.prng(size));
+		testSize(Hashing.prng("SHA1PRNG", size));
 	}
 
-	private void test(Hash<?> hash, int quantity) {
+	private void testSize(Hash<?> hash) {
+		int quantity = 10;
 		Hasher<Integer> hasher = hash.hasher(streamer);
-		final BigInteger s = hasher.getSize().getSize();
-		for (int i = 0; i < 10000; i++) {
+		final HashSize s = hasher.getSize();
+		for (int i = 0; i < 1000; i++) {
 			HashValue h = hasher.hashValue(i);
-			testCorrectlySizedInts(h, hasher.getSize(), quantity);
-			testCorrectlySizedLongs(h, hasher.getSize(), quantity);
-			testCorrectlySizedBigs(h, hasher.getSize(), quantity);
-			//TODO need to execute a statistical test for uniform distribution here
+			testCorrectlySizedInts(h, s, quantity);
+			testCorrectlySizedLongs(h, s, quantity);
+			testCorrectlySizedBigs(h, s, quantity);
+		}
+	}
+	
+	public void testDistribution() {
+		testDistribution(Hashing.prng(HashSize.INT_SIZE));
+		testDistribution(Hashing.prng("SHA1PRNG", HashSize.INT_SIZE));
+	}
+
+	private void testDistribution(Hash<?> hash) {
+		Hasher<Integer> hasher = hash.hasher(streamer);
+		Random r = new Random(0L);
+		int[] ints = new int[10000];
+		for (int i = 0; i < 50; i++) {
+			HashValue value = hasher.hashValue(r.nextInt());
+			for (int j = 0; j < ints.length; j++) {
+				ints[j] = value.intValue();
+			}
+			testDistribution(ints);
 		}
 	}
 }

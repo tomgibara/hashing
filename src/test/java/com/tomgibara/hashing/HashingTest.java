@@ -56,6 +56,7 @@ public abstract class HashingTest extends TestCase {
 			}
 		}
 		int expected = values.length / 2;
+		//TODO this is terrible - must put an improved bound here
 		int bound = values.length / 20;
 		for (int i = 0; i < counts.length; i++) {
 			assert(Math.abs(counts[i] - expected) <= bound);

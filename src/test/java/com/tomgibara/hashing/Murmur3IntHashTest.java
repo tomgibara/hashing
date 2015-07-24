@@ -50,13 +50,6 @@ public class Murmur3IntHashTest extends HashingTest {
 	
 	public void testDistribution() {
 		Hasher<Integer> hasher = Hashing.murmur3Int().hasher((i, s) -> s.writeInt(i));
-//		for (int i = 0; i < 100; i++) {
-//			int[] ints = new int[1000];
-//			for (int j = 0; j < ints.length; j++) {
-//				ints[j] = hasher.intHashValue(i);
-//			}
-//			testDistribution(ints);
-//		}
 		int[] ints = new int[10000];
 		for (int i = 0; i < ints.length; i++) {
 			ints[i] = hasher.intHashValue(i);
