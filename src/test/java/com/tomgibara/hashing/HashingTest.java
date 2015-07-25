@@ -19,7 +19,7 @@ public abstract class HashingTest extends TestCase {
 			assertTrue(big + " +ve", big.signum() >= 0);
 		}
 	}
-	
+
 	void testCorrectlySizedLongs(HashValue value, HashSize size, int quantity) {
 		BigInteger s = size.asBig();
 		// test longs
@@ -46,7 +46,7 @@ public abstract class HashingTest extends TestCase {
 			assertTrue(big + " +ve", big.signum() >= 0);
 		}
 	}
-	
+
 	void testDistribution(int... values) {
 		int[] counts = new int[32];
 		for (int value : values) {
@@ -61,7 +61,7 @@ public abstract class HashingTest extends TestCase {
 			assert(Math.abs(counts[i] - expected) <= bound);
 		}
 	}
-	
+
 	<T> void testConsistent(Hasher<T> hasher, T obj) {
 		BigInteger bigValue = hasher.bigHashValue(obj);
 		long longValue = hasher.longHashValue(obj);

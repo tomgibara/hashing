@@ -174,7 +174,7 @@ public final class HashSize implements Comparable<HashSize> {
 	public boolean isIntCapacity() {
 		return intCapacity;
 	}
-	
+
 	public int asInt() {
 		if (!intSized) throw new ArithmeticException("not int sized");
 		return intSize;

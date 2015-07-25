@@ -19,7 +19,7 @@ public class TestDistinctHasher extends HashingTest {
 			checkDistinct3(ints);
 		}
 	}
-	
+
 	public void testCorrectlySized() {
 		Hasher<Object> hasher = Hashing.identityHasher().distinct(3, HashSize.fromInt(1000));
 		for (int i = 0; i < 1000; i++) {

@@ -30,7 +30,7 @@ public class PerfectStringHashTest extends HashingTest {
 //		Hasher<String> hash = Hashing.perfect();
 //		assertTrue( hash.intHashValue("X") < 0 );
 //	}
-	
+
 	// create s distinct random strings
 	private static String[] uniqueStrings(int s) {
 		Random r = new Random(s);
@@ -95,7 +95,7 @@ public class PerfectStringHashTest extends HashingTest {
 			//expected
 		}
 	}
-	
+
 	public void testCorrectlySized() {
 		Random r = new Random(0);
 		for (int i = 0; i < 100; i++) {
@@ -116,7 +116,7 @@ public class PerfectStringHashTest extends HashingTest {
 			testCorrectlySizedBigs(hasher.hashValue(str), size, 1);
 		}
 	}
-	
+
 	public void testConsistent() {
 		String[] strs = uniqueStrings(1000);
 		Hasher<String> hasher = Hashing.perfect(strs);

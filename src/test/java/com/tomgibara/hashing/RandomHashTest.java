@@ -55,7 +55,7 @@ public class RandomHashTest extends HashingTest {
 			testCorrectlySizedBigs(h, s, quantity);
 		}
 	}
-	
+
 	public void testDistribution() {
 		testDistribution(Hashing.prng(HashSize.INT_SIZE));
 		testDistribution(Hashing.prng("SHA1PRNG", HashSize.INT_SIZE));
@@ -73,7 +73,7 @@ public class RandomHashTest extends HashingTest {
 			testDistribution(ints);
 		}
 	}
-	
+
 	public void testConsistent() {
 		testConsistent("");
 		testConsistent("SHA1PRNG");

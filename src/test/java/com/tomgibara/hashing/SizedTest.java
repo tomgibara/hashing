@@ -28,5 +28,5 @@ public class SizedTest extends HashingTest {
 			testCorrectlySizedBigs(value, size, 1000);
 		}
 	}
-	
+
 }

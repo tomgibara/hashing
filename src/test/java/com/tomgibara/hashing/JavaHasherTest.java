@@ -15,7 +15,7 @@ public class JavaHasherTest extends HashingTest {
 			testCorrectlySizedBigs(hasher.hashValue(str), size, 1);
 		}
 	}
-	
+
 	public void testIndentityCorrect() {
 		Hasher<String> hasher = Hashing.identityHasher();
 		HashSize size = hasher.getSize();
@@ -29,5 +29,5 @@ public class JavaHasherTest extends HashingTest {
 			testCorrectlySizedBigs(hasher.hashValue(str), size, 1);
 		}
 	}
-	
+
 }
