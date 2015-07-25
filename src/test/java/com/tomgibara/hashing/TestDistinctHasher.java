@@ -4,7 +4,7 @@ package com.tomgibara.hashing;
 public class TestDistinctHasher extends HashingTest {
 
 	public void testDistinct() {
-		Hasher<Object> hasher = Hashing.identityHasher().distinct(3, HashSize.fromIntSize(1000));
+		Hasher<Object> hasher = Hashing.identityHasher().distinct(3, HashSize.fromInt(1000));
 		int[] ints = new int[3];
 		for (int i = 0; i < 100000; i++) {
 			HashValue value = hasher.hashValue(i);
@@ -19,7 +19,7 @@ public class TestDistinctHasher extends HashingTest {
 	}
 	
 	public void testCorrectlySized() {
-		Hasher<Object> hasher = Hashing.identityHasher().distinct(3, HashSize.fromIntSize(1000));
+		Hasher<Object> hasher = Hashing.identityHasher().distinct(3, HashSize.fromInt(1000));
 		for (int i = 0; i < 1000; i++) {
 			testCorrectlySizedInts(hasher.hashValue(i), hasher.getSize(), 3);
 			testCorrectlySizedLongs(hasher.hashValue(i), hasher.getSize(), 3);

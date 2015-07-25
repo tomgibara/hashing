@@ -31,7 +31,7 @@ abstract class SizedHasher<T> implements Hasher<T> {
 		this.hashing = hashing;
 		this.newSize = newSize;
 		oldSize = hashing.getSize();
-		isSmaller = newSize.getSize().compareTo(oldSize.getSize()) < 0;
+		isSmaller = newSize.asBig().compareTo(oldSize.asBig()) < 0;
 	}
 
 	@Override

@@ -32,11 +32,11 @@ public class RandomHashTest extends HashingTest {
 	};
 
 	public void testSize() throws Exception {
-		testSize(HashSize.fromIntSize(50));
-		testSize(HashSize.fromLongSize(1L << 48));
-		testSize(HashSize.fromLongSize(0x51de5add1eL));
-		testSize(HashSize.fromBigSize(BigInteger.ONE.shiftLeft(175)));
-		testSize(HashSize.fromBigSize(new BigInteger("237497854858736458783445")));
+		testSize(HashSize.fromInt(50));
+		testSize(HashSize.fromLong(1L << 48));
+		testSize(HashSize.fromLong(0x51de5add1eL));
+		testSize(HashSize.fromBig(BigInteger.ONE.shiftLeft(175)));
+		testSize(HashSize.fromBig(new BigInteger("237497854858736458783445")));
 	}
 
 	private void testSize(HashSize size) {

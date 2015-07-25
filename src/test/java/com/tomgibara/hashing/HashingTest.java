@@ -8,7 +8,7 @@ import junit.framework.TestCase;
 public abstract class HashingTest extends TestCase {
 
 	void testCorrectlySizedInts(HashValue value, HashSize size, int quantity) {
-		BigInteger s = size.getSize();
+		BigInteger s = size.asBig();
 		// test ints
 		int[] ints = new int[quantity];
 		for (int j = 0; j < quantity; j++) {
@@ -22,7 +22,7 @@ public abstract class HashingTest extends TestCase {
 	}
 	
 	void testCorrectlySizedLongs(HashValue value, HashSize size, int quantity) {
-		BigInteger s = size.getSize();
+		BigInteger s = size.asBig();
 		// test longs
 		long[] longs = new long[quantity];
 		for (int j = 0; j < quantity; j++) {
@@ -36,7 +36,7 @@ public abstract class HashingTest extends TestCase {
 	}
 
 	void testCorrectlySizedBigs(HashValue value, HashSize size, int quantity) {
-		BigInteger s = size.getSize();
+		BigInteger s = size.asBig();
 		BigInteger[] bigs = new BigInteger[quantity];
 		for (int j = 0; j < quantity; j++) {
 			bigs[j] = value.bigValue();

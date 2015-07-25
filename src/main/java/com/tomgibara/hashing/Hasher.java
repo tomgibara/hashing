@@ -45,7 +45,7 @@ public interface Hasher<T> extends Hashing<T> {
 		if (quantity < 1) throw new IllegalArgumentException("non-positive quantity");
 		if (size == null) throw new IllegalArgumentException("null size");
 		if (!size.isIntSized()) throw new IllegalArgumentException("size not int sized");
-		if (quantity > size.getSize().intValue()) throw new IllegalArgumentException("quantity exceeds size of size");
+		if (quantity > size.asBig().intValue()) throw new IllegalArgumentException("quantity exceeds size of size");
 		return new DistinctHasher<>(size, quantity, this);
 	}
 

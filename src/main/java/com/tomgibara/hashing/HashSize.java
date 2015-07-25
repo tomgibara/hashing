@@ -53,6 +53,7 @@ public final class HashSize implements Comparable<HashSize> {
 	// has long capacity
 	public static final HashSize LONG_SIZE = new HashSize(BIG_ULONG);
 
+	// to call forXXX?
 	public static HashSize fromByteLength(int byteLength) {
 		if (byteLength <= 0) throw new IllegalArgumentException("non-positive byte length");
 		switch (byteLength) {
@@ -65,6 +66,7 @@ public final class HashSize implements Comparable<HashSize> {
 		}
 	}
 
+	// to call forXXX?
 	public static HashSize fromBitLength(int bitLength) {
 		if (bitLength <= 0) throw new IllegalArgumentException("non-positive bit length");
 		switch (bitLength) {
@@ -77,18 +79,18 @@ public final class HashSize implements Comparable<HashSize> {
 		}
 	}
 
-	public static HashSize fromBigSize(BigInteger size) {
+	public static HashSize fromBig(BigInteger size) {
 		if (size == null) throw new IllegalArgumentException("null size");
 		if (size.signum() <= 0) throw new IllegalArgumentException("non-positive size");
 		return new HashSize(size);
 	}
 
-	public static HashSize fromIntSize(int size) {
+	public static HashSize fromInt(int size) {
 		if (size == 0) return INT_SIZE;
 		return size > 0 ? new HashSize(size) : new HashSize(LONG_UINT - size);
 	}
 
-	public static HashSize fromLongSize(long size) {
+	public static HashSize fromLong(long size) {
 		if (size == 0L) return LONG_SIZE;
 		if (size > 0) return new HashSize(size);
 		return new HashSize(BIG_UINT.subtract(BigInteger.valueOf(size)));
@@ -97,7 +99,7 @@ public final class HashSize implements Comparable<HashSize> {
 	// fields
 	// masks only a valid mask if powerOfTwo and suitable capacity
 
-	private final BigInteger size;
+	private final BigInteger bigSize;
 	private final int bits;
 	private final boolean powerOfTwo;
 	private final BigInteger mask;
@@ -115,8 +117,7 @@ public final class HashSize implements Comparable<HashSize> {
 	// constructors
 
 	HashSize(BigInteger size) {
-		this.size = size;
-		//TODO is there a faster way than this?
+		bigSize = size;
 		BigInteger sizeMinusOne = size.subtract(BigInteger.ONE);
 		bits = sizeMinusOne.bitLength();
 		powerOfTwo = size.bitCount() == 1;
@@ -132,10 +133,10 @@ public final class HashSize implements Comparable<HashSize> {
 	}
 
 	HashSize(int size) {
-		this.size = BigInteger.valueOf(size);
+		bigSize = BigInteger.valueOf(size);
 		bits = 32 - Integer.numberOfLeadingZeros(size - 1);
 		powerOfTwo = Integer.highestOneBit(size) == size;
-		mask = (powerOfTwo ? this.size : BigInteger.ONE.shiftLeft(bits)).subtract(BigInteger.ONE);
+		mask = (powerOfTwo ? this.bigSize : BigInteger.ONE.shiftLeft(bits)).subtract(BigInteger.ONE);
 		intSized = true;
 		intCapacity = true;
 		intSize = size;
@@ -147,10 +148,10 @@ public final class HashSize implements Comparable<HashSize> {
 	}
 
 	HashSize(long size) {
-		this.size = BigInteger.valueOf(size);
+		bigSize = BigInteger.valueOf(size);
 		bits = 64 - Long.numberOfLeadingZeros(size - 1L);
 		powerOfTwo = Long.highestOneBit(size) == size;
-		mask = (powerOfTwo ? this.size : BigInteger.ONE.shiftLeft(bits)).subtract(BigInteger.ONE);
+		mask = (powerOfTwo ? this.bigSize : BigInteger.ONE.shiftLeft(bits)).subtract(BigInteger.ONE);
 		intSized = bits < 32;
 		intCapacity = bits <= 32;
 		intSize = (int) size;
@@ -163,8 +164,8 @@ public final class HashSize implements Comparable<HashSize> {
 
 	// accessors
 
-	public BigInteger getSize() {
-		return size;
+	public BigInteger asBig() {
+		return bigSize;
 	}
 
 	public int getBits() {
@@ -182,6 +183,11 @@ public final class HashSize implements Comparable<HashSize> {
 	public boolean isIntCapacity() {
 		return intCapacity;
 	}
+	
+	public int asInt() {
+		if (!intSized) throw new ArithmeticException("not int sized");
+		return intSize;
+	}
 
 	public boolean isLongSized() {
 		return longSized;
@@ -189,6 +195,11 @@ public final class HashSize implements Comparable<HashSize> {
 
 	public boolean isLongCapacity() {
 		return longCapacity;
+	}
+
+	public long asLong() {
+		if (!longSized) throw new ArithmeticException("not long sized");
+		return longSize;
 	}
 
 	// methods
@@ -204,18 +215,18 @@ public final class HashSize implements Comparable<HashSize> {
 		if (!longCapacity) return value;
 		if (powerOfTwo) return value & longMask;
 		if (longSized & value >= 0L) return value % longSize;
-		return BigInteger.valueOf(value).mod(size).longValue();
+		return BigInteger.valueOf(value).mod(bigSize).longValue();
 	}
 
 	public BigInteger mapBig(BigInteger value) {
-		return powerOfTwo ? value.and(mask) : value.mod(size);
+		return powerOfTwo ? value.and(mask) : value.mod(bigSize);
 	}
 
 	// comparable methods
 
 	@Override
 	public int compareTo(HashSize that) {
-		return this.size.compareTo(that.size);
+		return this.bigSize.compareTo(that.bigSize);
 	}
 
 	// object methods
@@ -225,17 +236,17 @@ public final class HashSize implements Comparable<HashSize> {
 		if (obj == this) return true;
 		if (!(obj instanceof HashSize)) return false;
 		HashSize that = (HashSize) obj;
-		return this.size.equals(that.size);
+		return this.bigSize.equals(that.bigSize);
 	}
 
 	@Override
 	public int hashCode() {
-		return size.hashCode();
+		return bigSize.hashCode();
 	}
 
 	@Override
 	public String toString() {
-		return size.toString();
+		return bigSize.toString();
 	}
 
 }
