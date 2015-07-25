@@ -1,5 +1,7 @@
 package com.tomgibara.hashing;
 
+import java.util.Random;
+
 
 public class TestDistinctHasher extends HashingTest {
 
@@ -32,6 +34,16 @@ public class TestDistinctHasher extends HashingTest {
 		if (ints[0] == ints[1]) fail("duplicate at 0 and 1");
 		if (ints[1] == ints[2]) fail("duplicate at 1 and 2");
 		if (ints[2] == ints[0]) fail("duplicate at 0 and 2");
+	}
+
+	public void testConsistent() {
+		Random r = new Random(0L);
+		for (int i = 1; i < 16; i++) {
+			Hasher<Object> hasher = Hashing.identityHasher().distinct(2, HashSize.fromInt(1 << i));
+			for (int j = 0; j < 100; j++) {
+				testConsistent(hasher,r.nextInt());
+			}
+		}
 	}
 
 }

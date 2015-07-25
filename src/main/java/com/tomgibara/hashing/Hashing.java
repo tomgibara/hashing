@@ -27,13 +27,16 @@ public interface Hashing<T> {
 
 	static Hash<?> prng(String algorithm, HashSize size) {
 		if (algorithm == null) throw new IllegalArgumentException("null algorithm");
+		if (algorithm.isEmpty()) throw new IllegalArgumentException("empty algorithm");
 		if (size == null) throw new IllegalArgumentException("null size");
 		return new RandomHash(algorithm, null, size);
 	}
 
 	static Hash<?> prng(String algorithm, String provider, HashSize size) {
 		if (algorithm == null) throw new IllegalArgumentException("null algorithm");
+		if (algorithm.isEmpty()) throw new IllegalArgumentException("empty algorithm");
 		if (provider == null) throw new IllegalArgumentException("null provider");
+		if (provider.isEmpty()) throw new IllegalArgumentException("empty provider");
 		if (size == null) throw new IllegalArgumentException("null size");
 		return new RandomHash(algorithm, provider, size);
 	}

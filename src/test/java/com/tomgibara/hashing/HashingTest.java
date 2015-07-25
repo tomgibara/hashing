@@ -61,4 +61,17 @@ public abstract class HashingTest extends TestCase {
 			assert(Math.abs(counts[i] - expected) <= bound);
 		}
 	}
+	
+	<T> void testConsistent(Hasher<T> hasher, T obj) {
+		BigInteger bigValue = hasher.bigHashValue(obj);
+		long longValue = hasher.longHashValue(obj);
+		int intValue = hasher.intHashValue(obj);
+
+		assertEquals(bigValue, hasher.hashValue(obj).bigValue());
+		assertEquals(longValue, hasher.hashValue(obj).longValue());
+		assertEquals(intValue, hasher.hashValue(obj).intValue());
+
+		assertEquals(longValue, hasher.hashValue(obj).bigValue().longValue());
+		assertEquals(intValue, hasher.hashValue(obj).bigValue().intValue());
+	}
 }

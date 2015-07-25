@@ -29,11 +29,11 @@ public final class HashSize implements Comparable<HashSize> {
 
 	// statics
 
-	private final static long LONG_UINT = 1L << 32;
-	private final static BigInteger BIG_BYTE = BigInteger.valueOf(256);
-	private final static BigInteger BIG_SHORT = BigInteger.valueOf(65536);
-	private final static BigInteger BIG_UINT = BigInteger.valueOf(LONG_UINT);
-	private final static BigInteger BIG_ULONG = BigInteger.ONE.shiftLeft(64);
+	final static long LONG_UINT = 1L << 32;
+	final static BigInteger BIG_BYTE = BigInteger.valueOf(256);
+	final static BigInteger BIG_SHORT = BigInteger.valueOf(65536);
+	final static BigInteger BIG_UINT = BigInteger.valueOf(LONG_UINT);
+	final static BigInteger BIG_ULONG = BigInteger.ONE.shiftLeft(64);
 
 	// has byte capacity
 	public static final HashSize BYTE_SIZE = new HashSize(BIG_BYTE);

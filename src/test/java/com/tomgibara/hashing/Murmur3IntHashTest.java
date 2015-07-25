@@ -53,4 +53,11 @@ public class Murmur3IntHashTest extends HashingTest {
 		}
 		testDistribution(ints);
 	}
+	
+	public void testConsistency() {
+		Hasher<Integer> hasher = Hashing.murmur3Int().hasher((i, s) -> s.writeInt(i));
+		for (int i = 0; i < 1000; i++) {
+			testConsistent(hasher, i);
+		}
+	}
 }

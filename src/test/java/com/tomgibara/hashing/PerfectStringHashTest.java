@@ -30,6 +30,23 @@ public class PerfectStringHashTest extends HashingTest {
 //		Hasher<String> hash = Hashing.perfect();
 //		assertTrue( hash.intHashValue("X") < 0 );
 //	}
+	
+	// create s distinct random strings
+	private static String[] uniqueStrings(int s) {
+		Random r = new Random(s);
+		Set<String> set = new HashSet<String>();
+		List<String> list = new ArrayList<String>(s);
+		for (int i = 0; i < s; i++) {
+			while (true) {
+				String str = Integer.toString( r.nextInt(1000000) );
+				if (set.add(str)) {
+					list.add(str);
+					break;
+				}
+			}
+		}
+		return (String[]) list.toArray(new String[list.size()]);
+	}
 
 	public void testOne() {
 		Hasher<String> hash = Hashing.perfect("a");
@@ -88,21 +105,7 @@ public class PerfectStringHashTest extends HashingTest {
 	}
 
 	private void testCorrectlySized(int s) {
-		// create s distinct random strings
-		Random r = new Random(s);
-		Set<String> set = new HashSet<String>();
-		List<String> list = new ArrayList<String>(s);
-		for (int i = 0; i < s; i++) {
-			while (true) {
-				String str = Integer.toString( r.nextInt(1000000) );
-				if (set.add(str)) {
-					list.add(str);
-					break;
-				}
-			}
-		}
-		// create a hasher from them
-		String[] strs = (String[]) list.toArray(new String[list.size()]);
+		String[] strs = uniqueStrings(s);
 		Hasher<String> hasher = Hashing.perfect(strs);
 		//test the values
 		HashSize size = hasher.getSize();
@@ -111,6 +114,14 @@ public class PerfectStringHashTest extends HashingTest {
 			testCorrectlySizedInts(hasher.hashValue(str), size, 1);
 			testCorrectlySizedLongs(hasher.hashValue(str), size, 1);
 			testCorrectlySizedBigs(hasher.hashValue(str), size, 1);
+		}
+	}
+	
+	public void testConsistent() {
+		String[] strs = uniqueStrings(1000);
+		Hasher<String> hasher = Hashing.perfect(strs);
+		for (int i = 0; i < strs.length; i++) {
+			testConsistent(hasher, strs[i]);
 		}
 	}
 

@@ -117,11 +117,12 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 				switch (type) {
 				case INT:
 				case FULL_INT:
-					return BigInteger.valueOf(intValue());
+					return BigInteger.valueOf(intValue() & 0xffffffffL);
 				case LONG:
 				case LONG_BITS:
-				case FULL_LONG:
 					return BigInteger.valueOf(longValue());
+				case FULL_LONG:
+					return HashSize.BIG_ULONG.add(BigInteger.valueOf(longValue()));
 				case BIG_BITS:
 					return new BigInteger(size.getBits(), random);
 				case BIG:
