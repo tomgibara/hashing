@@ -25,23 +25,14 @@ import java.math.BigInteger;
  *
  */
 
-//TODO add accessors for long and int sizes?
 public final class HashSize implements Comparable<HashSize> {
 
 	// statics
 
-//	private final static BigInteger INT_MINIMUM = BigInteger.valueOf(Integer.MIN_VALUE);
-//	private final static BigInteger INT_MAXIMUM = BigInteger.valueOf(Integer.MAX_VALUE);
-//	private final static BigInteger LONG_MINIMUM = BigInteger.valueOf(Long.MIN_VALUE);
-//	private final static BigInteger LONG_MAXIMUM = BigInteger.valueOf(Long.MAX_VALUE);
-
-	private final static long LONG_SINT = 1L << 31;
 	private final static long LONG_UINT = 1L << 32;
 	private final static BigInteger BIG_BYTE = BigInteger.valueOf(256);
 	private final static BigInteger BIG_SHORT = BigInteger.valueOf(65536);
-	private final static BigInteger BIG_SINT = BigInteger.valueOf(LONG_SINT);
 	private final static BigInteger BIG_UINT = BigInteger.valueOf(LONG_UINT);
-	private final static BigInteger BIG_SLONG = BigInteger.ONE.shiftLeft(63);
 	private final static BigInteger BIG_ULONG = BigInteger.ONE.shiftLeft(64);
 
 	// has byte capacity

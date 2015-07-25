@@ -3,9 +3,6 @@ package com.tomgibara.hashing;
 import java.util.Random;
 
 import com.google.common.hash.HashFunction;
-import com.tomgibara.streams.WriteStream;
-
-import junit.framework.TestCase;
 
 public class Murmur3IntHashTest extends HashingTest {
 

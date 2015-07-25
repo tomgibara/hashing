@@ -75,13 +75,13 @@ public class UsabililtyTest extends TestCase {
 			                  // all guaranteed to be distinct
 		}
 		
-		// produce hashes by seeding a random number generator...
+		// produce hashes by seeding a random number generator
 		Hash<?> prng = Hashing.prng(HashSize.LONG_SIZE);
 		
-		// ... and use this to produce cryptographically secure hashes ...
+		// use this capability to produce cryptographically secure hashes ...
 		Hash<?> secure = Hashing.prng("SHA1PRNG", HashSize.fromByteLength(16));
 		
-		// ... with abritrarily large hash codes
+		// ... with arbitrarily large hash codes
 		secure.hasher(someStream).bigHashValue(str); // 128 bit hash code
 		
 		// perfect hashes for strings is also provided

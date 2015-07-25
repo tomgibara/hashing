@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import junit.framework.TestCase;
-
 public class PerfectStringHashTest extends HashingTest {
 
 //	//TODO can't readily support because of inclusive ranges of HashRange - need to resolve this issue

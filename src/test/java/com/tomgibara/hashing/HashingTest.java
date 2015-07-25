@@ -1,7 +1,6 @@
 package com.tomgibara.hashing;
 
 import java.math.BigInteger;
-import java.util.Arrays;
 
 import junit.framework.TestCase;
 

@@ -1,7 +1,6 @@
 package com.tomgibara.hashing;
 
 import java.math.BigInteger;
-import java.util.Iterator;
 
 //TODO should note possible arithmetic exceptions
 public interface HashValue {
