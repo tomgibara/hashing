@@ -74,8 +74,7 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 			public int intValue() {
 				switch (type) {
 				case INT:
-					//TODO should cache intSize?
-					return random.nextInt(size.asBig().intValue());
+					return random.nextInt(size.asInt());
 				case FULL_INT:
 					return random.nextInt();
 				case LONG:
@@ -96,7 +95,7 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 				case FULL_INT:
 					return intValue() & 0xffffffffL;
 				case LONG:
-					long s = size.asBig().longValue();
+					long s = size.asLong();
 					while (true) {
 						long bits = random.nextLong() & ~Long.MIN_VALUE;
 						long value = bits % s;

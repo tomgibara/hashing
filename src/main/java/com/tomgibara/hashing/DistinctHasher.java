@@ -34,7 +34,7 @@ class DistinctHasher<E> implements Hasher<E> {
 	private final boolean longSized;
 
 	DistinctHasher(HashSize size, int multiplicity, Hasher<E> hasher) {
-		int intSize = size.asBig().intValue();
+		int intSize = size.asInt();
 		this.choose = Choose.from(intSize, multiplicity);
 		HashSize choiceSize = new HashSize(choose.asBigInt());
 		this.hasher = hasher.sized(choiceSize);
