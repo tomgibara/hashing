@@ -22,6 +22,7 @@ public class UsabililtyTest extends TestCase {
 		@Override
 		public void stream(String value, WriteStream stream) { }
 	};
+	private static final long randomSeed = 0L;
 
 	@Test
 	public void testSample() {
@@ -45,6 +46,14 @@ public class UsabililtyTest extends TestCase {
 		// .. different sized hashes are easily derived.
 		Hasher<String> shortMurmur = murmur.sized(HashSize.SHORT_SIZE);
 		shortMurmur.intHashValue(str); // guaranteed to be in the range 0-65535
+		
+		// derive seeded hashers to protect against collision attacks
+		Hasher<String> murmurSafe = Hashing.murmur3Int()
+				.seeded((s, out) -> out.writeChars(s), randomSeed);
+		{
+			murmurSafe.hashValue(str);
+			// almost certainly not the same as murmur.hashValue(str)
+		}
 		
 		// derive multiple hash values from a single hash function
 		Hasher<String> multiple = murmur.ints();
@@ -71,6 +80,7 @@ public class UsabililtyTest extends TestCase {
 		
 		// ... and use this to produce cryptographically secure hashes ...
 		Hash<?> secure = Hashing.prng("SHA1PRNG", HashSize.fromByteLength(16));
+		
 		// ... with abritrarily large hash codes
 		secure.hasher(someStream).bigHashValue(str); // 128 bit hash code
 		
@@ -84,6 +94,7 @@ public class UsabililtyTest extends TestCase {
 		// accuracy check
 		assertEquals(str.hashCode(), obj.intHashValue(str));
 		assertEquals(System.identityHashCode(str), ident.intHashValue(str));
+		assertFalse(murmur.intHashValue(str) == murmurSafe.intHashValue(str));
 		assertTrue(shortMurmur.intHashValue(str) < 65536);
 		assertEquals(0, perfect.intHashValue("cat"));
 		assertEquals(1, perfect.intHashValue("dog"));
