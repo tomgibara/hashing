@@ -23,15 +23,28 @@ package com.tomgibara.hashing;
  * object. Depending upon the implementation, null values may be supported.
  * </p>
  *
- * @author tomgibara
+ * @author Tom Gibara
  *
  * @param <T>
- *            the type of objects for which hashes may be generated
+ *            the type of object for which hashes are be generated
  */
 
 public interface Hasher<T> extends Hashing<T> {
 
 	// TODO can we stretch to make hash fit larger size?
+	/**
+	 * Derives a new hasher that generates hash values within a different
+	 * (generally smaller) range. Unless the new size divides the size of this
+	 * hasher, there is no guarantee that values will be evenly distributed over
+	 * new range. At present, no attempt is made to distribute the hash values
+	 * evenly over a larger range.
+	 * 
+	 * @param newSize
+	 *            specifies a size for the derived hasher
+	 * @return a hasher that redistributes hash values within the specified
+	 *         range
+	 */
+
 	default Hasher<T> sized(HashSize newSize) {
 		if (newSize == null) throw new IllegalArgumentException("null newSize");
 		final HashSize oldSize = getSize();
@@ -40,7 +53,7 @@ public interface Hasher<T> extends Hashing<T> {
 		if (oldSize.isLongCapacity()) return new SizedLongHasher<>(this, newSize);
 		return new SizedBigHasher<>(this, newSize);
 	}
-
+	
 	default Hasher<T> distinct(int quantity, HashSize size) {
 		if (quantity < 1) throw new IllegalArgumentException("non-positive quantity");
 		if (size == null) throw new IllegalArgumentException("null size");
