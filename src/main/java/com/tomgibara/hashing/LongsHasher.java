@@ -88,7 +88,7 @@ final class LongsHasher<T> implements Hasher<T> {
 
 	@Override
 	public int hashCode() {
-		return hasher.hashCode();
+		return 63 * hasher.hashCode();
 	}
 
 	@Override
@@ -99,4 +99,8 @@ final class LongsHasher<T> implements Hasher<T> {
 		return this.hasher.equals(that.hasher);
 	}
 
+	@Override
+	public String toString() {
+		return "longs from " + hasher;
+	}
 }

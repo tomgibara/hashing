@@ -60,4 +60,26 @@ class DistinctHasher<E> implements Hasher<E> {
 				choices.choiceAsArray(hasher.bigHashValue(value));
 		return new IntsHashCode(intValues);
 	}
+	
+	// object methods
+	
+	@Override
+	public int hashCode() {
+		return choose.hashCode() + hasher.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) return true;
+		if (!(obj instanceof DistinctHasher<?>)) return false;
+		DistinctHasher<?> that = (DistinctHasher<?>) obj;
+		if (!this.choose.equals(that.choose)) return false;
+		if (!this.hasher.equals(that.hasher)) return false;
+		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return choose + " from " + hasher;
+	}
 }

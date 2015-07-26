@@ -101,7 +101,7 @@ final class IntsHasher<T> implements Hasher<T> {
 
 	@Override
 	public int hashCode() {
-		return hasher.hashCode();
+		return 31 * hasher.hashCode();
 	}
 
 	@Override
@@ -112,4 +112,8 @@ final class IntsHasher<T> implements Hasher<T> {
 		return this.hasher.equals(that.hasher);
 	}
 
+	@Override
+	public String toString() {
+		return "ints from " + hasher;
+	}
 }

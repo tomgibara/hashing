@@ -65,4 +65,24 @@ abstract class SizedHasher<T> implements Hasher<T> {
 		};
 	}
 
+	@Override
+	public int hashCode() {
+		return hashing.hashCode() + newSize.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) return true;
+		if (!(obj instanceof SizedHasher)) return false;
+		SizedHasher<?> that = (SizedHasher<?>) obj;
+		if (!this.newSize.equals(that.newSize)) return false;
+		if (!this.hashing.equals(that.hashing)) return false;
+		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return hashing + " resized to " + newSize;
+	}
+	
 }

@@ -69,6 +69,26 @@ final class Murmur3IntHash implements Hash<Murmur3IntHash.MurmurStream> {
 	public HashCode hash(MurmurStream s) {
 		return new IntHashCode(s.hash());
 	}
+	
+	// object methods
+	
+	@Override
+	public int hashCode() {
+		return seed;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) return true;
+		if (!(obj instanceof Murmur3IntHash)) return false;
+		Murmur3IntHash that = (Murmur3IntHash) obj;
+		return this.seed == that.seed;
+	}
+	
+	@Override
+	public String toString() {
+		return "Murmur3 32 bits with seed " + seed;
+	}
 
 	// inner classes
 

@@ -70,4 +70,23 @@ class StandardHasher<S extends WriteStream,T> implements Hasher<T> {
 		return stream;
 	}
 
+	@Override
+	public int hashCode() {
+		return hash.hashCode() + serializer.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) return true;
+		if (!(obj instanceof StandardHasher)) return false;
+		StandardHasher<?, ?> that = (StandardHasher<?, ?>) obj;
+		if (!this.hash.equals(that.hash)) return false;
+		if (!this.serializer.equals(that.serializer)) return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return hash + " <- " + serializer;
+	}
 }

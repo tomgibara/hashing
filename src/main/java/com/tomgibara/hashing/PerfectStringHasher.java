@@ -252,7 +252,7 @@ class PerfectStringHasher implements Hasher<String> {
 		this.size = new HashSize(length);
 	}
 
-	// hash generator methods
+	// hasher methods
 
 	@Override
 	public HashSize getSize() {
@@ -278,6 +278,26 @@ class PerfectStringHasher implements Hasher<String> {
 	public HashCode hash(String value) {
 		return new IntHashCode(computeHash(value));
 	}
+	
+	// object methods
+	
+	@Override
+	public int hashCode() {
+		return Arrays.hashCode(hashes) + Arrays.hashCode(offsets) + Arrays.hashCode(pivots);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) return true;
+		if (!(obj instanceof PerfectStringHasher)) return false;
+		PerfectStringHasher that = (PerfectStringHasher) obj;
+		if (!Arrays.equals(this.hashes, that.hashes)) return false;
+		if (!Arrays.equals(this.offsets, that.offsets)) return false;
+		if (!Arrays.equals(this.pivots, that.pivots)) return false;
+		return true;
+	}
+	
+	// private methods
 
 	/**
 	 * Generates a hashcode for the supplied string.

@@ -20,6 +20,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.Provider;
+import java.util.Objects;
 
 class StandardHashDigestSource implements HashDigestSource {
 
@@ -94,5 +95,25 @@ class StandardHashDigestSource implements HashDigestSource {
 	@Override
 	public Hash<?> asHash() {
 		return new DigestHash(this);
+	}
+	
+	@Override
+	public int hashCode() {
+		return algorithm.hashCode() + provider.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) return true;
+		if (!(obj instanceof StandardHashDigestSource)) return false;
+		StandardHashDigestSource that = (StandardHashDigestSource) obj;
+		if (!this.algorithm.equals(that.algorithm)) return false;
+		if (!this.provider.equals(that.provider)) return false;
+		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return algorithm + " from " + provider.getName();
 	}
 }

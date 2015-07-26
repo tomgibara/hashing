@@ -33,5 +33,24 @@ class SeededHasher<S extends WriteStream,T> extends StandardHasher<S,T> {
 		stream.writeLong(seed);
 		return stream;
 	}
+	
+	@Override
+	public int hashCode() {
+		return super.hashCode() + Long.hashCode(seed);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (!super.equals(obj)) return false;
+		if (obj == this) return true;
+		if (!(obj instanceof SeededHasher)) return false;
+		SeededHasher<?, ?> that = (SeededHasher<?, ?>) obj;
+		return this.seed == that.seed;
+	}
 
+	@Override
+	public String toString() {
+		return super.toString() + " seeded by " + seed;
+	}
+	
 }

@@ -20,6 +20,7 @@ import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
+import java.util.Objects;
 import java.util.Random;
 
 import com.tomgibara.streams.AbstractWriteStream;
@@ -160,6 +161,31 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 		} catch (NoSuchProviderException e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	// object methods
+	
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(algorithm) + Objects.hash(provider) + size.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) return true;
+		if (!(obj instanceof RandomHash)) return false;
+		RandomHash that = (RandomHash) obj;
+		if (!this.size.equals(that.size)) return false;
+		if (!Objects.equals(this.algorithm, that.algorithm)) return false;
+		if (!Objects.equals(this.provider, that.provider)) return false;
+		return true;
+	}
+	
+	@Override
+	public String toString() {
+		if (algorithm == null) return "default PRNG sized " + size;
+		if (provider == null) return algorithm + " sized " + size;
+		return algorithm + " from " + provider + " sized " + size;
 	}
 
 	// inner classes
