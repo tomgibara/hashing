@@ -51,14 +51,24 @@ public class PerfectStringHashTest extends HashingTest {
 	public void testOne() {
 		Hasher<String> hash = Hashing.minimalPerfect("a");
 		assertEquals(0, hash.intHashValue("a"));
-		assertTrue( hash.intHashValue("b") < 0 );
+		try {
+			hash.intHashValue("b");
+			fail();
+		} catch (IllegalArgumentException e) {
+			/* expected */
+		}
 	}
 
 	public void testAbsentClashes() {
 		Hasher<String> hash = Hashing.minimalPerfect(new String[] {"a", "b"});
 		assertEquals(0, hash.intHashValue("a"));
 		assertEquals(1, hash.intHashValue("b"));
-		assertTrue(hash.intHashValue("c") < 0);
+		try {
+			hash.intHashValue("c");
+			fail();
+		} catch (IllegalArgumentException e) {
+			/* expected */
+		}
 
 	}
 
