@@ -82,16 +82,6 @@ Hasher<String> perfect = Hashing.minimalPerfect("mouse", "cat", "dog");
 perfect.intHashValue("cat"); // returns 0
 perfect.intHashValue("dog"); // returns 1
 perfect.intHashValue("mouse"); // returns 2
-
-
-// accuracy check
-assertEquals(str.hashCode(), obj.intHashValue(str));
-assertEquals(System.identityHashCode(str), ident.intHashValue(str));
-assertFalse(murmur.intHashValue(str) == murmurSafe.intHashValue(str));
-assertTrue(shortMurmur.intHashValue(str) < 65536);
-assertEquals(0, perfect.intHashValue("cat"));
-assertEquals(1, perfect.intHashValue("dog"));
-assertEquals(2, perfect.intHashValue("mouse"));
 ```
 
 Comparison with Guava
