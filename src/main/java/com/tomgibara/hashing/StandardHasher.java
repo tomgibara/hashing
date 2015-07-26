@@ -23,11 +23,11 @@ import com.tomgibara.streams.WriteStream;
 class StandardHasher<S extends WriteStream,T> implements Hasher<T> {
 
 	private final Hash<S> hash;
-	private final HashStreamer<T> streamer;
+	private final HashSerializer<T> serializer;
 
-	StandardHasher(Hash<S> hash, HashStreamer<T> streamer) {
+	StandardHasher(Hash<S> hash, HashSerializer<T> serializer) {
 		this.hash = hash;
-		this.streamer = streamer;
+		this.serializer = serializer;
 	}
 
 	@Override
@@ -66,7 +66,7 @@ class StandardHasher<S extends WriteStream,T> implements Hasher<T> {
 
 	private S stream(T value) {
 		S stream = newStream();
-		streamer.stream(value, stream);
+		serializer.stream(value, stream);
 		return stream;
 	}
 

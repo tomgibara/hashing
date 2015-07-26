@@ -22,8 +22,8 @@ class SeededHasher<S extends WriteStream,T> extends StandardHasher<S,T> {
 
 	private final long seed;
 
-	SeededHasher(Hash<S> hash, HashStreamer<T> streamer, long seed) {
-		super(hash, streamer);
+	SeededHasher(Hash<S> hash, HashSerializer<T> serializer, long seed) {
+		super(hash, serializer);
 		this.seed = seed;
 	}
 

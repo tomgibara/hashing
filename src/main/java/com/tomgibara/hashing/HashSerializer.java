@@ -21,12 +21,12 @@ import com.tomgibara.streams.WriteStream;
 /**
  * Converts an object into byte data that can be used to compute a hash value.
  *
- * @author tomgibara
+ * @author Tom Gibara
  *
  * @param <T> the type of object that will be be the source of hash data
  */
 
-public interface HashStreamer<T> {
+public interface HashSerializer<T> {
 
 	/**
 	 * Called to serialize an object instance to a stream.

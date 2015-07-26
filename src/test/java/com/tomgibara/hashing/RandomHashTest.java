@@ -23,7 +23,7 @@ import com.tomgibara.streams.WriteStream;
 
 public class RandomHashTest extends HashingTest {
 
-	private static final HashStreamer<Integer> streamer = new HashStreamer<Integer>() {
+	private static final HashSerializer<Integer> streamer = new HashSerializer<Integer>() {
 
 		@Override
 		public void stream(Integer value, WriteStream stream) {

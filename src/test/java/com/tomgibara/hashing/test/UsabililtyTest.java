@@ -22,7 +22,7 @@ import org.junit.Test;
 
 import com.tomgibara.hashing.Hash;
 import com.tomgibara.hashing.HashSize;
-import com.tomgibara.hashing.HashStreamer;
+import com.tomgibara.hashing.HashSerializer;
 import com.tomgibara.hashing.HashValue;
 import com.tomgibara.hashing.Hasher;
 import com.tomgibara.hashing.Hashing;
@@ -34,7 +34,7 @@ public class UsabililtyTest extends TestCase {
 
 	private static final String str = "...mon panache";
 	private static final Point pt = new Point();
-	private static final HashStreamer<String> someStream = new HashStreamer<String>() {
+	private static final HashSerializer<String> someStream = new HashSerializer<String>() {
 		@Override
 		public void stream(String value, WriteStream stream) { }
 	};
