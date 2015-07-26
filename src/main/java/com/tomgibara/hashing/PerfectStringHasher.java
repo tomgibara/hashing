@@ -294,9 +294,10 @@ class PerfectStringHasher implements Hasher<String> {
 		final int h = value.hashCode();
 		final int index = Arrays.binarySearch(hashes, h);
 		final int[] pivots = this.pivots;
-		if (pivots == null || index < 0) {
+		if (index < 0) {
 			throw new IllegalArgumentException("invalid string");
 		}
+		if (pivots == null) return index;
 
 		final int offset = offsets[index << 1];
 		if (offset == -1) return index;
