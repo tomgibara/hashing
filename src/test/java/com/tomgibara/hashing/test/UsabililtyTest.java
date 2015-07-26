@@ -21,6 +21,7 @@ import java.awt.Point;
 import org.junit.Test;
 
 import com.tomgibara.hashing.Hash;
+import com.tomgibara.hashing.HashDigestSource;
 import com.tomgibara.hashing.HashSize;
 import com.tomgibara.hashing.HashSerializer;
 import com.tomgibara.hashing.HashCode;
@@ -90,6 +91,9 @@ public class UsabililtyTest extends TestCase {
 			value.hasNext();  // returns false - supplies exactly 3 hashes
 			                  // all guaranteed to be distinct
 		}
+
+		// produce hashes from message digests
+		Hash<?> sha1 = HashDigestSource.SHA1().asHash();
 
 		// produce hashes by seeding a random number generator
 		Hash<?> prng = Hashing.prng(HashSize.LONG_SIZE);
