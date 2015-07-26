@@ -49,13 +49,13 @@ public class PerfectStringHashTest extends HashingTest {
 	}
 
 	public void testOne() {
-		Hasher<String> hash = Hashing.perfect("a");
+		Hasher<String> hash = Hashing.minimalPerfect("a");
 		assertEquals(0, hash.intHashValue("a"));
 		assertTrue( hash.intHashValue("b") < 0 );
 	}
 
 	public void testAbsentClashes() {
-		Hasher<String> hash = Hashing.perfect(new String[] {"a", "b"});
+		Hasher<String> hash = Hashing.minimalPerfect(new String[] {"a", "b"});
 		assertEquals(0, hash.intHashValue("a"));
 		assertEquals(1, hash.intHashValue("b"));
 		assertTrue(hash.intHashValue("c") < 0);
@@ -63,14 +63,14 @@ public class PerfectStringHashTest extends HashingTest {
 	}
 
 	public void testSingleClash() {
-		Hasher<String> hash = Hashing.perfect(new String[] {"Ab", "BC"});
+		Hasher<String> hash = Hashing.minimalPerfect(new String[] {"Ab", "BC"});
 		assertEquals(0, hash.intHashValue("Ab"));
 		assertEquals(1, hash.intHashValue("BC"));
 	}
 
 	public void testClashCombos() {
 		final String[] arr = new String[] {"Ab", "BC", "5u", "6V", "77"};
-		Hasher<String> hash = Hashing.perfect(arr);
+		Hasher<String> hash = Hashing.minimalPerfect(arr);
 		for (int i = 0; i < arr.length; i++) {
 			assertEquals(i, hash.intHashValue(arr[i]));
 		}
@@ -78,7 +78,7 @@ public class PerfectStringHashTest extends HashingTest {
 
 	public void testClashCombosPlus() {
 		final String[] arr = new String[] {"Ab", "BC", "5u", "6V", "77", "1", "A", "b", "C", "d", "11", "AA", "bb", "CC", "dd"};
-		Hasher<String> hash = Hashing.perfect(arr);
+		Hasher<String> hash = Hashing.minimalPerfect(arr);
 		assertEquals(0, hash.intHashValue("1"));
 		assertEquals(14, hash.intHashValue("dd"));
 
@@ -89,7 +89,7 @@ public class PerfectStringHashTest extends HashingTest {
 
 	public void testDuplicates() {
 		try {
-			Hashing.perfect("a", "b", "a");
+			Hashing.minimalPerfect("a", "b", "a");
 			fail();
 		} catch (IllegalArgumentException e) {
 			//expected
@@ -106,7 +106,7 @@ public class PerfectStringHashTest extends HashingTest {
 
 	private void testCorrectlySized(int s) {
 		String[] strs = uniqueStrings(s);
-		Hasher<String> hasher = Hashing.perfect(strs);
+		Hasher<String> hasher = Hashing.minimalPerfect(strs);
 		//test the values
 		HashSize size = hasher.getSize();
 		for (int i = 0; i < strs.length; i++) {
@@ -119,7 +119,7 @@ public class PerfectStringHashTest extends HashingTest {
 
 	public void testConsistent() {
 		String[] strs = uniqueStrings(1000);
-		Hasher<String> hasher = Hashing.perfect(strs);
+		Hasher<String> hasher = Hashing.minimalPerfect(strs);
 		for (int i = 0; i < strs.length; i++) {
 			testConsistent(hasher, strs[i]);
 		}

@@ -85,7 +85,7 @@ public class UsabililtyTest extends TestCase {
 		secure.hasher(someStream).bigHashValue(str); // 128 bit hash code
 
 		// perfect hashes for strings is also provided
-		Hasher<String> perfect = Hashing.perfect("mouse", "cat", "dog");
+		Hasher<String> perfect = Hashing.minimalPerfect("mouse", "cat", "dog");
 		perfect.intHashValue("cat"); // returns 0
 		perfect.intHashValue("dog"); // returns 1
 		perfect.intHashValue("mouse"); // returns 2

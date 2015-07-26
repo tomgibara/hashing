@@ -19,10 +19,9 @@ package com.tomgibara.hashing;
 import java.math.BigInteger;
 
 /**
- * Records the size of values that a hash value may generate.
+ * Records the size of hash values that can be generated from a {@link Hashing}.
  *
- * @author tomgibara
- *
+ * @author Tom Gibara
  */
 
 public final class HashSize implements Comparable<HashSize> {

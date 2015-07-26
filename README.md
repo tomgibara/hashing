@@ -4,13 +4,17 @@ Hashing
 Overview
 --------
 
-This library provides an API for defining hash functions and computing their values. It aims for generality while providing for efficient implementation. The core abstractions are:
+This library provides an API for defining hash functions and computing their
+values. It aims for generality while providing for efficient implementation.
+The core abstractions are:
 
  * `HashValue` - the result of computing a hash.
  * `HashStreamer` - decomposes objects into a stream for them to be hashed. 
  * `Hash` - converts the contents of a stream into a `HashValue`
- * `Hasher` can converts an object into a `HashValue`, often by way of a `Hash` combined with a `HashStreamer`
- * `Hashing` - the entry-point to the API and the basis for obtaining provided `Hash` and `Hasher` implementations.
+ * `Hasher` can converts an object into a `HashValue`,
+    often by way of a `Hash` combined with a `HashStreamer`
+ * `Hashing` - the entry-point to the API and the basis for obtaining
+    provided `Hash` and `Hasher` implementations.
 
 Examples
 --------
@@ -73,8 +77,8 @@ Hash<?> secure = Hashing.prng("SHA1PRNG", HashSize.fromByteLength(16));
 // ... with arbitrarily large hash codes
 secure.hasher(someStream).bigHashValue(str); // 128 bit hash code
 
-// perfect hashes for strings is also provided
-Hasher<String> perfect = Hashing.perfect("mouse", "cat", "dog");
+// minimal perfect hashing for strings is also provided
+Hasher<String> perfect = Hashing.minimalPerfect("mouse", "cat", "dog");
 perfect.intHashValue("cat"); // returns 0
 perfect.intHashValue("dog"); // returns 1
 perfect.intHashValue("mouse"); // returns 2
@@ -93,13 +97,16 @@ assertEquals(2, perfect.intHashValue("mouse"));
 Comparison with Guava
 ---------------------
 
-A high quality hashing library is already available for Java as part of the Guava library [*][0]
-but this library has some capabilities that Guava does not currently have.
-Any of these may be necessary for your application:
+A high quality hashing library is already available for Java as part of the
+Guava library [*][0] but this library has some capabilities that Guava does not
+currently have. Any of these may be necessary for your application:
 
- * Direct emulation of `Object.hashCode()` and `System.identityHashCode()` (so existing Java hash codes can be exposed through the API).
- * Support for multi-valued hashes (useful for probabalistic data structures such as Bloom filters).
- * Hashes that do not necessarily span an exact number of bits (this includes support for perfect hashing of strings).
+ * Direct emulation of `Object.hashCode()` and `System.identityHashCode()`
+   (so existing Java hash codes can be exposed through the API).
+ * Support for multi-valued hashes
+   (useful for probabalistic data structures such as Bloom filters).
+ * Hashes that do not necessarily span an exact number of bits
+   (this includes support for perfect hashing of strings).
 
 Usage
 -----
@@ -125,8 +132,5 @@ Release History
 **2015.07.xx** Version 1.0.0
 
 Initial release
-
-Links
------
 
 [0]: https://github.com/google/guava
