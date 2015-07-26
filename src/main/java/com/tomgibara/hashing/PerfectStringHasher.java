@@ -261,22 +261,22 @@ class PerfectStringHasher implements Hasher<String> {
 
 	@Override
 	public int intHashValue(String value) {
-		return hash(value);
+		return computeHash(value);
 	}
 
 	@Override
 	public long longHashValue(String value) {
-		return hash(value);
+		return computeHash(value);
 	}
 
 	@Override
 	public BigInteger bigHashValue(String value) {
-		return BigInteger.valueOf(hash(value));
+		return BigInteger.valueOf(computeHash(value));
 	}
 
 	@Override
-	public HashValue hashValue(String value) {
-		return new IntHashValue(hash(value));
+	public HashCode hash(String value) {
+		return new IntHashCode(computeHash(value));
 	}
 
 	/**
@@ -290,7 +290,7 @@ class PerfectStringHasher implements Hasher<String> {
 	 *             value
 	 */
 
-	private int hash(String value) {
+	private int computeHash(String value) {
 		final int h = value.hashCode();
 		final int index = Arrays.binarySearch(hashes, h);
 		final int[] pivots = this.pivots;

@@ -49,7 +49,7 @@ public class RandomHashTest extends HashingTest {
 		Hasher<Integer> hasher = hash.hasher(streamer);
 		final HashSize s = hasher.getSize();
 		for (int i = 0; i < 1000; i++) {
-			HashValue h = hasher.hashValue(i);
+			HashCode h = hasher.hash(i);
 			testCorrectlySizedInts(h, s, quantity);
 			testCorrectlySizedLongs(h, s, quantity);
 			testCorrectlySizedBigs(h, s, quantity);
@@ -66,7 +66,7 @@ public class RandomHashTest extends HashingTest {
 		Random r = new Random(0L);
 		int[] ints = new int[10000];
 		for (int i = 0; i < 50; i++) {
-			HashValue value = hasher.hashValue(r.nextInt());
+			HashCode value = hasher.hash(r.nextInt());
 			for (int j = 0; j < ints.length; j++) {
 				ints[j] = value.intValue();
 			}

@@ -134,7 +134,7 @@ public interface Hashing<T> {
 	/**
 	 * <p>
 	 * A "minimal perfect hash" for strings. An array of <em>n</em> unique
-	 * non-null strings will generator a hasher that returns a unique hash value
+	 * non-null strings will generator a hasher that returns a unique hash code
 	 * <em>h</em> (0 &lt;= h &lt; n) for any string <em>s</em> in the array.
 	 * </p>
 	 *
@@ -192,26 +192,26 @@ public interface Hashing<T> {
 	}
 	
 	/**
-	 * Computes a hash value for the supplied object.
+	 * Computes a hash code for the supplied object.
 	 * 
 	 * @param value
 	 *            the object to be hashed
-	 * @return the computed hash value
+	 * @return the computed hash code
 	 * @throws IllegalArgumentException
 	 *             if the supplied value cannot be hashed by this object
 	 */
 
-	HashValue hashValue(T value) throws IllegalArgumentException;
+	HashCode hash(T value) throws IllegalArgumentException;
 
 	/**
 	 * <p>
-	 * The hash value as a {@link BigInteger}. This method may be useful in
+	 * The hash code as a {@link BigInteger}. This method may be useful in
 	 * circumstances where the generated hash is too large to be accommodated in
 	 * a single primitive value, eg. if cryptographic hashes are being used.
 	 * 
 	 * <p>
 	 * If multiple values are required for a single hashing then
-	 * {@link HashValue#bigValue()} must be used.
+	 * {@link HashCode#bigValue()} must be used.
 	 *
 	 * @param value
 	 *            the object to be hashed
@@ -221,17 +221,17 @@ public interface Hashing<T> {
 	 */
 
 	default BigInteger bigHashValue(T value) throws IllegalArgumentException {
-		return hashValue(value).bigValue();
+		return hash(value).bigValue();
 	}
 
 	/**
 	 * <p>
 	 * The hash value as a long. This method should provide better performance
-	 * for long-capacity hashes over the {@link #hashValue(Object)} method.
+	 * for long-capacity hashes over the {@link #hash(Object)} method.
 	 * 
 	 * <p>
 	 * If multiple values are required for a single hashing then
-	 * {@link HashValue#longValue()} must be used.
+	 * {@link HashCode#longValue()} must be used.
 	 *
 	 * @param value
 	 *            the object to be hashed
@@ -241,17 +241,17 @@ public interface Hashing<T> {
 	 */
 
 	default long longHashValue(T value) throws IllegalArgumentException {
-		return hashValue(value).longValue();
+		return hash(value).longValue();
 	}
 
 	/**
 	 * <p>
 	 * The hash value as an int. This method should provide better performance
-	 * for integer-capacity hashes over the {@link #hashValue(Object)} method.
+	 * for integer-capacity hashes over the {@link #hash(Object)} method.
 	 * 
 	 * <p>
 	 * If multiple values are required for a single hashing then
-	 * {@link HashValue#intValue()} must be used.
+	 * {@link HashCode#intValue()} must be used.
 	 *
 	 * @param value
 	 *            the object to be hashed
@@ -261,7 +261,7 @@ public interface Hashing<T> {
 	 */
 
 	default int intHashValue(T value) throws IllegalArgumentException {
-		return hashValue(value).intValue();
+		return hash(value).intValue();
 	}
 
 }

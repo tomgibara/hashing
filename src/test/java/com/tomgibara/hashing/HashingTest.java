@@ -22,7 +22,7 @@ import junit.framework.TestCase;
 
 public abstract class HashingTest extends TestCase {
 
-	void testCorrectlySizedInts(HashValue value, HashSize size, int quantity) {
+	void testCorrectlySizedInts(HashCode value, HashSize size, int quantity) {
 		BigInteger s = size.asBig();
 		// test ints
 		int[] ints = new int[quantity];
@@ -36,7 +36,7 @@ public abstract class HashingTest extends TestCase {
 		}
 	}
 
-	void testCorrectlySizedLongs(HashValue value, HashSize size, int quantity) {
+	void testCorrectlySizedLongs(HashCode value, HashSize size, int quantity) {
 		BigInteger s = size.asBig();
 		// test longs
 		long[] longs = new long[quantity];
@@ -50,7 +50,7 @@ public abstract class HashingTest extends TestCase {
 		}
 	}
 
-	void testCorrectlySizedBigs(HashValue value, HashSize size, int quantity) {
+	void testCorrectlySizedBigs(HashCode value, HashSize size, int quantity) {
 		BigInteger s = size.asBig();
 		BigInteger[] bigs = new BigInteger[quantity];
 		for (int j = 0; j < quantity; j++) {
@@ -83,11 +83,11 @@ public abstract class HashingTest extends TestCase {
 		long longValue = hasher.longHashValue(obj);
 		int intValue = hasher.intHashValue(obj);
 
-		assertEquals(bigValue, hasher.hashValue(obj).bigValue());
-		assertEquals(longValue, hasher.hashValue(obj).longValue());
-		assertEquals(intValue, hasher.hashValue(obj).intValue());
+		assertEquals(bigValue, hasher.hash(obj).bigValue());
+		assertEquals(longValue, hasher.hash(obj).longValue());
+		assertEquals(intValue, hasher.hash(obj).intValue());
 
-		assertEquals(longValue, hasher.hashValue(obj).bigValue().longValue());
-		assertEquals(intValue, hasher.hashValue(obj).bigValue().intValue());
+		assertEquals(longValue, hasher.hash(obj).bigValue().longValue());
+		assertEquals(intValue, hasher.hash(obj).bigValue().intValue());
 	}
 }

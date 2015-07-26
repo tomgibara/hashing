@@ -45,8 +45,8 @@ abstract class SizedHasher<T> implements Hasher<T> {
 	}
 
 	@Override
-	public HashValue hashValue(T value) {
-		return new AbstractHashValue() {
+	public HashCode hash(T value) {
+		return new AbstractHashCode() {
 
 			@Override
 			public BigInteger bigValue() {

@@ -41,8 +41,8 @@ class StandardHasher<S extends WriteStream,T> implements Hasher<T> {
 	}
 
 	@Override
-	public HashValue hashValue(T value) {
-		return hash.hashValue(stream(value));
+	public HashCode hash(T value) {
+		return hash.hash(stream(value));
 	}
 
 	@Override

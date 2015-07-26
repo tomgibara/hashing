@@ -77,9 +77,9 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 	}
 
 	@Override
-	public HashValue hashValue(SeedingStream value) {
+	public HashCode hash(SeedingStream value) {
 		final Random random = value.getRandom();
-		return new HashValue() {
+		return new HashCode() {
 
 			@Override
 			public boolean hasNext() {

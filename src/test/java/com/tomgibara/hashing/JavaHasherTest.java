@@ -26,9 +26,9 @@ public class JavaHasherTest extends HashingTest {
 			String str = Integer.toString(i);
 			assertEquals(str.hashCode(), hasher.intHashValue(str));
 			testConsistent(hasher, str);
-			testCorrectlySizedInts(hasher.hashValue(str), size, 1);
-			testCorrectlySizedLongs(hasher.hashValue(str), size, 1);
-			testCorrectlySizedBigs(hasher.hashValue(str), size, 1);
+			testCorrectlySizedInts(hasher.hash(str), size, 1);
+			testCorrectlySizedLongs(hasher.hash(str), size, 1);
+			testCorrectlySizedBigs(hasher.hash(str), size, 1);
 		}
 	}
 
@@ -40,9 +40,9 @@ public class JavaHasherTest extends HashingTest {
 			String str = Integer.toString(i);
 			assertEquals(System.identityHashCode(str), hasher.intHashValue(str));
 			testConsistent(hasher, str);
-			testCorrectlySizedInts(hasher.hashValue(str), size, 1);
-			testCorrectlySizedLongs(hasher.hashValue(str), size, 1);
-			testCorrectlySizedBigs(hasher.hashValue(str), size, 1);
+			testCorrectlySizedInts(hasher.hash(str), size, 1);
+			testCorrectlySizedLongs(hasher.hash(str), size, 1);
+			testCorrectlySizedBigs(hasher.hash(str), size, 1);
 		}
 	}
 

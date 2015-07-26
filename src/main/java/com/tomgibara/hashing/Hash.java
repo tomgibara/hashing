@@ -20,14 +20,14 @@ import com.tomgibara.streams.WriteStream;
 
 /**
  * <p>
- * A hash creates streams that it can later convert into {@link HashValue}s.
- * Streams are ordinarily populated by a {@link HashSerializer} implementation.
- * Applications are generally expected to use instances of this class indirectly
- * by deriving {@link Hasher}s from them.
+ * A hash creates streams that it can subsequently convert into {@link HashCode}
+ * s. Streams are ordinarily populated by a {@link HashSerializer}
+ * implementation. Applications are generally expected to use instances of this
+ * class indirectly by deriving {@link Hasher}s from them.
  * 
  * <p>
  * New hash implementations can be introduced by implementing this interface.
- * Hashes that generate multiple hash values will want to indicate this via the
+ * Hashes that generate multiple hash values should indicate this via the
  * {@link #getQuantity()} method.
  * 
  * @author Tom Gibara
@@ -40,7 +40,7 @@ public interface Hash<S extends WriteStream> extends Hashing<S> {
 
 	/**
 	 * Creates new stream that can later be passed back to the object to derive
-	 * a {@link HashValue}.
+	 * a {@link HashCode}.
 	 * 
 	 * @return a new stream for accumulating object data
 	 */

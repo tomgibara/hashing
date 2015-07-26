@@ -20,56 +20,56 @@ import java.math.BigInteger;
 
 /**
  * The result of hashing an object. Multiple values may be provided in a single
- * result. In this case {@link #hasNext()} will return false until all every
- * values have been retrieved.
+ * result. In this case {@link #hasNext()} will return true until every value
+ * has been retrieved.
  * 
  * @author Tom Gibara
  *
  */
 
-public interface HashValue {
+public interface HashCode {
 
 	/**
-	 * A hash value with an integer value.
+	 * A hash code with an integer value.
 	 * 
 	 * @param intValue
 	 *            the integer hash value
-	 * @return a hash value instance.
+	 * @return a hash code
 	 */
 
-	static HashValue fromInt(int intValue) { return new IntHashValue(intValue); }
+	static HashCode fromInt(int intValue) { return new IntHashCode(intValue); }
 
 	/**
-	 * A hash value with a long value.
+	 * A hash code with a long integer value.
 	 * 
 	 * @param longValue
-	 *            the long hash value
-	 * @return a hash value instance.
+	 *            the long integer hash value
+	 * @return a hash code
 	 */
 
-	static HashValue fromLong(long longValue) { return new LongHashValue(longValue); }
+	static HashCode fromLong(long longValue) { return new LongHashCode(longValue); }
 
 	/**
-	 * A hash value with a big integer value.
+	 * A hash code with a big integer value.
 	 * 
 	 * @param bigValue
 	 *            the big integer hash value
-	 * @return a hash value instance.
+	 * @return a hash code
 	 */
 
-	static HashValue fromBig(BigInteger bigValue) { return new BigHashValue(bigValue); }
+	static HashCode fromBig(BigInteger bigValue) { return new BigHashCode(bigValue); }
 
 	/**
 	 * A hash value consisting of a multiplicity of integer values.
 	 * 
 	 * @param intValues
 	 *            the integer hash values
-	 * @return a hash value instance
+	 * @return a hash code
 	 */
 
-	static HashValue fromInts(int... intValues) {
+	static HashCode fromInts(int... intValues) {
 		if (intValues == null) throw new IllegalArgumentException("null intValues");
-		return new IntsHashValue(intValues);
+		return new IntsHashCode(intValues);
 	}
 	
 	/**
@@ -77,12 +77,12 @@ public interface HashValue {
 	 * 
 	 * @param longValues
 	 *            the long hash values
-	 * @return a hash value instance
+	 * @return a hash code
 	 */
 
-	static HashValue fromLongs(long... longValues) {
+	static HashCode fromLongs(long... longValues) {
 		if (longValues == null) throw new IllegalArgumentException("null longValues");
-		return new LongsHashValue(longValues);
+		return new LongsHashCode(longValues);
 	}
 
 	/**
@@ -90,10 +90,10 @@ public interface HashValue {
 	 * 
 	 * @param bigValues
 	 *            the big hash values
-	 * @return a hash value instance
+	 * @return a hash code
 	 */
 
-	static HashValue fromLongs(BigInteger... bigValues) {
+	static HashCode fromLongs(BigInteger... bigValues) {
 		if (bigValues == null) throw new IllegalArgumentException("null bigValues");
 		for (BigInteger big : bigValues) {
 			if (big == null) throw new IllegalArgumentException("null big value");

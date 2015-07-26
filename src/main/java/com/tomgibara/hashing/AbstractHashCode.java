@@ -1,6 +1,6 @@
 package com.tomgibara.hashing;
 
-abstract class AbstractHashValue implements HashValue {
+abstract class AbstractHashCode implements HashCode {
 
 	@Override
 	public int hashCode() {
@@ -10,8 +10,8 @@ abstract class AbstractHashValue implements HashValue {
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) return true;
-		if (!(obj instanceof HashValue)) return false;
-		return this.bigValue().equals(((HashValue) obj).bigValue());
+		if (!(obj instanceof HashCode)) return false;
+		return this.bigValue().equals(((HashCode) obj).bigValue());
 	}
 
 	@Override

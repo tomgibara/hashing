@@ -121,9 +121,9 @@ public class PerfectStringHashTest extends HashingTest {
 		HashSize size = hasher.getSize();
 		for (int i = 0; i < strs.length; i++) {
 			String str = strs[i];
-			testCorrectlySizedInts(hasher.hashValue(str), size, 1);
-			testCorrectlySizedLongs(hasher.hashValue(str), size, 1);
-			testCorrectlySizedBigs(hasher.hashValue(str), size, 1);
+			testCorrectlySizedInts(hasher.hash(str), size, 1);
+			testCorrectlySizedLongs(hasher.hash(str), size, 1);
+			testCorrectlySizedBigs(hasher.hash(str), size, 1);
 		}
 	}
 

@@ -66,8 +66,8 @@ final class Murmur3IntHash implements Hash<Murmur3IntHash.MurmurStream> {
 	}
 
 	@Override
-	public HashValue hashValue(MurmurStream s) {
-		return new IntHashValue(s.hash());
+	public HashCode hash(MurmurStream s) {
+		return new IntHashCode(s.hash());
 	}
 
 	// inner classes

@@ -17,40 +17,42 @@
 package com.tomgibara.hashing;
 
 import java.math.BigInteger;
+import java.util.NoSuchElementException;
 
-final class LongHashValue extends AbstractHashValue {
+final class IntsHashCode extends AbstractHashCode {
 
-	private final long longValue;
+	private final int[] intValues;
+	private int index = 0;
 
-	public LongHashValue(long longValue) {
-		this.longValue = longValue;
+	IntsHashCode(int[] intValues) {
+		this.intValues = intValues;
 	}
 
 	@Override
 	public int intValue() {
-		return (int) longValue;
+		checkIndex();
+		return intValues[index++];
 	}
 
 	@Override
 	public long longValue() {
-		return longValue;
+		checkIndex();
+		return intValues[index++];
 	}
 
 	@Override
 	public BigInteger bigValue() {
-		return BigInteger.valueOf(longValue);
+		checkIndex();
+		return BigInteger.valueOf(intValues[index++]);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (obj == this) return true;
-		if (obj instanceof LongHashValue) return this.longValue == ((LongHashValue) obj).longValue;
-		return super.equals(obj);
+	public boolean hasNext() {
+		return index < intValues.length;
 	}
 
-	@Override
-	public String toString() {
-		return Long.toString(longValue);
+	private void checkIndex() {
+		if (index == intValues.length) throw new NoSuchElementException();
 	}
 
 }

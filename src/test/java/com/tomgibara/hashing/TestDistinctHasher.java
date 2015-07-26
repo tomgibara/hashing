@@ -25,7 +25,7 @@ public class TestDistinctHasher extends HashingTest {
 		Hasher<Object> hasher = Hashing.identityHasher().distinct(3, HashSize.fromInt(1000));
 		int[] ints = new int[3];
 		for (int i = 0; i < 100000; i++) {
-			HashValue value = hasher.hashValue(i);
+			HashCode value = hasher.hash(i);
 			ints[0] = value.intValue();
 			assertTrue(value.hasNext());
 			ints[1] = value.intValue();
@@ -39,9 +39,9 @@ public class TestDistinctHasher extends HashingTest {
 	public void testCorrectlySized() {
 		Hasher<Object> hasher = Hashing.identityHasher().distinct(3, HashSize.fromInt(1000));
 		for (int i = 0; i < 1000; i++) {
-			testCorrectlySizedInts(hasher.hashValue(i), hasher.getSize(), 3);
-			testCorrectlySizedLongs(hasher.hashValue(i), hasher.getSize(), 3);
-			testCorrectlySizedBigs(hasher.hashValue(i), hasher.getSize(), 3);
+			testCorrectlySizedInts(hasher.hash(i), hasher.getSize(), 3);
+			testCorrectlySizedLongs(hasher.hash(i), hasher.getSize(), 3);
+			testCorrectlySizedBigs(hasher.hash(i), hasher.getSize(), 3);
 		}
 	}
 

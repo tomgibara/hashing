@@ -43,7 +43,7 @@ abstract class JavaHasher<T> implements Hasher<T> {
 
 	@Override
 	public int intHashValue(T value) {
-		return hash(value);
+		return computeHash(value);
 	}
 
 	@Override
@@ -57,16 +57,16 @@ abstract class JavaHasher<T> implements Hasher<T> {
 	}
 
 	@Override
-	public HashValue hashValue(T value) {
-		return new IntHashValue(intHashValue(value));
+	public HashCode hash(T value) {
+		return new IntHashCode(intHashValue(value));
 	}
 
-	abstract int hash(T value);
+	abstract int computeHash(T value);
 
 	private final static class ObjectHasher<T> extends JavaHasher<T> {
 
 		@Override
-		int hash(T value) {
+		int computeHash(T value) {
 			return value == null ? 0 : value.hashCode();
 		}
 
@@ -75,7 +75,7 @@ abstract class JavaHasher<T> implements Hasher<T> {
 	private final static class IdentityHasher<T> extends JavaHasher<T> {
 
 		@Override
-		int hash(T value) {
+		int computeHash(T value) {
 			return System.identityHashCode(value);
 		}
 

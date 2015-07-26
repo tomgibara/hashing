@@ -19,8 +19,8 @@ package com.tomgibara.hashing;
 
 /**
  * <p>
- * Implementations of this interface can generate one hash value for a given
- * object. Depending upon the implementation, null values may be supported.
+ * Implementations of this interface generate hash codes from objects. Depending
+ * upon the implementation, null values may be supported.
  * </p>
  *
  * @author Tom Gibara
@@ -31,9 +31,9 @@ package com.tomgibara.hashing;
 
 public interface Hasher<T> extends Hashing<T> {
 
-	// TODO can we stretch to make hash fit larger size?
+	// TODO can/should we stretch to make hash fit larger size?
 	/**
-	 * Derives a new hasher that generates hash values within a different
+	 * Derives a new hasher that generates hash codes within a different
 	 * (generally smaller) range. Unless the new size divides the size of this
 	 * hasher, there is no guarantee that values will be evenly distributed over
 	 * new range. At present, no attempt is made to distribute the hash values
@@ -55,13 +55,14 @@ public interface Hasher<T> extends Hashing<T> {
 	}
 	
 	/**
-	 * Derives a hasher that produces a fixed quantity of distinct values within
-	 * a specified range. To ensure that all value combinations are possible,
-	 * the size of this hasher must meet or exceed 'size choose quantity'.
+	 * Derives a hasher that produces a fixed quantity of distinct hash codes
+	 * within a specified range. To ensure that all value combinations are
+	 * possible, the size of this hasher must meet or exceed 'size choose
+	 * quantity'.
 	 * 
 	 * @param quantity
-	 *            the number of hash values derived a single hash value of this
-	 *            hasher
+	 *            the number of hash values derived from a single hash code of
+	 *            this hasher
 	 * @param size
 	 *            the range over which distinct values will be generated
 	 * @return a hasher that generates multiple distinct hash values
@@ -80,9 +81,10 @@ public interface Hasher<T> extends Hashing<T> {
 	
 	/**
 	 * Derives a hasher that produces an endless stream of hash values in the
-	 * range {@link HashSize#INT_SIZE} generated from the hash value created by
-	 * this hasher. It is recommended that any hasher used to derive values in
-	 * this way should have a size which is at least {@link HashSize#INT_SIZE}.
+	 * range {@link HashSize#INT_SIZE} generated from a single hash value
+	 * created by this hasher. It is recommended that any hasher used to derive
+	 * values in this way should have a size which is at least
+	 * {@link HashSize#INT_SIZE}.
 	 * 
 	 * @return a hasher that derives an endless stream of hash values for each
 	 *         object hashed by this hasher.
@@ -94,9 +96,10 @@ public interface Hasher<T> extends Hashing<T> {
 
 	/**
 	 * Derives a hasher that produces an endless stream of hash values in the
-	 * range {@link HashSize#LONG_SIZE} generated from the hash value created by
-	 * this hasher. It is recommended that any hasher used to derive values in
-	 * this way should have a size which is at least {@link HashSize#LONG_SIZE}.
+	 * range {@link HashSize#LONG_SIZE} generated from a single hash value
+	 * created by this hasher. It is recommended that any hasher used to derive
+	 * values in this way should have a size which is at least
+	 * {@link HashSize#LONG_SIZE}.
 	 * 
 	 * @return a hasher that derives an endless stream of hash values for each
 	 *         object hashed by this hasher.

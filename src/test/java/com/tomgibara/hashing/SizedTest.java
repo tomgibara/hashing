@@ -38,7 +38,7 @@ public class SizedTest extends HashingTest {
 		Hasher<Integer> h = hasher.sized(size);
 		assertEquals(size, h.getSize());
 		for (int i = 0; i < 10; i++) {
-			HashValue value = h.hashValue(i);
+			HashCode value = h.hash(i);
 			testCorrectlySizedInts(value, size, 1000);
 			testCorrectlySizedLongs(value, size, 1000);
 			testCorrectlySizedBigs(value, size, 1000);

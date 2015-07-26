@@ -55,9 +55,9 @@ public class Murmur3IntHashTest extends HashingTest {
 		Hasher<Integer> hasher = Hashing.murmur3Int().hasher((i, s) -> s.writeInt(i));
 		HashSize size = hasher.getSize();
 		for (int i = 0; i < 1000; i++) {
-			testCorrectlySizedInts(hasher.hashValue(i), size, 1);
-			testCorrectlySizedLongs(hasher.hashValue(i), size, 1);
-			testCorrectlySizedBigs(hasher.hashValue(i), size, 1);
+			testCorrectlySizedInts(hasher.hash(i), size, 1);
+			testCorrectlySizedLongs(hasher.hash(i), size, 1);
+			testCorrectlySizedBigs(hasher.hash(i), size, 1);
 		}
 	}
 

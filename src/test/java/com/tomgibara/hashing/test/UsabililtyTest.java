@@ -23,7 +23,7 @@ import org.junit.Test;
 import com.tomgibara.hashing.Hash;
 import com.tomgibara.hashing.HashSize;
 import com.tomgibara.hashing.HashSerializer;
-import com.tomgibara.hashing.HashValue;
+import com.tomgibara.hashing.HashCode;
 import com.tomgibara.hashing.Hasher;
 import com.tomgibara.hashing.Hashing;
 import com.tomgibara.streams.WriteStream;
@@ -67,14 +67,14 @@ public class UsabililtyTest extends TestCase {
 		Hasher<String> murmurSafe = Hashing.murmur3Int()
 				.seeded((s, out) -> out.writeChars(s), randomSeed);
 		{
-			murmurSafe.hashValue(str);
+			murmurSafe.hash(str);
 			// almost certainly not the same as murmur.hashValue(str)
 		}
 
 		// derive multiple hash values from a single hash function
 		Hasher<String> multiple = murmur.ints();
 		{
-			HashValue value = multiple.hashValue(str);
+			HashCode value = multiple.hash(str);
 			value.intValue(); // first hash value
 			value.intValue(); // next hash value
 			value.intValue(); // .. and so on ..
@@ -83,7 +83,7 @@ public class UsabililtyTest extends TestCase {
 		// derive multiple *distinct* hash values from a single hash function
 		Hasher<Point> distinct = murmurPt.distinct(3, HashSize.BYTE_SIZE);
 		{
-			HashValue value = distinct.hashValue(pt);
+			HashCode value = distinct.hash(pt);
 			value.intValue(); // first hash value
 			value.intValue(); // second hash value
 			value.intValue(); // third hash value
@@ -100,7 +100,7 @@ public class UsabililtyTest extends TestCase {
 		// ... with arbitrarily large hash codes
 		secure.hasher(someStream).bigHashValue(str); // 128 bit hash code
 
-		// perfect hashes for strings is also provided
+		// "minimal perfect hashing" for strings is also provided
 		Hasher<String> perfect = Hashing.minimalPerfect("mouse", "cat", "dog");
 		perfect.intHashValue("cat"); // returns 0
 		perfect.intHashValue("dog"); // returns 1

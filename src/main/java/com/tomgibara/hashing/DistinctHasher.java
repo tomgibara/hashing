@@ -53,11 +53,11 @@ class DistinctHasher<E> implements Hasher<E> {
 	}
 
 	@Override
-	public HashValue hashValue(E value) throws IllegalArgumentException {
+	public HashCode hash(E value) throws IllegalArgumentException {
 		Choices choices = choose.choices();
 		int[] intValues = longSized ?
 				choices.choiceAsArray(hasher.longHashValue(value)) :
 				choices.choiceAsArray(hasher.bigHashValue(value));
-		return new IntsHashValue(intValues);
+		return new IntsHashCode(intValues);
 	}
 }

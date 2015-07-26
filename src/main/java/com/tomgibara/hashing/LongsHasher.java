@@ -46,17 +46,17 @@ final class LongsHasher<T> implements Hasher<T> {
 	}
 
 	@Override
-	public HashValue hashValue(T value) {
-		return new MultiHashValue(hasher.hashValue(value).intValue());
+	public HashCode hash(T value) {
+		return new MultiHashCode(hasher.hash(value).intValue());
 	}
 
-	private final static class MultiHashValue extends AbstractHashValue {
+	private final static class MultiHashCode extends AbstractHashCode {
 
 		private final long probe;
 		private final long h;
 		private int i = 0;
 
-		MultiHashValue(long hashCode) {
+		MultiHashCode(long hashCode) {
 			probe = hashCode == Long.MIN_VALUE ? 1L : 1 + Math.abs(hashCode);
 			h = spread(hashCode);
 		}

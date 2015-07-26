@@ -62,17 +62,17 @@ final class IntsHasher<T> implements Hasher<T> {
 	}
 
 	@Override
-	public HashValue hashValue(T value) {
-		return new MultiHashValue(hasher.hashValue(value).intValue());
+	public HashCode hash(T value) {
+		return new MultiHashCode(hasher.hash(value).intValue());
 	}
 
-	private final static class MultiHashValue extends AbstractHashValue {
+	private final static class MultiHashCode extends AbstractHashCode {
 
 		private final int probe;
 		private final int h;
 		private int i = 0;
 
-		MultiHashValue(int hashCode) {
+		MultiHashCode(int hashCode) {
 			probe = hashCode == Integer.MIN_VALUE ? 1 : 1 + Math.abs(hashCode);
 			h = spread(hashCode);
 		}
