@@ -135,7 +135,7 @@ public interface Hashing<T> {
 	 * <p>
 	 * A "minimal perfect hash" for strings. An array of <em>n</em> unique
 	 * non-null strings will generator a hasher that returns a unique hash value
-	 * <em>h</em> (0 <= h < n) for any string <em>s</em> in the array.
+	 * <em>h</em> (0 &lt;= h &lt; n) for any string <em>s</em> in the array.
 	 * </p>
 	 *
 	 * <p>
@@ -147,14 +147,14 @@ public interface Hashing<T> {
 	 * </p>
 	 *
 	 * <p>
-	 * <strong>IMPORTANT NOTE:<strong> The array of strings supplied to the
+	 * <strong>IMPORTANT NOTE:</strong> The array of strings supplied to the
 	 * constructor will be mutated: it is re-ordered so that
 	 * <code>hash(a[i]) == i</code>. Application code must generally use this
 	 * information to map hash values back onto the appropriate string value.
 	 * </p>
 	 *
 	 * <p>
-	 * <strong>NOTE:<strong> Good performance of this algorithm is predicated on
+	 * <strong>NOTE:</strong> Good performance of this algorithm is predicated on
 	 * string hash values being cached by the <code>String</code> class.
 	 * Experience indicates that is is a good assumption.
 	 * </p>
