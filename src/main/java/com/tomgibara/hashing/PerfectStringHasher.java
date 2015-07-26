@@ -259,7 +259,6 @@ class PerfectStringHasher implements Hasher<String> {
 		return size;
 	}
 
-	//TODO decide whether to throw an IAE if -1 is returned from hash
 	@Override
 	public int intHashValue(String value) {
 		return hash(value);
@@ -285,14 +284,19 @@ class PerfectStringHasher implements Hasher<String> {
 	 *
 	 * @param value
 	 *            any string, not null
-	 * @return a minimal hashcode for the supplied string, or -1
+	 * @return a minimal hashcode for the supplied string
+	 * @throws IllegalArgumentException
+	 *             if it is know that the supplied string is not a hashable
+	 *             value
 	 */
 
 	private int hash(String value) {
 		final int h = value.hashCode();
 		final int index = Arrays.binarySearch(hashes, h);
 		final int[] pivots = this.pivots;
-		if (pivots == null || index < 0) return index;
+		if (pivots == null || index < 0) {
+			throw new IllegalArgumentException("invalid string");
+		}
 
 		final int offset = offsets[index << 1];
 		if (offset == -1) return index;
@@ -315,7 +319,10 @@ class PerfectStringHasher implements Hasher<String> {
 			i <<= 1;
 			if (right) i++;
 		}
-		return i >= count ? -1 : index + i - offsets[(index << 1) + 1];
+		if (i >= count) {
+			throw new IllegalArgumentException("invalid string");
+		}
+		return index + i - offsets[(index << 1) + 1];
 	}
 
 }

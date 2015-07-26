@@ -26,7 +26,7 @@ package com.tomgibara.hashing;
  * @author Tom Gibara
  *
  * @param <T>
- *            the type of object for which hashes are be generated
+ *            the type of object for which hashes are generated
  */
 
 public interface Hasher<T> extends Hashing<T> {
@@ -54,17 +54,53 @@ public interface Hasher<T> extends Hashing<T> {
 		return new SizedBigHasher<>(this, newSize);
 	}
 	
-	default Hasher<T> distinct(int quantity, HashSize size) {
+	/**
+	 * Derives a hasher that produces a fixed quantity of distinct values within
+	 * a specified range. To ensure that all value combinations are possible,
+	 * the size of this hasher must meet or exceed 'size choose quantity'.
+	 * 
+	 * @param quantity
+	 *            the number of hash values derived a single hash value of this
+	 *            hasher
+	 * @param size
+	 *            the range over which distinct values will be generated
+	 * @return a hasher that generates multiple distinct hash values
+	 * @throws IllegalArgumentException
+	 *             if the size is not integer sized or the quantity is outside
+	 *             the range [1,size]
+	 */
+	
+	default Hasher<T> distinct(int quantity, HashSize size) throws IllegalArgumentException {
 		if (quantity < 1) throw new IllegalArgumentException("non-positive quantity");
 		if (size == null) throw new IllegalArgumentException("null size");
 		if (!size.isIntSized()) throw new IllegalArgumentException("size not int sized");
-		if (quantity > size.asBig().intValue()) throw new IllegalArgumentException("quantity exceeds size of size");
+		if (quantity > size.asInt()) throw new IllegalArgumentException("quantity exceeds size of size");
 		return new DistinctHasher<>(size, quantity, this);
 	}
+	
+	/**
+	 * Derives a hasher that produces an endless stream of hash values in the
+	 * range {@link HashSize#INT_SIZE} generated from the hash value created by
+	 * this hasher. It is recommended that any hasher used to derive values in
+	 * this way should have a size which is at least {@link HashSize#INT_SIZE}.
+	 * 
+	 * @return a hasher that derives an endless stream of hash values for each
+	 *         object hashed by this hasher.
+	 */
 
 	default Hasher<T> ints() {
 		return new IntsHasher<>(this);
 	}
+
+	/**
+	 * Derives a hasher that produces an endless stream of hash values in the
+	 * range {@link HashSize#LONG_SIZE} generated from the hash value created by
+	 * this hasher. It is recommended that any hasher used to derive values in
+	 * this way should have a size which is at least {@link HashSize#LONG_SIZE}.
+	 * 
+	 * @return a hasher that derives an endless stream of hash values for each
+	 *         object hashed by this hasher.
+	 */
 
 	default Hasher<T> longs() {
 		return new LongsHasher<>(this);
