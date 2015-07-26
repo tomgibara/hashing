@@ -18,14 +18,6 @@ package com.tomgibara.hashing;
 
 import java.math.BigInteger;
 
-/**
- * Generic hash generator, produces a single hash which is the result of calling
- * {@link #hashCode()} on the object, or zero for null.
- *
- * @author tomgibara
- *
- */
-
 abstract class JavaHasher<T> implements Hasher<T> {
 
 	private static ObjectHasher<?> object = new ObjectHasher<>();

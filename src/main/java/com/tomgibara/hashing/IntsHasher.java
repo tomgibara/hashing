@@ -26,7 +26,7 @@ import java.math.BigInteger;
  * http://code.google.com/p/concurrentlinkedhashmap/wiki/BloomFilter
  * by Benjamin Manes.
  *
- * @author tomgibara
+ * @author Tom Gibara
  *
  * @param <T>
  *            the type of objects for which hashes will be generated
