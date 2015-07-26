@@ -12,16 +12,6 @@ final class BigHashValue extends AbstractHashValue {
 	}
 
 	@Override
-	public int intValue() {
-		return bigValue.intValueExact();
-	}
-
-	@Override
-	public long longValue() {
-		return bigValue.longValueExact();
-	}
-
-	@Override
 	public BigInteger bigValue() {
 		return bigValue;
 	}

@@ -28,6 +28,15 @@ import com.tomgibara.streams.WriteStream;
 
 public interface HashStreamer<T> {
 
+	/**
+	 * Called to serialize an object instance to a stream.
+	 * 
+	 * @param value
+	 *            the object to be serialized
+	 * @param stream
+	 *            the stream to which the object should be serialized
+	 */
+
 	void stream(T value, WriteStream stream);
 
 }
