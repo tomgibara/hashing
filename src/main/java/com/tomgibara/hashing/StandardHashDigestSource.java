@@ -69,7 +69,6 @@ class StandardHashDigestSource implements HashDigestSource {
 	StandardHashDigestSource(MessageDigest digest) {
 		algorithm = digest.getAlgorithm();
 		provider = digest.getProvider();
-		if (isCloneable(digest)) throw new IllegalArgumentException("digest not cloneable");
 		size = HashSize.fromByteLength( lengthInBytes(digest) );
 		this.digest = isCloneable(digest) ? digest : null;
 	}
