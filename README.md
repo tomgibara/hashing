@@ -104,8 +104,7 @@ currently have. Any of these may be necessary for your application:
 Usage
 -----
 
-The bits library is shortly to be made available from the Maven
-central repository:
+The hashing library is available from the Maven central repository:
 
 > Group ID:    `com.tomgibara.hashing`
 > Artifact ID: `hashing`
@@ -122,7 +121,7 @@ The Maven dependency being:
 Release History
 ---------------
 
-**2015.07.xx** Version 1.0.0
+**2015.07.27** Version 1.0.0
 
 Initial release
 
