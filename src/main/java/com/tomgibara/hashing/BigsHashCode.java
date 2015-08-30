@@ -19,12 +19,12 @@ package com.tomgibara.hashing;
 import java.math.BigInteger;
 import java.util.NoSuchElementException;
 
-final class BigsHashValue extends AbstractHashCode {
+final class BigsHashCode extends AbstractHashCode {
 
 	private final BigInteger[] bigValues;
 	private int index = 0;
 
-	BigsHashValue(BigInteger[] bigValues) {
+	BigsHashCode(BigInteger... bigValues) {
 		this.bigValues = bigValues;
 	}
 

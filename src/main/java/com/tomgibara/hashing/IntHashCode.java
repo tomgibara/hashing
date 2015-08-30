@@ -25,6 +25,11 @@ final class IntHashCode extends AbstractHashCode {
 	public IntHashCode(int intValue) {
 		this.intValue = intValue;
 	}
+	
+	@Override
+	public boolean hasNext() {
+		return true;
+	}
 
 	@Override
 	public int intValue() {

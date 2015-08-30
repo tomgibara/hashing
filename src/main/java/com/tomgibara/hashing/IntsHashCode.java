@@ -24,7 +24,7 @@ final class IntsHashCode extends AbstractHashCode {
 	private final int[] intValues;
 	private int index = 0;
 
-	IntsHashCode(int[] intValues) {
+	IntsHashCode(int... intValues) {
 		this.intValues = intValues;
 	}
 

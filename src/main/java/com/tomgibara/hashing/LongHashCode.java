@@ -25,6 +25,11 @@ final class LongHashCode extends AbstractHashCode {
 	public LongHashCode(long longValue) {
 		this.longValue = longValue;
 	}
+	
+	@Override
+	public boolean hasNext() {
+		return true;
+	}
 
 	@Override
 	public int intValue() {

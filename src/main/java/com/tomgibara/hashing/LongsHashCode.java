@@ -24,7 +24,7 @@ final class LongsHashCode extends AbstractHashCode {
 	private final long[] longValues;
 	private int index = 0;
 
-	LongsHashCode(long[] longValues) {
+	LongsHashCode(long... longValues) {
 		this.longValues = longValues;
 	}
 

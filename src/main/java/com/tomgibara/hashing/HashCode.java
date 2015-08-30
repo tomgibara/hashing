@@ -98,7 +98,7 @@ public interface HashCode {
 		for (BigInteger big : bigValues) {
 			if (big == null) throw new IllegalArgumentException("null big value");
 		}
-		return new BigsHashValue(bigValues);
+		return new BigsHashCode(bigValues);
 	}
 
 	/**
@@ -137,6 +137,63 @@ public interface HashCode {
 
 	default boolean hasNext() {
 		return false;
+	}
+
+	/**
+	 * Writes the next hash values into the supplied array. The hash code may
+	 * contains fewer values than the length of the array and in this case not
+	 * all elements of the array will be written to.
+	 * 
+	 * @param bigs
+	 *            the array into which the array values should be written
+	 * @return the number of values written
+	 */
+
+	default int bigValues(BigInteger[] bigs) {
+		if (bigs == null) throw new IllegalArgumentException("null bigs");
+		int i;
+		for (i = 0; i < bigs.length && hasNext(); i++) {
+			bigs[i] = bigValue();
+		}
+		return i;
+	}
+
+	/**
+	 * Writes the next hash values into the supplied array. The hash code may
+	 * contains fewer values than the length of the array and in this case not
+	 * all elements of the array will be written to.
+	 * 
+	 * @param bigs
+	 *            the array into which the array values should be written
+	 * @return the number of values written
+	 */
+
+	default int longValues(long[] longs) {
+		if (longs == null) throw new IllegalArgumentException("null longs");
+		int i;
+		for (i = 0; i < longs.length && hasNext(); i++) {
+			longs[i] = longValue();
+		}
+		return i;
+	}
+
+	/**
+	 * Writes the next hash values into the supplied array. The hash code may
+	 * contains fewer values than the length of the array and in this case not
+	 * all elements of the array will be written to.
+	 * 
+	 * @param bigs
+	 *            the array into which the array values should be written
+	 * @return the number of values written
+	 */
+
+	default int intValues(int[] ints) {
+		if (ints == null) throw new IllegalArgumentException("null ints");
+		int i;
+		for (i = 0; i < ints.length && hasNext(); i++) {
+			ints[i] = intValue();
+		}
+		return i;
 	}
 
 }
