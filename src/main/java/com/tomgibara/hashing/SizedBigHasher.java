@@ -20,24 +20,24 @@ import java.math.BigInteger;
 
 final class SizedBigHasher<T> extends SizedHasher<T> {
 
-	public SizedBigHasher(Hashing<T> hashing, HashSize newSized) {
+	SizedBigHasher(Hashing<T> hashing, HashSize newSized) {
 		super(hashing, newSized);
 	}
 
 	@Override
-	public int intHashValue(T value) {
-		return bigHashValue(value).intValue();
+	int sizedIntValue(HashCode code) {
+		return sizedBigValue(code).intValue();
 	}
 
 	@Override
-	public long longHashValue(T value) {
-		return bigHashValue(value).longValue();
+	long sizedLongValue(HashCode code) {
+		return sizedBigValue(code).longValue();
 	}
 
 	@Override
-	public BigInteger bigHashValue(T value) {
-		BigInteger h = hashing.bigHashValue(value);
+	BigInteger sizedBigValue(HashCode code) {
+		BigInteger h = code.bigValue();
 		return isSmaller ? newSize.mapBig(h) : h;
 	}
-
+	
 }

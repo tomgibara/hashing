@@ -48,20 +48,23 @@ abstract class SizedHasher<T> implements Hasher<T> {
 	public HashCode hash(T value) {
 		return new AbstractHashCode() {
 
+			private final HashCode code = hashing.hash(value);
+
 			@Override
-			public BigInteger bigValue() {
-				return bigHashValue(value);
+			public int intValue() {
+				return sizedIntValue(code);
 			}
 
 			@Override
 			public long longValue() {
-				return longHashValue(value);
+				return sizedLongValue(code);
 			}
 
 			@Override
-			public int intValue() {
-				return intHashValue(value);
+			public BigInteger bigValue() {
+				return sizedBigValue(code);
 			}
+
 		};
 	}
 
@@ -84,5 +87,11 @@ abstract class SizedHasher<T> implements Hasher<T> {
 	public String toString() {
 		return hashing + " resized to " + newSize;
 	}
-	
+
+	abstract int sizedIntValue(HashCode code);
+
+	abstract long sizedLongValue(HashCode code);
+
+	abstract BigInteger sizedBigValue(HashCode code);
+
 }

@@ -17,7 +17,10 @@
 package com.tomgibara.hashing;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.Random;
+
+import org.junit.Assert;
 
 public class SizedTest extends HashingTest {
 
@@ -43,6 +46,22 @@ public class SizedTest extends HashingTest {
 			testCorrectlySizedLongs(value, size, 1000);
 			testCorrectlySizedBigs(value, size, 1000);
 		}
+	}
+	
+	public void testMultipleValues() {
+		int count = 10;
+		HashCode hash = hasher.hash(0);
+		int[] expected = new int[count];
+		for (int i = 0; i < count; i++) {
+			expected[i] = hash.intValue() & 0xffff;
+		}
+		Hasher<Integer> sized = hasher.sized(HashSize.SHORT_SIZE);
+		HashCode sizedHash = sized.hash(0);
+		int[] actual = new int[count];
+		for (int i = 0; i < count; i++) {
+			actual[i] = sizedHash.intValue();
+		}
+		Assert.assertArrayEquals(expected, actual);
 	}
 
 }
