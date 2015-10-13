@@ -23,7 +23,6 @@ import java.security.SecureRandom;
 import java.util.Objects;
 import java.util.Random;
 
-import com.tomgibara.streams.AbstractWriteStream;
 import com.tomgibara.streams.ByteWriteStream;
 import com.tomgibara.streams.WrappedWriteStream;
 import com.tomgibara.streams.WriteStream;
@@ -196,7 +195,7 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 
 	}
 
-	private static class LongSeedingStream extends AbstractWriteStream implements SeedingStream {
+	private static class LongSeedingStream implements WriteStream, SeedingStream {
 
 		private final Random random;
 		private long seed = 0L;

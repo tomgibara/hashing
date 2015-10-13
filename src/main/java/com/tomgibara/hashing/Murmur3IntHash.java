@@ -18,7 +18,7 @@ package com.tomgibara.hashing;
 
 import java.math.BigInteger;
 
-import com.tomgibara.streams.AbstractWriteStream;
+import com.tomgibara.streams.WriteStream;
 
 // See http://smhasher.googlecode.com/svn/trunk/MurmurHash3.cpp
 // based on http://guava-libraries.googlecode.com/git/guava/src/com/google/common/hash/Murmur3_32HashFunction.java
@@ -92,7 +92,7 @@ final class Murmur3IntHash implements Hash<Murmur3IntHash.MurmurStream> {
 
 	// inner classes
 
-	static class MurmurStream extends AbstractWriteStream {
+	static class MurmurStream implements WriteStream {
 
 		private int k1;
 		private int h1;
