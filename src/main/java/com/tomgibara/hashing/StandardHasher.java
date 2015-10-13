@@ -18,14 +18,15 @@ package com.tomgibara.hashing;
 
 import java.math.BigInteger;
 
+import com.tomgibara.streams.StreamSerializer;
 import com.tomgibara.streams.WriteStream;
 
 class StandardHasher<S extends WriteStream,T> implements Hasher<T> {
 
 	private final Hash<S> hash;
-	private final HashSerializer<T> serializer;
+	private final StreamSerializer<T> serializer;
 
-	StandardHasher(Hash<S> hash, HashSerializer<T> serializer) {
+	StandardHasher(Hash<S> hash, StreamSerializer<T> serializer) {
 		this.hash = hash;
 		this.serializer = serializer;
 	}
@@ -66,7 +67,7 @@ class StandardHasher<S extends WriteStream,T> implements Hasher<T> {
 
 	private S stream(T value) {
 		S stream = newStream();
-		serializer.stream(value, stream);
+		serializer.serialize(value, stream);
 		return stream;
 	}
 

@@ -16,6 +16,7 @@
  */
 package com.tomgibara.hashing;
 
+import com.tomgibara.streams.StreamSerializer;
 import com.tomgibara.streams.WriteStream;
 
 /**
@@ -49,7 +50,7 @@ public interface Hash<S extends WriteStream> extends Hashing<S> {
 
 	/**
 	 * Derives a {@link Hasher} by combining this hash with a
-	 * {@link HashSerializer}: a new stream will be created by the hash,
+	 * <code>StreamSerializer</code>: a new stream will be created by the hash,
 	 * populated by the serializer, and converted into a hash value.
 	 * 
 	 * @param serializer
@@ -59,16 +60,16 @@ public interface Hash<S extends WriteStream> extends Hashing<S> {
 	 * @return a new hasher that uses this hash to compute the hash values
 	 */
 
-	default <T> Hasher<T> hasher(HashSerializer<T> serializer) {
+	default <T> Hasher<T> hasher(StreamSerializer<T> serializer) {
 		if (serializer == null) throw new IllegalArgumentException("null serializer");
 		return new StandardHasher<S, T>(this, serializer);
 	}
 
 	/**
 	 * Derives a {@link Hasher} by combining this hash with a
-	 * {@link HashSerializer}. The supplied seed changes the hash values that
-	 * will be created by the derived hasher based on this hash. This can be
-	 * useful when creating data structures that need to be resiliant to
+	 * <code>StreamSerializer</code>. The supplied seed changes the hash values
+	 * that will be created by the derived hasher based on this hash. This can
+	 * be useful when creating data structures that need to be resiliant to
 	 * orchestrated collision attacks.
 	 * 
 	 * @param serializer
@@ -80,7 +81,7 @@ public interface Hash<S extends WriteStream> extends Hashing<S> {
 	 * @return a new hasher that uses this hash to compute the hash values
 	 */
 
-	default <T> Hasher<T> seeded(HashSerializer<T> serializer, long seed) {
+	default <T> Hasher<T> seeded(StreamSerializer<T> serializer, long seed) {
 		if (serializer == null) throw new IllegalArgumentException("null serializer");
 		return new SeededHasher<S, T>(this, serializer, seed);
 	}

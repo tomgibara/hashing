@@ -19,17 +19,11 @@ package com.tomgibara.hashing;
 import java.math.BigInteger;
 import java.util.Random;
 
-import com.tomgibara.streams.WriteStream;
+import com.tomgibara.streams.StreamSerializer;
 
 public class RandomHashTest extends HashingTest {
 
-	private static final HashSerializer<Integer> streamer = new HashSerializer<Integer>() {
-
-		@Override
-		public void stream(Integer value, WriteStream stream) {
-			stream.writeInt(value);
-		}
-	};
+	private static final StreamSerializer<Integer> streamer = (v, s) -> s.writeInt(v);
 
 	public void testSize() throws Exception {
 		testSize(HashSize.fromInt(50));

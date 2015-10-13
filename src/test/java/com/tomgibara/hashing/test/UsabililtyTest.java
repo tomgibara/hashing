@@ -23,11 +23,10 @@ import org.junit.Test;
 import com.tomgibara.hashing.Hash;
 import com.tomgibara.hashing.HashDigestSource;
 import com.tomgibara.hashing.HashSize;
-import com.tomgibara.hashing.HashSerializer;
 import com.tomgibara.hashing.HashCode;
 import com.tomgibara.hashing.Hasher;
 import com.tomgibara.hashing.Hashing;
-import com.tomgibara.streams.WriteStream;
+import com.tomgibara.streams.StreamSerializer;
 
 import junit.framework.TestCase;
 
@@ -35,10 +34,7 @@ public class UsabililtyTest extends TestCase {
 
 	private static final String str = "...mon panache";
 	private static final Point pt = new Point();
-	private static final HashSerializer<String> someStream = new HashSerializer<String>() {
-		@Override
-		public void stream(String value, WriteStream stream) { }
-	};
+	private static final StreamSerializer<String> someStream = (v,s) -> {};
 	private static final long randomSeed = 0L;
 
 	@Test

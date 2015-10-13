@@ -16,13 +16,14 @@
  */
 package com.tomgibara.hashing;
 
+import com.tomgibara.streams.StreamSerializer;
 import com.tomgibara.streams.WriteStream;
 
 class SeededHasher<S extends WriteStream,T> extends StandardHasher<S,T> {
 
 	private final long seed;
 
-	SeededHasher(Hash<S> hash, HashSerializer<T> serializer, long seed) {
+	SeededHasher(Hash<S> hash, StreamSerializer<T> serializer, long seed) {
 		super(hash, serializer);
 		this.seed = seed;
 	}
