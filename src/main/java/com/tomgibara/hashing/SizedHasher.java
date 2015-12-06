@@ -46,7 +46,7 @@ abstract class SizedHasher<T> implements Hasher<T> {
 
 	@Override
 	public HashCode hash(T value) {
-		return new AbstractHashCode() {
+		return new AbstractHashCode(newSize) {
 
 			private final HashCode code = hashing.hash(value);
 

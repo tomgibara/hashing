@@ -23,6 +23,13 @@ final class LongHashCode extends AbstractHashCode {
 	private final long longValue;
 
 	public LongHashCode(long longValue) {
+		super(HashSize.LONG_SIZE);
+		this.longValue = longValue;
+	}
+
+	public LongHashCode(HashSize size, long longValue) {
+		super(size);
+		if (!size.isLongCapacity()) throw new IllegalArgumentException("size exceeds long capacity");
 		this.longValue = longValue;
 	}
 	

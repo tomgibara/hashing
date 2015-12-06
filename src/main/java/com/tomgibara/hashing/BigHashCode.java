@@ -11,7 +11,8 @@ final class BigHashCode extends AbstractHashCode {
 		return true;
 	}
 
-	public BigHashCode(BigInteger bigValue) {
+	public BigHashCode(HashSize size, BigInteger bigValue) {
+		super(size);
 		if (bigValue == null) throw new IllegalArgumentException("null bigValue");
 		this.bigValue = bigValue;
 	}

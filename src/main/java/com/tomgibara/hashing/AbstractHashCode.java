@@ -2,6 +2,18 @@ package com.tomgibara.hashing;
 
 abstract class AbstractHashCode implements HashCode {
 
+	final HashSize size;
+	
+	AbstractHashCode(HashSize size) {
+		if (size == null) throw new IllegalArgumentException("null size");
+		this.size = size;
+	}
+	
+	@Override
+	public HashSize size() {
+		return size;
+	}
+	
 	@Override
 	public int hashCode() {
 		return intValue();

@@ -25,6 +25,13 @@ final class LongsHashCode extends AbstractHashCode {
 	private int index = 0;
 
 	LongsHashCode(long... longValues) {
+		super(HashSize.LONG_SIZE);
+		this.longValues = longValues;
+	}
+
+	LongsHashCode(HashSize size, long... longValues) {
+		super(size);
+		if (!size.isLongCapacity()) throw new IllegalArgumentException("size exceeds long capacity");
 		this.longValues = longValues;
 	}
 

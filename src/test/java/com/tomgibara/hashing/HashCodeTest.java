@@ -31,7 +31,7 @@ public class HashCodeTest extends HashingTest {
 
 	public void testBigArrays() {
 		BigInteger[] bs = new BigInteger[5];
-		int count = new BigHashCode(BigInteger.ONE).bigValues(bs);
+		int count = new BigHashCode(HashSize.BYTE_SIZE, BigInteger.ONE).bigValues(bs);
 		Assert.assertEquals(5, count);
 		BigInteger[] e = new BigInteger[5];
 		Arrays.fill(e, BigInteger.ONE);
@@ -62,7 +62,7 @@ public class HashCodeTest extends HashingTest {
 
 	public void testBigsArrays() {
 		BigInteger[] bs = new BigInteger[10];
-		int count = new BigsHashCode(ZERO,ONE,valueOf(2L),valueOf(3L),valueOf(4L)).bigValues(bs);
+		int count = new BigsHashCode(HashSize.BYTE_SIZE,ZERO,ONE,valueOf(2L),valueOf(3L),valueOf(4L)).bigValues(bs);
 		Assert.assertEquals(5, count);
 		BigInteger[] e = new BigInteger[10];
 		for (int i = 0; i < 5; i++) {

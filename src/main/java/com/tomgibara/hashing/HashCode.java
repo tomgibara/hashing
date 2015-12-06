@@ -29,6 +29,8 @@ import java.math.BigInteger;
 
 public interface HashCode {
 
+	HashSize size();
+	
 	/**
 	 * A hash code with an integer value.
 	 * 
@@ -57,7 +59,7 @@ public interface HashCode {
 	 * @return a hash code
 	 */
 
-	static HashCode fromBig(BigInteger bigValue) { return new BigHashCode(bigValue); }
+	static HashCode fromBig(HashSize size, BigInteger bigValue) { return new BigHashCode(size, bigValue); }
 
 	/**
 	 * A hash value consisting of a multiplicity of integer values.
@@ -69,7 +71,7 @@ public interface HashCode {
 
 	static HashCode fromInts(int... intValues) {
 		if (intValues == null) throw new IllegalArgumentException("null intValues");
-		return new IntsHashCode(intValues);
+		return new IntsHashCode(HashSize.INT_SIZE, intValues);
 	}
 	
 	/**
@@ -82,7 +84,7 @@ public interface HashCode {
 
 	static HashCode fromLongs(long... longValues) {
 		if (longValues == null) throw new IllegalArgumentException("null longValues");
-		return new LongsHashCode(longValues);
+		return new LongsHashCode(HashSize.LONG_SIZE, longValues);
 	}
 
 	/**
@@ -93,12 +95,14 @@ public interface HashCode {
 	 * @return a hash code
 	 */
 
-	static HashCode fromLongs(BigInteger... bigValues) {
+	static HashCode fromBigs(HashSize size, BigInteger... bigValues) {
+		if (size == null) throw new IllegalArgumentException("null size");
 		if (bigValues == null) throw new IllegalArgumentException("null bigValues");
 		for (BigInteger big : bigValues) {
 			if (big == null) throw new IllegalArgumentException("null big value");
+			if (size.containsBig(big)) throw new IllegalArgumentException("invalid big value");
 		}
-		return new BigsHashCode(bigValues);
+		return new BigsHashCode(HashSize.LONG_SIZE, bigValues);
 	}
 
 	/**
@@ -108,7 +112,7 @@ public interface HashCode {
 	 */
 
 	BigInteger bigValue();
-
+	
 	/**
 	 * The next hash value a long integer.
 	 * 

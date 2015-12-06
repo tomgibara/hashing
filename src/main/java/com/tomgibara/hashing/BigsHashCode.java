@@ -24,7 +24,8 @@ final class BigsHashCode extends AbstractHashCode {
 	private final BigInteger[] bigValues;
 	private int index = 0;
 
-	BigsHashCode(BigInteger... bigValues) {
+	BigsHashCode(HashSize size, BigInteger... bigValues) {
+		super(size);
 		this.bigValues = bigValues;
 	}
 

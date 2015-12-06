@@ -50,7 +50,7 @@ final class DigestHash implements Hash<DigestWriteStream> {
 
 	@Override
 	public HashCode hash(DigestWriteStream stream) {
-		return new BigHashCode(bigHashValue(stream));
+		return new BigHashCode(size, bigHashValue(stream));
 	}
 
 	@Override

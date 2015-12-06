@@ -330,6 +330,10 @@ public final class HashSize implements Comparable<HashSize> {
 		return powerOfTwo ? value.and(mask) : value.mod(bigSize);
 	}
 
+	public boolean containsBig(BigInteger value) {
+		return value.signum() >=0 && value.compareTo(bigSize) < 0;
+	}
+
 	// comparable methods
 
 	@Override

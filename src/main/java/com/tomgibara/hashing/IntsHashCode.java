@@ -19,12 +19,20 @@ package com.tomgibara.hashing;
 import java.math.BigInteger;
 import java.util.NoSuchElementException;
 
+//TODO should values be checked against size?
 final class IntsHashCode extends AbstractHashCode {
 
 	private final int[] intValues;
 	private int index = 0;
 
 	IntsHashCode(int... intValues) {
+		super(HashSize.INT_SIZE);
+		this.intValues = intValues;
+	}
+
+	IntsHashCode(HashSize size, int... intValues) {
+		super(size);
+		if (!size.isIntCapacity()) throw new IllegalArgumentException("size exceeds int capacity");
 		this.intValues = intValues;
 	}
 

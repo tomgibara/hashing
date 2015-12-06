@@ -23,6 +23,13 @@ final class IntHashCode extends AbstractHashCode {
 	private final int intValue;
 
 	public IntHashCode(int intValue) {
+		super(HashSize.INT_SIZE);
+		this.intValue = intValue;
+	}
+	
+	public IntHashCode(HashSize size, int intValue) {
+		super(size);
+		if (!size.isIntCapacity()) throw new IllegalArgumentException("size exceeds int capacity");
 		this.intValue = intValue;
 	}
 	

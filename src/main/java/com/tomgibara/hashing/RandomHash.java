@@ -83,6 +83,11 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 		return new HashCode() {
 
 			@Override
+			public HashSize size() {
+				return size;
+			}
+			
+			@Override
 			public boolean hasNext() {
 				return true;
 			}
