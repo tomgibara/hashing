@@ -23,7 +23,8 @@ import java.security.SecureRandom;
 import java.util.Objects;
 import java.util.Random;
 
-import com.tomgibara.streams.ByteWriteStream;
+import com.tomgibara.streams.StreamBytes;
+import com.tomgibara.streams.Streams;
 import com.tomgibara.streams.WrappedWriteStream;
 import com.tomgibara.streams.WriteStream;
 
@@ -67,7 +68,7 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 		if (algorithm == null) {
 			return new LongSeedingStream(new Random());
 		} else {
-			return new BytesSeedingStream(newRandom());
+			return new BytesSeedingStream(newRandom(), Streams.bytes());
 		}
 	}
 
@@ -237,18 +238,20 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 
 	}
 
-	private static class BytesSeedingStream extends WrappedWriteStream<ByteWriteStream> implements SeedingStream {
+	private static class BytesSeedingStream extends WrappedWriteStream implements SeedingStream {
 
+		private final StreamBytes bytes;
 		private final SecureRandom random;
 
-		BytesSeedingStream(SecureRandom random) {
-			super(new ByteWriteStream());
+		BytesSeedingStream(SecureRandom random, StreamBytes bytes) {
+			super(bytes.writer());
+			this.bytes = bytes;
 			this.random = random;
 		}
 
 		@Override
 		public Random getRandom() {
-			random.setSeed(wrapped.getBytes());
+			random.setSeed(bytes.bytes());
 			return random;
 		}
 

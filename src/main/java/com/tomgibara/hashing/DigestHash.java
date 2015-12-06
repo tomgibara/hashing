@@ -20,6 +20,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 
 import com.tomgibara.streams.DigestWriteStream;
+import com.tomgibara.streams.Streams;
 
 final class DigestHash implements Hash<DigestWriteStream> {
 
@@ -44,7 +45,7 @@ final class DigestHash implements Hash<DigestWriteStream> {
 	@Override
 	public DigestWriteStream newStream() {
 		MessageDigest digest = digestSource.newDigest();
-		return new DigestWriteStream(digest);
+		return Streams.streamDigest(digest);
 	}
 
 	@Override
