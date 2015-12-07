@@ -55,6 +55,12 @@ final class IntsHashCode extends AbstractHashCode {
 	}
 
 	@Override
+	public byte[] bytesValue() {
+		checkIndex();
+		return intToBytes(intValues[index++]);
+	}
+	
+	@Override
 	public boolean hasNext() {
 		return index < intValues.length;
 	}

@@ -81,6 +81,11 @@ final class LongsHasher<T> implements Hasher<T> {
 		}
 
 		@Override
+		public byte[] bytesValue() {
+			return longToBytes(longValue());
+		}
+
+		@Override
 		public boolean hasNext() {
 			return true;
 		}

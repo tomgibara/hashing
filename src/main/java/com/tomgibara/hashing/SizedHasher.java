@@ -65,6 +65,10 @@ abstract class SizedHasher<T> implements Hasher<T> {
 				return sizedBigValue(code);
 			}
 
+			@Override
+			public byte[] bytesValue() {
+				return sizedBytesValue(code);
+			}
 		};
 	}
 
@@ -94,4 +98,5 @@ abstract class SizedHasher<T> implements Hasher<T> {
 
 	abstract BigInteger sizedBigValue(HashCode code);
 
+	abstract byte[] sizedBytesValue(HashCode code);
 }

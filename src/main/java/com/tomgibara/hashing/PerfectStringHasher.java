@@ -275,6 +275,11 @@ class PerfectStringHasher implements Hasher<String> {
 	}
 
 	@Override
+	public byte[] bytesHashValue(String value) throws IllegalArgumentException {
+		return AbstractHashCode.intToBytes(computeHash(value));
+	}
+
+	@Override
 	public HashCode hash(String value) {
 		return new IntHashCode(computeHash(value));
 	}

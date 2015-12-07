@@ -17,6 +17,7 @@
 package com.tomgibara.hashing;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 
 /**
  * Records the size of hash values that can be generated from a {@link Hashing}.
@@ -110,6 +111,7 @@ public final class HashSize implements Comparable<HashSize> {
 
 	private final BigInteger bigSize;
 	private final int bits;
+	private final int bytes;
 	private final boolean powerOfTwo;
 	private final BigInteger mask;
 
@@ -129,6 +131,7 @@ public final class HashSize implements Comparable<HashSize> {
 		bigSize = size;
 		BigInteger sizeMinusOne = size.subtract(BigInteger.ONE);
 		bits = sizeMinusOne.bitLength();
+		bytes = (bits + 7) >> 3;
 		powerOfTwo = size.bitCount() == 1;
 		mask = powerOfTwo ? sizeMinusOne : BigInteger.ONE.shiftLeft(bits).subtract(BigInteger.ONE);
 		intSized = bits < 32;
@@ -144,6 +147,7 @@ public final class HashSize implements Comparable<HashSize> {
 	HashSize(int size) {
 		bigSize = BigInteger.valueOf(size);
 		bits = 32 - Integer.numberOfLeadingZeros(size - 1);
+		bytes = (bits + 7) >> 3;
 		powerOfTwo = Integer.highestOneBit(size) == size;
 		mask = (powerOfTwo ? this.bigSize : BigInteger.ONE.shiftLeft(bits)).subtract(BigInteger.ONE);
 		intSized = true;
@@ -159,6 +163,7 @@ public final class HashSize implements Comparable<HashSize> {
 	HashSize(long size) {
 		bigSize = BigInteger.valueOf(size);
 		bits = 64 - Long.numberOfLeadingZeros(size - 1L);
+		bytes = (bits + 7) >> 3;
 		powerOfTwo = Long.highestOneBit(size) == size;
 		mask = (powerOfTwo ? this.bigSize : BigInteger.ONE.shiftLeft(bits)).subtract(BigInteger.ONE);
 		intSized = bits < 32;
@@ -191,6 +196,16 @@ public final class HashSize implements Comparable<HashSize> {
 
 	public int getBits() {
 		return bits;
+	}
+
+	/**
+	 * The number of bytes required to store hashes of this size.
+	 * 
+	 * @return the number of bytes, always greater than zero
+	 */
+
+	public int getBytes() {
+		return bytes;
 	}
 
 	/**
@@ -330,7 +345,54 @@ public final class HashSize implements Comparable<HashSize> {
 		return powerOfTwo ? value.and(mask) : value.mod(bigSize);
 	}
 
-	public boolean containsBig(BigInteger value) {
+	/**
+	 * Maps an arbitrary byte array into the range of this size by treating the
+	 * bytes collectively as a big-endian unsigned integer and computing its
+	 * remainder modulo this size. For sizes that are a power of two, this is
+	 * equivalent to returning the number of least significant bits in a number
+	 * of bytes equal to {@link #getBytes()}.
+	 * 
+	 * @param value
+	 *            the value to be mapped into the range of this size.
+	 * @return a new byte array
+	 */
+
+	public byte[] mapBytes(byte[] value) {
+		if (!powerOfTwo) {
+			// forced to take a very slow path
+			BigInteger big = mapBig(AbstractHashCode.bigFromBytes(value));
+			return AbstractHashCode.bigToBytes(bytes, big);
+		}
+		byte[] bs;
+		int vlen = value.length;
+		if (vlen == bytes) {
+			bs = value.clone();
+		} else if (vlen > bytes) {
+			bs = Arrays.copyOfRange(value, vlen - bytes, vlen);
+		} else {
+			bs = new byte[bytes];
+			System.arraycopy(value, 0, bs, bytes - vlen, vlen);
+		}
+		int noOfBits = (bytes << 3) - bits;
+		// check if masking is necessary
+		if (noOfBits == 0) return bs;
+		int mask = 0xffffff00 >>> noOfBits;
+		bs[0] &= mask;
+		return bs;
+	}
+	
+	/**
+	 * Whether the given big integer value is within the range of this size. If
+	 * the value is negative then zero is returned.
+	 * 
+	 * @param value
+	 *            a big integer value
+	 * 
+	 * @return true if the value is non-negative and less than the value
+	 *         returned by {@link #asBig()}
+	 */
+
+	public boolean containsBigValue(BigInteger value) {
 		return value.signum() >=0 && value.compareTo(bigSize) < 0;
 	}
 

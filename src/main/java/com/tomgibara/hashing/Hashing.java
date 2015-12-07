@@ -211,6 +211,27 @@ public interface Hashing<T> {
 	 * 
 	 * <p>
 	 * If multiple values are required for a single hashing then
+	 * {@link HashCode#bytesValue()} must be used.
+	 *
+	 * @param value
+	 *            the object to be hashed
+	 * @return the computed hash value
+	 * @throws IllegalArgumentException
+	 *             if the supplied value cannot be hashed by this object
+	 */
+
+	default byte[] bytesHashValue(T value) throws IllegalArgumentException {
+		return hash(value).bytesValue();
+	}
+
+	/**
+	 * <p>
+	 * The hash code as a {@link BigInteger}. This method may be useful in
+	 * circumstances where the generated hash is too large to be accommodated in
+	 * a single primitive value, eg. if cryptographic hashes are being used.
+	 * 
+	 * <p>
+	 * If multiple values are required for a single hashing then
 	 * {@link HashCode#bigValue()} must be used.
 	 *
 	 * @param value

@@ -51,6 +51,7 @@ public interface Hasher<T> extends Hashing<T> {
 		if (oldSize.equals(newSize)) return this;
 		if (oldSize.isIntCapacity()) return new SizedIntHasher<>(this, newSize);
 		if (oldSize.isLongCapacity()) return new SizedLongHasher<>(this, newSize);
+		if (newSize.isPowerOfTwo()) return new SizedBytesHasher<>(this, newSize);
 		return new SizedBigHasher<>(this, newSize);
 	}
 	

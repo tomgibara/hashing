@@ -100,19 +100,23 @@ public interface HashCode {
 		if (bigValues == null) throw new IllegalArgumentException("null bigValues");
 		for (BigInteger big : bigValues) {
 			if (big == null) throw new IllegalArgumentException("null big value");
-			if (size.containsBig(big)) throw new IllegalArgumentException("invalid big value");
+			if (size.containsBigValue(big)) throw new IllegalArgumentException("invalid big value");
 		}
 		return new BigsHashCode(HashSize.LONG_SIZE, bigValues);
 	}
 
+	byte[] bytesValue();
+	
 	/**
 	 * The next hash value a big integer.
 	 * 
 	 * @return a big integer hash value
 	 */
 
-	BigInteger bigValue();
-	
+	default BigInteger bigValue() {
+		return new BigInteger(1, bytesValue());
+	}
+
 	/**
 	 * The next hash value a long integer.
 	 * 

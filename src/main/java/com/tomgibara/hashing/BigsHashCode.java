@@ -36,6 +36,11 @@ final class BigsHashCode extends AbstractHashCode {
 	}
 
 	@Override
+	public byte[] bytesValue() {
+		return bigToBytes(size.getBytes(), bigValue());
+	}
+
+	@Override
 	public boolean hasNext() {
 		return index < bigValues.length;
 	}

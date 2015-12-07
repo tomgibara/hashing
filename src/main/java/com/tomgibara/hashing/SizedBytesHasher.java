@@ -18,40 +18,31 @@ package com.tomgibara.hashing;
 
 import java.math.BigInteger;
 
-final class SizedIntHasher<T> extends SizedHasher<T> {
+final class SizedBytesHasher<T> extends SizedHasher<T> {
 
-	SizedIntHasher(Hashing<T> hashing, HashSize newSize) {
-		super(hashing, newSize);
-	}
-
-	@Override
-	public int intHashValue(T value) {
-		int h = hashing.intHashValue(value);
-		return isSmaller ? newSize.mapInt(h) : h;
+	SizedBytesHasher(Hashing<T> hashing, HashSize newSized) {
+		super(hashing, newSized);
 	}
 
 	@Override
 	int sizedIntValue(HashCode code) {
-		int h = code.intValue();
-		return isSmaller ? newSize.mapInt(h) : h;
+		return AbstractHashCode.intFromBytes(sizedBytesValue(code));
 	}
 
 	@Override
 	long sizedLongValue(HashCode code) {
-		long h = code.longValue();
-		return isSmaller ? newSize.mapLong(h) : h;
+		return AbstractHashCode.longFromBytes(sizedBytesValue(code));
 	}
 
 	@Override
 	BigInteger sizedBigValue(HashCode code) {
-		BigInteger h = code.bigValue();
-		return isSmaller ? newSize.mapBig(h) : h;
+		return AbstractHashCode.bigFromBytes(sizedBytesValue(code));
 	}
-
+	
 	@Override
 	byte[] sizedBytesValue(HashCode code) {
 		byte[] h = code.bytesValue();
 		return isSmaller ? newSize.mapBytes(h) : h;
 	}
-
+	
 }

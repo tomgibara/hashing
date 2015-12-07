@@ -47,6 +47,11 @@ class StandardHasher<S extends WriteStream,T> implements Hasher<T> {
 	}
 
 	@Override
+	public byte[] bytesHashValue(T value) {
+		return hash.bytesHashValue(stream(value));
+	}
+
+	@Override
 	public BigInteger bigHashValue(T value) {
 		return hash.bigHashValue(stream(value));
 	}

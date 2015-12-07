@@ -54,18 +54,23 @@ final class DigestHash implements Hash<DigestWriteStream> {
 	}
 
 	@Override
+	public byte[] bytesHashValue(DigestWriteStream stream) {
+		return stream.getDigest().digest();
+	}
+
+	@Override
 	public BigInteger bigHashValue(DigestWriteStream stream) {
-		return new BigInteger(1, stream.getDigest().digest());
+		return AbstractHashCode.bigFromBytes(bytesHashValue(stream));
 	}
 
 	@Override
 	public long longHashValue(DigestWriteStream stream) {
-		return bigHashValue(stream).longValueExact();
+		return AbstractHashCode.longFromBytes(bytesHashValue(stream));
 	}
 
 	@Override
 	public int intHashValue(DigestWriteStream stream) {
-		return bigHashValue(stream).intValueExact();
+		return AbstractHashCode.intFromBytes(bytesHashValue(stream));
 	}
 
 }

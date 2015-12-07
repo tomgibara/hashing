@@ -54,6 +54,11 @@ final class IntHashCode extends AbstractHashCode {
 	}
 
 	@Override
+	public byte[] bytesValue() {
+		return intToBytes(intValue);
+	}
+	
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) return true;
 		if (obj instanceof IntHashCode) return this.intValue == ((IntHashCode) obj).intValue;

@@ -94,6 +94,11 @@ final class IntsHasher<T> implements Hasher<T> {
 		}
 
 		@Override
+		public byte[] bytesValue() {
+			return intToBytes(intValue());
+		}
+		
+		@Override
 		public boolean hasNext() {
 			return true;
 		}

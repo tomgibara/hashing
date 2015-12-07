@@ -22,4 +22,8 @@ final class BigHashCode extends AbstractHashCode {
 		return bigValue;
 	}
 
+	@Override
+	public byte[] bytesValue() {
+		return bigToBytes(size.getBytes(), bigValue);
+	}
 }

@@ -54,6 +54,11 @@ final class LongHashCode extends AbstractHashCode {
 	}
 
 	@Override
+	public byte[] bytesValue() {
+		return longToBytes(longValue);
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) return true;
 		if (obj instanceof LongHashCode) return this.longValue == ((LongHashCode) obj).longValue;

@@ -40,4 +40,10 @@ final class SizedBigHasher<T> extends SizedHasher<T> {
 		return isSmaller ? newSize.mapBig(h) : h;
 	}
 	
+	@Override
+	byte[] sizedBytesValue(HashCode code) {
+		byte[] h = code.bytesValue();
+		return isSmaller ? newSize.mapBytes(h) : h;
+	}
+	
 }

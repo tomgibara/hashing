@@ -52,6 +52,11 @@ final class LongsHashCode extends AbstractHashCode {
 	}
 
 	@Override
+	public byte[] bytesValue() {
+		return longToBytes(longValue());
+	}
+
+	@Override
 	public boolean hasNext() {
 		return index < longValues.length;
 	}

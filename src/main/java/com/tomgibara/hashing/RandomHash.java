@@ -31,7 +31,7 @@ import com.tomgibara.streams.WriteStream;
 class RandomHash implements Hash<RandomHash.SeedingStream> {
 
 	private enum Type {
-		INT, FULL_INT, LONG, LONG_BITS, FULL_LONG, BIG_BITS, BIG;
+		INT, FULL_INT, LONG, LONG_BITS, FULL_LONG, BIG_BYTES, BIG_BITS, BIG;
 
 		static Type from(HashSize size) {
 			if (size.isIntSized()) return INT;
@@ -40,6 +40,7 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 				if (bits == 32) return FULL_INT;
 				if (bits < 64) return LONG_BITS;
 				if (bits == 64) return FULL_LONG;
+				if ((bits & 7) == 0) return BIG_BYTES;
 				return BIG_BITS;
 			}
 			if (bits < 64) return LONG;
@@ -80,13 +81,8 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 	@Override
 	public HashCode hash(SeedingStream value) {
 		final Random random = value.getRandom();
-		return new HashCode() {
+		return new AbstractHashCode(size) {
 
-			@Override
-			public HashSize size() {
-				return size;
-			}
-			
 			@Override
 			public boolean hasNext() {
 				return true;
@@ -103,6 +99,8 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 				case LONG_BITS:
 				case FULL_LONG:
 					return (int) longValue();
+				case BIG_BYTES:
+					return intFromBytes(bytesValue());
 				case BIG_BITS:
 				case BIG:
 					return bigValue().intValue();
@@ -127,6 +125,8 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 					return size.mapLong(random.nextLong());
 				case FULL_LONG:
 					return random.nextLong();
+				case BIG_BYTES:
+					return longFromBytes(bytesValue());
 				case BIG_BITS:
 				case BIG:
 					return bigValue().longValue();
@@ -145,11 +145,33 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 					return BigInteger.valueOf(longValue());
 				case FULL_LONG:
 					return HashSize.BIG_ULONG.add(BigInteger.valueOf(longValue()));
+				case BIG_BYTES:
+					return bigFromBytes(bytesValue());
 				case BIG_BITS:
 					return new BigInteger(size.getBits(), random);
 				case BIG:
 					//TODO want a better solution for this
 					return size.mapBig(new BigInteger(size.getBits() + 16, random));
+					default: throw new IllegalStateException();
+				}
+			}
+
+			@Override
+			public byte[] bytesValue() {
+				switch (type) {
+				case INT:
+				case FULL_INT:
+					return intToBytes(intValue());
+				case LONG:
+				case LONG_BITS:
+					return longToBytes(longValue());
+				case BIG_BYTES:
+					byte[] bytes = new byte[size.getBytes()];
+					random.nextBytes(bytes);
+					return bytes;
+				case BIG_BITS:
+				case BIG:
+					return bigToBytes(size.getBytes(), bigValue());
 					default: throw new IllegalStateException();
 				}
 			}
