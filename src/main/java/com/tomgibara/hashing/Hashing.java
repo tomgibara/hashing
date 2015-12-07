@@ -17,6 +17,9 @@
 package com.tomgibara.hashing;
 
 import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 
 /**
@@ -129,6 +132,67 @@ public interface Hashing<T> {
 		if (provider.isEmpty()) throw new IllegalArgumentException("empty provider");
 		if (size == null) throw new IllegalArgumentException("null size");
 		return new RandomHash(algorithm, provider, size);
+	}
+
+	/**
+	 * Provides a standard source of SHA-1 digests.
+	 * 
+	 * @return a source of SHA-1 digests
+	 */
+
+	static HashDigestSource SHA1() {
+		return StandardHashDigestSource.SHA1();
+	}
+
+	/**
+	 * Creates a digest source for the specified algorithm based on the
+	 * platform's default provider.
+	 * 
+	 * @param algorithm
+	 *            the name of the digest algorithm
+	 * @return a source of the specified digests
+	 * @throws NoSuchAlgorithmException
+	 *             if there is no digest provided for the specified algorithm
+	 */
+
+	static HashDigestSource digestSource(String algorithm) throws NoSuchAlgorithmException {
+		if (algorithm == null) throw new IllegalArgumentException("null algorithm");
+		return new StandardHashDigestSource(algorithm);
+	}
+
+	/**
+	 * Creates a digest source for the specified algorithm based on the supplied
+	 * platform.
+	 * 
+	 * @param algorithm
+	 *            the name of the digest algorithm
+	 * @param provider
+	 *            the name of the digest provider
+	 * @return a source of digests using the chosen provider
+	 * @throws NoSuchProviderException
+	 *             if there is no provider with the given name
+	 * @throws NoSuchAlgorithmException
+	 *             if the provider does not support an algorithm with the given
+	 *             name
+	 */
+
+	static HashDigestSource digestSource(String algorithm, String provider) throws NoSuchAlgorithmException, NoSuchProviderException {
+		if (algorithm == null) throw new IllegalArgumentException("null algorithm");
+		if (provider == null) throw new IllegalArgumentException("null provider");
+		return new StandardHashDigestSource(algorithm, provider);
+	}
+
+	/**
+	 * Attempts to derive an digest source by cloning the supplied digest.
+	 * 
+	 * @param digest
+	 *            the digest to be cloned
+	 * @return a source of digests based on cloning
+	 */
+
+	static HashDigestSource digestSource(MessageDigest digest) {
+		if (digest == null) throw new IllegalArgumentException("null digest");
+		return new StandardHashDigestSource(digest);
 	}
 
 	/**
