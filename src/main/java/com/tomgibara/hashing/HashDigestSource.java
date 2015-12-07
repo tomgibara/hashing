@@ -105,7 +105,7 @@ public interface HashDigestSource {
 	 *         this source to derive the hash values.
 	 */
 
-	default Hash<?> asHash() {
+	default Hash asHash() {
 		return new DigestHash(this);
 	}
 

@@ -23,7 +23,7 @@ import com.tomgibara.streams.WriteStream;
 // See http://smhasher.googlecode.com/svn/trunk/MurmurHash3.cpp
 // based on http://guava-libraries.googlecode.com/git/guava/src/com/google/common/hash/Murmur3_32HashFunction.java
 
-final class Murmur3IntHash implements Hash<Murmur3IntHash.MurmurStream> {
+final class Murmur3IntHash implements Hash {
 
 	static final int c1 = 0xcc9e2d51;
 	static final int c2 = 0x1b873593;
@@ -46,33 +46,33 @@ final class Murmur3IntHash implements Hash<Murmur3IntHash.MurmurStream> {
 	}
 
 	@Override
-	public MurmurStream newStream() {
+	public WriteStream newStream() {
 		return new MurmurStream(seed);
 	}
 
 	@Override
-	public int intHashValue(MurmurStream s) {
-		return s.hash();
+	public int intHashValue(WriteStream s) {
+		return cast(s).hash();
 	}
 
 	@Override
-	public long longHashValue(MurmurStream s) {
-		return s.hash() & 0xffffffffL;
+	public long longHashValue(WriteStream s) {
+		return cast(s).hash() & 0xffffffffL;
 	}
 
 	@Override
-	public BigInteger bigHashValue(MurmurStream s) {
+	public BigInteger bigHashValue(WriteStream s) {
 		return BigInteger.valueOf(longHashValue(s));
 	}
 
 	@Override
-	public byte[] bytesHashValue(MurmurStream s) {
+	public byte[] bytesHashValue(WriteStream s) {
 		return AbstractHashCode.longToBytes(longHashValue(s));
 	}
 	
 	@Override
-	public HashCode hash(MurmurStream s) {
-		return new IntHashCode(s.hash());
+	public HashCode hash(WriteStream s) {
+		return new IntHashCode(cast(s).hash());
 	}
 	
 	// object methods
@@ -95,6 +95,12 @@ final class Murmur3IntHash implements Hash<Murmur3IntHash.MurmurStream> {
 		return "Murmur3 32 bits with seed " + seed;
 	}
 
+	// private helper methods
+	
+	private MurmurStream cast(WriteStream stream) {
+		return (MurmurStream) stream;
+	}
+	
 	// inner classes
 
 	static class MurmurStream implements WriteStream {
@@ -126,7 +132,7 @@ final class Murmur3IntHash implements Hash<Murmur3IntHash.MurmurStream> {
 			}
 		}
 
-		public int hash() {
+		int hash() {
 
 			// process tail
 

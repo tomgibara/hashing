@@ -28,7 +28,7 @@ import com.tomgibara.streams.Streams;
 import com.tomgibara.streams.WrappedWriteStream;
 import com.tomgibara.streams.WriteStream;
 
-class RandomHash implements Hash<RandomHash.SeedingStream> {
+class RandomHash implements Hash {
 
 	private enum Type {
 		INT, FULL_INT, LONG, LONG_BITS, FULL_LONG, BIG_BYTES, BIG_BITS, BIG;
@@ -65,7 +65,7 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 	}
 
 	@Override
-	public SeedingStream newStream() {
+	public WriteStream newStream() {
 		if (algorithm == null) {
 			return new LongSeedingStream(new Random());
 		} else {
@@ -79,8 +79,8 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 	}
 
 	@Override
-	public HashCode hash(SeedingStream value) {
-		final Random random = value.getRandom();
+	public HashCode hash(WriteStream value) {
+		final Random random = ((SeedingStream) value).getRandom();
 		return new AbstractHashCode(size) {
 
 			@Override
@@ -223,7 +223,7 @@ class RandomHash implements Hash<RandomHash.SeedingStream> {
 
 	}
 
-	private static class LongSeedingStream implements WriteStream, SeedingStream {
+	private static class LongSeedingStream implements SeedingStream {
 
 		private final Random random;
 		private long seed = 0L;

@@ -21,12 +21,12 @@ import java.math.BigInteger;
 import com.tomgibara.streams.StreamSerializer;
 import com.tomgibara.streams.WriteStream;
 
-class StandardHasher<S extends WriteStream,T> implements Hasher<T> {
+class StandardHasher<T> implements Hasher<T> {
 
-	private final Hash<S> hash;
+	private final Hash hash;
 	private final StreamSerializer<T> serializer;
 
-	StandardHasher(Hash<S> hash, StreamSerializer<T> serializer) {
+	StandardHasher(Hash hash, StreamSerializer<T> serializer) {
 		this.hash = hash;
 		this.serializer = serializer;
 	}
@@ -66,12 +66,12 @@ class StandardHasher<S extends WriteStream,T> implements Hasher<T> {
 		return hash.intHashValue(stream(value));
 	}
 
-	S newStream() {
+	WriteStream newStream() {
 		return hash.newStream();
 	}
 
-	private S stream(T value) {
-		S stream = newStream();
+	private WriteStream stream(T value) {
+		WriteStream stream = newStream();
 		serializer.serialize(value, stream);
 		return stream;
 	}
@@ -85,7 +85,7 @@ class StandardHasher<S extends WriteStream,T> implements Hasher<T> {
 	public boolean equals(Object obj) {
 		if (obj == this) return true;
 		if (!(obj instanceof StandardHasher)) return false;
-		StandardHasher<?, ?> that = (StandardHasher<?, ?>) obj;
+		StandardHasher<?> that = (StandardHasher<?>) obj;
 		if (!this.hash.equals(that.hash)) return false;
 		if (!this.serializer.equals(that.serializer)) return false;
 		return true;

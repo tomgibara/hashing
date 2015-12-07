@@ -19,18 +19,18 @@ package com.tomgibara.hashing;
 import com.tomgibara.streams.StreamSerializer;
 import com.tomgibara.streams.WriteStream;
 
-class SeededHasher<S extends WriteStream,T> extends StandardHasher<S,T> {
+class SeededHasher<T> extends StandardHasher<T> {
 
 	private final long seed;
 
-	SeededHasher(Hash<S> hash, StreamSerializer<T> serializer, long seed) {
+	SeededHasher(Hash hash, StreamSerializer<T> serializer, long seed) {
 		super(hash, serializer);
 		this.seed = seed;
 	}
 
 	@Override
-	S newStream() {
-		S stream = super.newStream();
+	WriteStream newStream() {
+		WriteStream stream = super.newStream();
 		stream.writeLong(seed);
 		return stream;
 	}
@@ -45,7 +45,7 @@ class SeededHasher<S extends WriteStream,T> extends StandardHasher<S,T> {
 		if (!super.equals(obj)) return false;
 		if (obj == this) return true;
 		if (!(obj instanceof SeededHasher)) return false;
-		SeededHasher<?, ?> that = (SeededHasher<?, ?>) obj;
+		SeededHasher<?> that = (SeededHasher<?>) obj;
 		return this.seed == that.seed;
 	}
 

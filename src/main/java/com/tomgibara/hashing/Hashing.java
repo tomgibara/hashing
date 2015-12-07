@@ -64,7 +64,7 @@ public interface Hashing<T> {
 	 * @return a hasher based on the Murmur3 32-bit hash function
 	 */
 
-	static Hash<?> murmur3Int() {
+	static Hash murmur3Int() {
 		return Murmur3IntHash.instance();
 	}
 
@@ -76,7 +76,7 @@ public interface Hashing<T> {
 	 * @return a hasher based on the Murmur3 32-bit hash function
 	 */
 
-	static Hash<?> murmur3Int(int seed) {
+	static Hash murmur3Int(int seed) {
 		return Murmur3IntHash.instance(seed);
 	}
 
@@ -88,7 +88,7 @@ public interface Hashing<T> {
 	 * @return a PRNG-based hasher over the indicated range
 	 */
 
-	static Hash<?> prng(HashSize size) {
+	static Hash prng(HashSize size) {
 		if (size == null) throw new IllegalArgumentException("null size");
 		return new RandomHash(null, null, size);
 	}
@@ -103,7 +103,7 @@ public interface Hashing<T> {
 	 * @return a PRNG-based hasher over the indicated range
 	 */
 
-	static Hash<?> prng(String algorithm, HashSize size) {
+	static Hash prng(String algorithm, HashSize size) {
 		if (algorithm == null) throw new IllegalArgumentException("null algorithm");
 		if (algorithm.isEmpty()) throw new IllegalArgumentException("empty algorithm");
 		if (size == null) throw new IllegalArgumentException("null size");
@@ -122,7 +122,7 @@ public interface Hashing<T> {
 	 * @return a PRNG-based hasher over the indicated range
 	 */
 
-	static Hash<?> prng(String algorithm, String provider, HashSize size) {
+	static Hash prng(String algorithm, String provider, HashSize size) {
 		if (algorithm == null) throw new IllegalArgumentException("null algorithm");
 		if (algorithm.isEmpty()) throw new IllegalArgumentException("empty algorithm");
 		if (provider == null) throw new IllegalArgumentException("null provider");

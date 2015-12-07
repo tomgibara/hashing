@@ -38,7 +38,7 @@ public class RandomHashTest extends HashingTest {
 		testSize(Hashing.prng("SHA1PRNG", size));
 	}
 
-	private void testSize(Hash<?> hash) {
+	private void testSize(Hash hash) {
 		int quantity = 10;
 		Hasher<Integer> hasher = hash.hasher(streamer);
 		final HashSize s = hasher.getSize();
@@ -55,7 +55,7 @@ public class RandomHashTest extends HashingTest {
 		testDistribution(Hashing.prng("SHA1PRNG", HashSize.INT_SIZE));
 	}
 
-	private void testDistribution(Hash<?> hash) {
+	private void testDistribution(Hash hash) {
 		Hasher<Integer> hasher = hash.hasher(streamer);
 		Random r = new Random(0L);
 		int[] ints = new int[10000];
@@ -82,11 +82,11 @@ public class RandomHashTest extends HashingTest {
 		testConsistent(newHash(algorithm, HashSize.fromBitLength(77)));
 	}
 
-	private static Hash<?> newHash(String algorithm, HashSize size) {
+	private static Hash newHash(String algorithm, HashSize size) {
 		return algorithm.isEmpty() ? Hashing.prng(size) : Hashing.prng(algorithm, size);
 	}
 
-	private void testConsistent(Hash<?> hash) {
+	private void testConsistent(Hash hash) {
 		Hasher<Integer> hasher = hash.hasher(streamer);
 		for (int i = 0; i < 1000; i++) {
 			testConsistent(hasher, i);

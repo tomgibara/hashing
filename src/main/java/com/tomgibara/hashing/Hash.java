@@ -22,7 +22,7 @@ import com.tomgibara.streams.WriteStream;
 /**
  * <p>
  * A hash creates streams that it can subsequently convert into {@link HashCode}
- * s. Streams are ordinarily populated by a {@link HashSerializer}
+ * s. Streams are ordinarily populated by a <code>StreamSerializer</code>
  * implementation. Applications are generally expected to use instances of this
  * class indirectly by deriving {@link Hasher}s from them.
  * 
@@ -33,11 +33,9 @@ import com.tomgibara.streams.WriteStream;
  * 
  * @author Tom Gibara
  *
- * @param <S>
- *            the type of stream which is created and then hashed
  */
 
-public interface Hash<S extends WriteStream> extends Hashing<S> {
+public interface Hash extends Hashing<WriteStream> {
 
 	/**
 	 * Creates new stream that can later be passed back to the object to derive
@@ -46,7 +44,7 @@ public interface Hash<S extends WriteStream> extends Hashing<S> {
 	 * @return a new stream for accumulating object data
 	 */
 
-	S newStream();
+	WriteStream newStream();
 
 	/**
 	 * Derives a {@link Hasher} by combining this hash with a
@@ -62,7 +60,7 @@ public interface Hash<S extends WriteStream> extends Hashing<S> {
 
 	default <T> Hasher<T> hasher(StreamSerializer<T> serializer) {
 		if (serializer == null) throw new IllegalArgumentException("null serializer");
-		return new StandardHasher<S, T>(this, serializer);
+		return new StandardHasher<T>(this, serializer);
 	}
 
 	/**
@@ -83,6 +81,6 @@ public interface Hash<S extends WriteStream> extends Hashing<S> {
 
 	default <T> Hasher<T> seeded(StreamSerializer<T> serializer, long seed) {
 		if (serializer == null) throw new IllegalArgumentException("null serializer");
-		return new SeededHasher<S, T>(this, serializer, seed);
+		return new SeededHasher<T>(this, serializer, seed);
 	}
 }

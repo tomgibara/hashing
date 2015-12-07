@@ -20,7 +20,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.Provider;
-import java.util.Objects;
 
 class StandardHashDigestSource implements HashDigestSource {
 
@@ -92,7 +91,7 @@ class StandardHashDigestSource implements HashDigestSource {
 	}
 
 	@Override
-	public Hash<?> asHash() {
+	public Hash asHash() {
 		return new DigestHash(this);
 	}
 	
