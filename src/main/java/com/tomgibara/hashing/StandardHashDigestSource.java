@@ -47,9 +47,13 @@ class StandardHashDigestSource implements HashDigestSource {
 		}
 	}
 
+	private static HashDigestSource md5 = null;
 	private static HashDigestSource sha1 = null;
+	private static HashDigestSource sha256 = null;
 
-	static HashDigestSource SHA1() { return sha1 == null ? sha1 = getDigestSource("SHA1") : sha1; }
+	static HashDigestSource MD5() { return md5 == null ? md5 = getDigestSource("MD5") : md5; }
+	static HashDigestSource SHA_1() { return sha1 == null ? sha1 = getDigestSource("SHA-1") : sha1; }
+	static HashDigestSource SHA_256() { return sha256 == null ? sha256 = getDigestSource("SHA-256") : sha256; }
 
 
 	private final String algorithm;

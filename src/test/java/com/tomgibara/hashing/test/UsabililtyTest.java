@@ -88,7 +88,7 @@ public class UsabililtyTest extends TestCase {
 		}
 
 		// produce hashes from message digests
-		Hash sha1 = Hashing.SHA1().asHash();
+		Hash sha1 = Hashing.SHA_1().asHash();
 
 		// produce hashes by seeding a random number generator
 		Hash prng = Hashing.prng(HashSize.LONG_SIZE);
@@ -97,7 +97,7 @@ public class UsabililtyTest extends TestCase {
 		Hash secure = Hashing.prng("SHA1PRNG", HashSize.fromByteLength(16));
 
 		// ... with arbitrarily large hash codes
-		secure.hasher(someStream).bigHashValue(str); // 128 bit hash code
+		secure.hasher(someStream).bytesHashValue(str); // 128 bit hash code
 
 		// "minimal perfect hashing" for strings is also provided
 		Hasher<String> perfect = Hashing.minimalPerfect("mouse", "cat", "dog");

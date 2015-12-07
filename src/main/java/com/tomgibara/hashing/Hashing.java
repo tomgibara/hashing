@@ -135,13 +135,34 @@ public interface Hashing<T> {
 	}
 
 	/**
+	 * Provides a standard source of MD5 digests. Note that use of this
+	 * algorithm should be restricted to cases where compatibility mandates it.
+	 * 
+	 * @return a source of MD5 digests
+	 */
+
+	static HashDigestSource MD5() {
+		return StandardHashDigestSource.MD5();
+	}
+
+	/**
 	 * Provides a standard source of SHA-1 digests.
 	 * 
 	 * @return a source of SHA-1 digests
 	 */
 
-	static HashDigestSource SHA1() {
-		return StandardHashDigestSource.SHA1();
+	static HashDigestSource SHA_1() {
+		return StandardHashDigestSource.SHA_1();
+	}
+
+	/**
+	 * Provides a standard source of SHA-256 digests.
+	 * 
+	 * @return a source of SHA-256 digests
+	 */
+
+	static HashDigestSource SHA_256() {
+		return StandardHashDigestSource.SHA_256();
 	}
 
 	/**
