@@ -271,7 +271,7 @@ class RandomHash implements Hash {
 		private final SecureRandom random;
 
 		BytesSeedingStream(SecureRandom random, StreamBytes bytes) {
-			super(bytes.writer());
+			super(bytes.writeStream());
 			this.bytes = bytes;
 			this.random = random;
 		}
