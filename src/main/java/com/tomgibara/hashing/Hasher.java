@@ -38,7 +38,7 @@ public interface Hasher<T> extends Hashing<T> {
 	 * hasher, there is no guarantee that values will be evenly distributed over
 	 * new range. At present, no attempt is made to distribute the hash values
 	 * evenly over a larger range.
-	 * 
+	 *
 	 * @param newSize
 	 *            specifies a size for the derived hasher
 	 * @return a hasher that redistributes hash values within the specified
@@ -54,13 +54,13 @@ public interface Hasher<T> extends Hashing<T> {
 		if (newSize.isPowerOfTwo()) return new SizedBytesHasher<>(this, newSize);
 		return new SizedBigHasher<>(this, newSize);
 	}
-	
+
 	/**
 	 * Derives a hasher that produces a fixed quantity of distinct hash codes
 	 * within a specified range. To ensure that all value combinations are
 	 * possible, the size of this hasher must meet or exceed 'size choose
 	 * quantity'.
-	 * 
+	 *
 	 * @param quantity
 	 *            the number of hash values derived from a single hash code of
 	 *            this hasher
@@ -71,7 +71,7 @@ public interface Hasher<T> extends Hashing<T> {
 	 *             if the size is not integer sized or the quantity is outside
 	 *             the range [1,size]
 	 */
-	
+
 	default Hasher<T> distinct(int quantity, HashSize size) throws IllegalArgumentException {
 		if (quantity < 1) throw new IllegalArgumentException("non-positive quantity");
 		if (size == null) throw new IllegalArgumentException("null size");
@@ -79,14 +79,14 @@ public interface Hasher<T> extends Hashing<T> {
 		if (quantity > size.asInt()) throw new IllegalArgumentException("quantity exceeds size of size");
 		return new DistinctHasher<>(size, quantity, this);
 	}
-	
+
 	/**
 	 * Derives a hasher that produces an endless stream of hash values in the
 	 * range {@link HashSize#INT_SIZE} generated from a single hash value
 	 * created by this hasher. It is recommended that any hasher used to derive
 	 * values in this way should have a size which is at least
 	 * {@link HashSize#INT_SIZE}.
-	 * 
+	 *
 	 * @return a hasher that derives an endless stream of hash values for each
 	 *         object hashed by this hasher.
 	 */
@@ -101,7 +101,7 @@ public interface Hasher<T> extends Hashing<T> {
 	 * created by this hasher. It is recommended that any hasher used to derive
 	 * values in this way should have a size which is at least
 	 * {@link HashSize#LONG_SIZE}.
-	 * 
+	 *
 	 * @return a hasher that derives an endless stream of hash values for each
 	 *         object hashed by this hasher.
 	 */

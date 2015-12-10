@@ -70,5 +70,5 @@ public class HashCodeTest extends HashingTest {
 		}
 		Assert.assertArrayEquals(e, bs);
 	}
-	
+
 }

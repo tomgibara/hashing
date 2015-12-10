@@ -189,14 +189,14 @@ class RandomHash implements Hash {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	// object methods
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hashCode(algorithm) + Objects.hash(provider) + size.hashCode();
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) return true;
@@ -207,7 +207,7 @@ class RandomHash implements Hash {
 		if (!Objects.equals(this.provider, that.provider)) return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		if (algorithm == null) return "default PRNG sized " + size;

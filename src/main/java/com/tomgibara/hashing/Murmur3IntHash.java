@@ -69,19 +69,19 @@ final class Murmur3IntHash implements Hash {
 	public byte[] bytesHashValue(WriteStream s) {
 		return AbstractHashCode.longToBytes(longHashValue(s));
 	}
-	
+
 	@Override
 	public HashCode hash(WriteStream s) {
 		return new IntHashCode(cast(s).hash());
 	}
-	
+
 	// object methods
-	
+
 	@Override
 	public int hashCode() {
 		return seed;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) return true;
@@ -89,18 +89,18 @@ final class Murmur3IntHash implements Hash {
 		Murmur3IntHash that = (Murmur3IntHash) obj;
 		return this.seed == that.seed;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Murmur3 32 bits with seed " + seed;
 	}
 
 	// private helper methods
-	
+
 	private MurmurStream cast(WriteStream stream) {
 		return (MurmurStream) stream;
 	}
-	
+
 	// inner classes
 
 	static class MurmurStream implements WriteStream {

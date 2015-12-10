@@ -26,13 +26,13 @@ final class IntHashCode extends AbstractHashCode {
 		super(HashSize.INT_SIZE);
 		this.intValue = intValue;
 	}
-	
+
 	public IntHashCode(HashSize size, int intValue) {
 		super(size);
 		if (!size.isIntCapacity()) throw new IllegalArgumentException("size exceeds int capacity");
 		this.intValue = intValue;
 	}
-	
+
 	@Override
 	public boolean hasNext() {
 		return true;
@@ -57,7 +57,7 @@ final class IntHashCode extends AbstractHashCode {
 	public byte[] bytesValue() {
 		return intToBytes(intValue);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) return true;

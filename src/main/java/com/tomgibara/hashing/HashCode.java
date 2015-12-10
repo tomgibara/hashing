@@ -22,7 +22,7 @@ import java.math.BigInteger;
  * The result of hashing an object. Multiple values may be provided in a single
  * result. In this case {@link #hasNext()} will return true until every value
  * has been retrieved.
- * 
+ *
  * @author Tom Gibara
  *
  */
@@ -30,10 +30,10 @@ import java.math.BigInteger;
 public interface HashCode {
 
 	HashSize size();
-	
+
 	/**
 	 * A hash code with an integer value.
-	 * 
+	 *
 	 * @param intValue
 	 *            the integer hash value
 	 * @return a hash code
@@ -43,7 +43,7 @@ public interface HashCode {
 
 	/**
 	 * A hash code with a long integer value.
-	 * 
+	 *
 	 * @param longValue
 	 *            the long integer hash value
 	 * @return a hash code
@@ -53,7 +53,7 @@ public interface HashCode {
 
 	/**
 	 * A hash code with a big integer value.
-	 * 
+	 *
 	 * @param size
 	 *            the reported size of the hash value.
 	 * @param bigValue
@@ -70,7 +70,7 @@ public interface HashCode {
 
 	/**
 	 * A hash value consisting of a multiplicity of integer values.
-	 * 
+	 *
 	 * @param intValues
 	 *            the integer hash values
 	 * @return a hash code
@@ -80,10 +80,10 @@ public interface HashCode {
 		if (intValues == null) throw new IllegalArgumentException("null intValues");
 		return new IntsHashCode(HashSize.INT_SIZE, intValues);
 	}
-	
+
 	/**
 	 * A hash value consisting of a multiplicity of long integer values.
-	 * 
+	 *
 	 * @param longValues
 	 *            the long hash values
 	 * @return a hash code
@@ -96,7 +96,7 @@ public interface HashCode {
 
 	/**
 	 * A hash value consisting of a multiplicity of big integer values.
-	 * 
+	 *
 	 * @param bigValues
 	 *            the big hash values
 	 * @return a hash code
@@ -113,10 +113,10 @@ public interface HashCode {
 	}
 
 	byte[] bytesValue();
-	
+
 	/**
 	 * The next hash value a big integer.
-	 * 
+	 *
 	 * @return a big integer hash value
 	 */
 
@@ -126,7 +126,7 @@ public interface HashCode {
 
 	/**
 	 * The next hash value a long integer.
-	 * 
+	 *
 	 * @return a long integer hash value
 	 */
 
@@ -136,7 +136,7 @@ public interface HashCode {
 
 	/**
 	 * The next hash value an integer.
-	 * 
+	 *
 	 * @return an integer hash value
 	 */
 
@@ -146,7 +146,7 @@ public interface HashCode {
 
 	/**
 	 * Whether there are more values available.
-	 * 
+	 *
 	 * @return true if more hash values are available
 	 */
 
@@ -158,7 +158,7 @@ public interface HashCode {
 	 * Writes the next hash values into the supplied array. The hash code may
 	 * contains fewer values than the length of the array and in this case not
 	 * all elements of the array will be written to.
-	 * 
+	 *
 	 * @param bigs
 	 *            the array into which the array values should be written
 	 * @return the number of values written
@@ -177,7 +177,7 @@ public interface HashCode {
 	 * Writes the next hash values into the supplied array. The hash code may
 	 * contains fewer values than the length of the array and in this case not
 	 * all elements of the array will be written to.
-	 * 
+	 *
 	 * @param longs
 	 *            the array into which the array values should be written
 	 * @return the number of values written
@@ -196,7 +196,7 @@ public interface HashCode {
 	 * Writes the next hash values into the supplied array. The hash code may
 	 * contains fewer values than the length of the array and in this case not
 	 * all elements of the array will be written to.
-	 * 
+	 *
 	 * @param ints
 	 *            the array into which the array values should be written
 	 * @return the number of values written

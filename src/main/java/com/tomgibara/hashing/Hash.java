@@ -25,12 +25,12 @@ import com.tomgibara.streams.WriteStream;
  * s. Streams are ordinarily populated by a <code>StreamSerializer</code>
  * implementation. Applications are generally expected to use instances of this
  * class indirectly by deriving {@link Hasher}s from them.
- * 
+ *
  * <p>
  * New hash implementations can be introduced by implementing this interface.
  * Hashes that generate multiple hash values should indicate this via the
  * {@link #getQuantity()} method.
- * 
+ *
  * @author Tom Gibara
  *
  */
@@ -40,7 +40,7 @@ public interface Hash extends Hashing<WriteStream> {
 	/**
 	 * Creates new stream that can later be passed back to the object to derive
 	 * a {@link HashCode}.
-	 * 
+	 *
 	 * @return a new stream for accumulating object data
 	 */
 
@@ -50,7 +50,7 @@ public interface Hash extends Hashing<WriteStream> {
 	 * Derives a {@link Hasher} by combining this hash with a
 	 * <code>StreamSerializer</code>: a new stream will be created by the hash,
 	 * populated by the serializer, and converted into a hash value.
-	 * 
+	 *
 	 * @param serializer
 	 *            serializes objects of the specified type
 	 * @param <T>
@@ -69,7 +69,7 @@ public interface Hash extends Hashing<WriteStream> {
 	 * that will be created by the derived hasher based on this hash. This can
 	 * be useful when creating data structures that need to be resiliant to
 	 * orchestrated collision attacks.
-	 * 
+	 *
 	 * @param serializer
 	 *            serializes objects of the specified type
 	 * @param seed

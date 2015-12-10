@@ -13,7 +13,7 @@ abstract class AbstractHashCode implements HashCode {
 				(byte) (v      )
 		};
 	}
-	
+
 	static byte[] longToBytes(long v) {
 		return new byte[] {
 			(byte) (v >> 56),
@@ -26,7 +26,7 @@ abstract class AbstractHashCode implements HashCode {
 			(byte) (v      )
 		};
 	}
-	
+
 	static byte[] bigToBytes(int len, BigInteger v) {
 		byte[] bytes = v.toByteArray();
 		if (bytes.length == len) return bytes;
@@ -62,7 +62,7 @@ abstract class AbstractHashCode implements HashCode {
 					((bs[len - 1] & 0xff)      ) ;
 		}
 	}
-	
+
 	static long longFromBytes(byte[] bs) {
 		int len = bs.length;
 		if (len >= 8) {
@@ -83,23 +83,23 @@ abstract class AbstractHashCode implements HashCode {
 		}
 		return acc;
 	}
-	
+
 	static BigInteger bigFromBytes(byte[] bs) {
 		return new BigInteger(1, bs);
 	}
-	
+
 	final HashSize size;
-	
+
 	AbstractHashCode(HashSize size) {
 		if (size == null) throw new IllegalArgumentException("null size");
 		this.size = size;
 	}
-	
+
 	@Override
 	public HashSize size() {
 		return size;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return intValue();

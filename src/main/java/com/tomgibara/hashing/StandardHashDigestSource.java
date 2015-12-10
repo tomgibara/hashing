@@ -98,12 +98,12 @@ class StandardHashDigestSource implements HashDigestSource {
 	public Hash asHash() {
 		return new DigestHash(this);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return algorithm.hashCode() + provider.hashCode();
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) return true;
@@ -113,7 +113,7 @@ class StandardHashDigestSource implements HashDigestSource {
 		if (!this.provider.equals(that.provider)) return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return algorithm + " from " + provider.getName();

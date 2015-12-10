@@ -59,7 +59,7 @@ final class IntsHashCode extends AbstractHashCode {
 		checkIndex();
 		return intToBytes(intValues[index++]);
 	}
-	
+
 	@Override
 	public boolean hasNext() {
 		return index < intValues.length;

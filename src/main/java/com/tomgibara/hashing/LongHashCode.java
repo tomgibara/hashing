@@ -32,7 +32,7 @@ final class LongHashCode extends AbstractHashCode {
 		if (!size.isLongCapacity()) throw new IllegalArgumentException("size exceeds long capacity");
 		this.longValue = longValue;
 	}
-	
+
 	@Override
 	public boolean hasNext() {
 		return true;

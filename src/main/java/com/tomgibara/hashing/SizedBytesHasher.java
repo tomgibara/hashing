@@ -38,11 +38,11 @@ final class SizedBytesHasher<T> extends SizedHasher<T> {
 	BigInteger sizedBigValue(HashCode code) {
 		return AbstractHashCode.bigFromBytes(sizedBytesValue(code));
 	}
-	
+
 	@Override
 	byte[] sizedBytesValue(HashCode code) {
 		byte[] h = code.bytesValue();
 		return isSmaller ? newSize.mapBytes(h) : h;
 	}
-	
+
 }

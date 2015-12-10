@@ -47,7 +47,7 @@ public class SizedTest extends HashingTest {
 			testCorrectlySizedBigs(value, size, 1000);
 		}
 	}
-	
+
 	public void testMultipleValues() {
 		int count = 10;
 		HashCode hash = hasher.hash(0);

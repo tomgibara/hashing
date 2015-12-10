@@ -55,7 +55,7 @@ abstract class JavaHasher<T> implements Hasher<T> {
 	public BigInteger bigHashValue(T value) {
 		return BigInteger.valueOf(intHashValue(value));
 	}
-	
+
 	@Override
 	public byte[] bytesHashValue(T value) {
 		return AbstractHashCode.intToBytes(intHashValue(value));

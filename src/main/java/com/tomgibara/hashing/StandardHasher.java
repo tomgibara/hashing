@@ -80,7 +80,7 @@ class StandardHasher<T> implements Hasher<T> {
 	public int hashCode() {
 		return hash.hashCode() + serializer.hashCode();
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) return true;

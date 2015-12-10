@@ -180,7 +180,7 @@ public final class HashSize implements Comparable<HashSize> {
 
 	/**
 	 * The size as a big integer.
-	 * 
+	 *
 	 * @return the size, always greater than zero
 	 */
 
@@ -190,7 +190,7 @@ public final class HashSize implements Comparable<HashSize> {
 
 	/**
 	 * The number of bits required to store hashes of this size.
-	 * 
+	 *
 	 * @return the number of bits, always greater than zero
 	 */
 
@@ -200,7 +200,7 @@ public final class HashSize implements Comparable<HashSize> {
 
 	/**
 	 * The number of bytes required to store hashes of this size.
-	 * 
+	 *
 	 * @return the number of bytes, always greater than zero
 	 */
 
@@ -210,17 +210,17 @@ public final class HashSize implements Comparable<HashSize> {
 
 	/**
 	 * Whether hash values of this size are composed of an exact number of bits.
-	 * 
+	 *
 	 * @return whether the size is a power of two
 	 */
-	
+
 	public boolean isPowerOfTwo() {
 		return powerOfTwo;
 	}
 
 	/**
 	 * Whether this size is small enough to be represented by a signed int.
-	 * 
+	 *
 	 * @return whether the hash size is int-sized
 	 */
 
@@ -231,7 +231,7 @@ public final class HashSize implements Comparable<HashSize> {
 	/**
 	 * Whether hashes of this size can be accommodated in the bits of a single
 	 * int.
-	 * 
+	 *
 	 * @return whether an int has the capacity to store hashes of this size
 	 */
 
@@ -241,7 +241,7 @@ public final class HashSize implements Comparable<HashSize> {
 
 	/**
 	 * The size as an int.
-	 * 
+	 *
 	 * @return the size, always greater than zero
 	 * @throws ArithmeticException
 	 *             if not int-sized
@@ -255,7 +255,7 @@ public final class HashSize implements Comparable<HashSize> {
 
 	/**
 	 * Whether this size is small enough to be represented by a signed long.
-	 * 
+	 *
 	 * @return whether the hash size is long-sized
 	 */
 
@@ -266,7 +266,7 @@ public final class HashSize implements Comparable<HashSize> {
 	/**
 	 * Whether hashes of this size can be accommodated in the bits of a single
 	 * long.
-	 * 
+	 *
 	 * @return whether a long has the capacity to store hashes of this size
 	 */
 
@@ -276,7 +276,7 @@ public final class HashSize implements Comparable<HashSize> {
 
 	/**
 	 * The size as a long.
-	 * 
+	 *
 	 * @return the size, always greater than zero
 	 * @throws ArithmeticException
 	 *             if not long-sized
@@ -297,7 +297,7 @@ public final class HashSize implements Comparable<HashSize> {
 	 * indicated by {@link #getBits()}. Note that for sizes that are not
 	 * int-sized (ie. sizes exceeding 2^31-1) the resulting value may be
 	 * negative.
-	 * 
+	 *
 	 * @param value
 	 *            the value to be mapped into the range of this size.
 	 * @return an int whose unsigned value falls into the range of this size
@@ -317,7 +317,7 @@ public final class HashSize implements Comparable<HashSize> {
 	 * indicated by {@link #getBits()}. Note that for sizes that are not
 	 * long-sized (ie. sizes exceeding 2^63-1) the resulting value may be
 	 * negative.
-	 * 
+	 *
 	 * @param value
 	 *            the value to be mapped into the range of this size.
 	 * @return a long whose unsigned value falls into the range of this size
@@ -335,7 +335,7 @@ public final class HashSize implements Comparable<HashSize> {
 	 * its remainder modulo this size. For sizes that are a power of two, this
 	 * is equivalent to returning the number of least significant bits indicated
 	 * by {@link #getBits()}.
-	 * 
+	 *
 	 * @param value
 	 *            the value to be mapped into the range of this size.
 	 * @return a big integer less than this size
@@ -351,7 +351,7 @@ public final class HashSize implements Comparable<HashSize> {
 	 * remainder modulo this size. For sizes that are a power of two, this is
 	 * equivalent to returning the number of least significant bits in a number
 	 * of bytes equal to {@link #getBytes()}.
-	 * 
+	 *
 	 * @param value
 	 *            the value to be mapped into the range of this size.
 	 * @return a new byte array
@@ -380,14 +380,14 @@ public final class HashSize implements Comparable<HashSize> {
 		bs[0] &= mask;
 		return bs;
 	}
-	
+
 	/**
 	 * Whether the given big integer value is within the range of this size. If
 	 * the value is negative then zero is returned.
-	 * 
+	 *
 	 * @param value
 	 *            a big integer value
-	 * 
+	 *
 	 * @return true if the value is non-negative and less than the value
 	 *         returned by {@link #asBig()}
 	 */
