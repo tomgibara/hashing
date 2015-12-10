@@ -178,7 +178,7 @@ public interface HashCode {
 	 * contains fewer values than the length of the array and in this case not
 	 * all elements of the array will be written to.
 	 * 
-	 * @param bigs
+	 * @param longs
 	 *            the array into which the array values should be written
 	 * @return the number of values written
 	 */
@@ -197,7 +197,7 @@ public interface HashCode {
 	 * contains fewer values than the length of the array and in this case not
 	 * all elements of the array will be written to.
 	 * 
-	 * @param bigs
+	 * @param ints
 	 *            the array into which the array values should be written
 	 * @return the number of values written
 	 */
