@@ -135,38 +135,38 @@ public interface Hashing<T> {
 	}
 
 	/**
-	 * Provides a standard source of MD5 digests. Note that use of this
-	 * algorithm should be restricted to cases where compatibility mandates it.
+	 * Provides standard MD5 digests. Note that use of this algorithm should be
+	 * restricted to cases where compatibility mandates it.
 	 *
 	 * @return a source of MD5 digests
 	 */
 
-	static HashDigestSource MD5() {
-		return StandardHashDigestSource.MD5();
+	static HashDigest MD5() {
+		return StandardHashDigest.MD5();
 	}
 
 	/**
-	 * Provides a standard source of SHA-1 digests.
+	 * Provides a standard SHA-1 digests.
 	 *
 	 * @return a source of SHA-1 digests
 	 */
 
-	static HashDigestSource SHA_1() {
-		return StandardHashDigestSource.SHA_1();
+	static HashDigest SHA_1() {
+		return StandardHashDigest.SHA_1();
 	}
 
 	/**
-	 * Provides a standard source of SHA-256 digests.
+	 * Provides a standard SHA-256 digests.
 	 *
 	 * @return a source of SHA-256 digests
 	 */
 
-	static HashDigestSource SHA_256() {
-		return StandardHashDigestSource.SHA_256();
+	static HashDigest SHA_256() {
+		return StandardHashDigest.SHA_256();
 	}
 
 	/**
-	 * Creates a digest source for the specified algorithm based on the
+	 * Creates a digests using the specified algorithm based on the
 	 * platform's default provider.
 	 *
 	 * @param algorithm
@@ -176,13 +176,13 @@ public interface Hashing<T> {
 	 *             if there is no digest provided for the specified algorithm
 	 */
 
-	static HashDigestSource digestSource(String algorithm) throws NoSuchAlgorithmException {
+	static HashDigest digest(String algorithm) throws NoSuchAlgorithmException {
 		if (algorithm == null) throw new IllegalArgumentException("null algorithm");
-		return new StandardHashDigestSource(algorithm);
+		return new StandardHashDigest(algorithm);
 	}
 
 	/**
-	 * Creates a digest source for the specified algorithm based on the supplied
+	 * Creates a digests for the specified algorithm based on the supplied
 	 * platform.
 	 *
 	 * @param algorithm
@@ -197,23 +197,23 @@ public interface Hashing<T> {
 	 *             name
 	 */
 
-	static HashDigestSource digestSource(String algorithm, String provider) throws NoSuchAlgorithmException, NoSuchProviderException {
+	static HashDigest digest(String algorithm, String provider) throws NoSuchAlgorithmException, NoSuchProviderException {
 		if (algorithm == null) throw new IllegalArgumentException("null algorithm");
 		if (provider == null) throw new IllegalArgumentException("null provider");
-		return new StandardHashDigestSource(algorithm, provider);
+		return new StandardHashDigest(algorithm, provider);
 	}
 
 	/**
-	 * Attempts to derive an digest source by cloning the supplied digest.
+	 * Attempts to derive digests by cloning the supplied digest.
 	 *
 	 * @param digest
 	 *            the digest to be cloned
 	 * @return a source of digests based on cloning
 	 */
 
-	static HashDigestSource digestSource(MessageDigest digest) {
+	static HashDigest digest(MessageDigest digest) {
 		if (digest == null) throw new IllegalArgumentException("null digest");
-		return new StandardHashDigestSource(digest);
+		return new StandardHashDigest(digest);
 	}
 
 	/**

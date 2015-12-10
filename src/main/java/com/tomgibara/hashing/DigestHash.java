@@ -23,15 +23,15 @@ import com.tomgibara.streams.WriteStream;
 
 final class DigestHash implements Hash {
 
-	private final HashDigestSource digestSource;
+	private final HashDigest digestSource;
 	private final HashSize size;
 
-	DigestHash(HashDigestSource digestSource) {
+	DigestHash(HashDigest digestSource) {
 		this.digestSource = digestSource;
 		size = HashSize.fromByteLength(digestSource.newDigest().getDigestLength());
 	}
 
-	DigestHash(StandardHashDigestSource digestSource) {
+	DigestHash(StandardHashDigest digestSource) {
 		this.digestSource = digestSource;
 		size = digestSource.size;
 	}

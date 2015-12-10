@@ -26,10 +26,10 @@ import java.security.MessageDigest;
  */
 
 @FunctionalInterface
-public interface HashDigestSource {
+public interface HashDigest {
 
 	/**
-	 * Creates a new digest instance
+	 * Creates a new message digest instance
 	 *
 	 * @return a digest
 	 */

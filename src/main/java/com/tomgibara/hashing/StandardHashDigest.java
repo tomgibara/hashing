@@ -21,7 +21,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.Provider;
 
-class StandardHashDigestSource implements HashDigestSource {
+class StandardHashDigest implements HashDigest {
 
 	private static boolean isCloneable(MessageDigest digest) {
 		try {
@@ -38,22 +38,22 @@ class StandardHashDigestSource implements HashDigestSource {
 		return length;
 	}
 
-	private static HashDigestSource getDigestSource(String algorithm) {
+	private static HashDigest getDigestSource(String algorithm) {
 		try {
-			return new StandardHashDigestSource(algorithm);
+			return new StandardHashDigest(algorithm);
 		} catch (NoSuchAlgorithmException e) {
 			// unlikely
 			throw new RuntimeException(e);
 		}
 	}
 
-	private static HashDigestSource md5 = null;
-	private static HashDigestSource sha1 = null;
-	private static HashDigestSource sha256 = null;
+	private static HashDigest md5 = null;
+	private static HashDigest sha1 = null;
+	private static HashDigest sha256 = null;
 
-	static HashDigestSource MD5() { return md5 == null ? md5 = getDigestSource("MD5") : md5; }
-	static HashDigestSource SHA_1() { return sha1 == null ? sha1 = getDigestSource("SHA-1") : sha1; }
-	static HashDigestSource SHA_256() { return sha256 == null ? sha256 = getDigestSource("SHA-256") : sha256; }
+	static HashDigest MD5() { return md5 == null ? md5 = getDigestSource("MD5") : md5; }
+	static HashDigest SHA_1() { return sha1 == null ? sha1 = getDigestSource("SHA-1") : sha1; }
+	static HashDigest SHA_256() { return sha256 == null ? sha256 = getDigestSource("SHA-256") : sha256; }
 
 
 	private final String algorithm;
@@ -61,15 +61,15 @@ class StandardHashDigestSource implements HashDigestSource {
 	private final MessageDigest digest;
 	final HashSize size;
 
-	StandardHashDigestSource(String algorithm) throws NoSuchAlgorithmException {
+	StandardHashDigest(String algorithm) throws NoSuchAlgorithmException {
 		this( MessageDigest.getInstance(algorithm) );
 	}
 
-	StandardHashDigestSource(String algorithm, String provider) throws NoSuchAlgorithmException, NoSuchProviderException {
+	StandardHashDigest(String algorithm, String provider) throws NoSuchAlgorithmException, NoSuchProviderException {
 		this( MessageDigest.getInstance(algorithm, provider) );
 	}
 
-	StandardHashDigestSource(MessageDigest digest) {
+	StandardHashDigest(MessageDigest digest) {
 		algorithm = digest.getAlgorithm();
 		provider = digest.getProvider();
 		size = HashSize.fromByteLength( lengthInBytes(digest) );
@@ -107,8 +107,8 @@ class StandardHashDigestSource implements HashDigestSource {
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) return true;
-		if (!(obj instanceof StandardHashDigestSource)) return false;
-		StandardHashDigestSource that = (StandardHashDigestSource) obj;
+		if (!(obj instanceof StandardHashDigest)) return false;
+		StandardHashDigest that = (StandardHashDigest) obj;
 		if (!this.algorithm.equals(that.algorithm)) return false;
 		if (!this.provider.equals(that.provider)) return false;
 		return true;
