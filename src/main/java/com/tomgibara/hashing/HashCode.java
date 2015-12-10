@@ -54,12 +54,19 @@ public interface HashCode {
 	/**
 	 * A hash code with a big integer value.
 	 * 
+	 * @param size
+	 *            the reported size of the hash value.
 	 * @param bigValue
 	 *            the big integer hash value
 	 * @return a hash code
+	 * @throws IllegalArgumentException
+	 *             if the value is not contained within the specified size
 	 */
 
-	static HashCode fromBig(HashSize size, BigInteger bigValue) { return new BigHashCode(size, bigValue); }
+	static HashCode fromBig(HashSize size, BigInteger bigValue) {
+		if (!size.containsBigValue(bigValue)) throw new IllegalArgumentException("invalid size");
+		return new BigHashCode(size, bigValue);
+	}
 
 	/**
 	 * A hash value consisting of a multiplicity of integer values.
