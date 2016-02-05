@@ -17,12 +17,22 @@
 package com.tomgibara.hashing;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 
 abstract class JavaHasher<T> implements Hasher<T> {
 
-	private static ObjectHasher<?> object = new ObjectHasher<>();
-	private static IdentityHasher<?> identity = new IdentityHasher<>();
+	private static final ObjectHasher<?> object = new ObjectHasher<>();
+	private static final IdentityHasher<?> identity = new IdentityHasher<>();
 
+	final static BytesHasher bytesHasher = new BytesHasher();
+	final static ShortsHasher shortsHasher = new ShortsHasher();
+	final static IntsHasher intsHasher = new IntsHasher();
+	final static LongsHasher longsHasher = new LongsHasher();
+	final static BooleansHasher booleansHasher = new BooleansHasher();
+	final static CharsHasher charsHasher = new CharsHasher();
+	final static FloatsHasher floatsHasher = new FloatsHasher();
+	final static DoublesHasher doublesHasher = new DoublesHasher();
+	
 	@SuppressWarnings("unchecked")
 	static <T> JavaHasher<T> object() {
 		return (JavaHasher<T>) object;
@@ -69,20 +79,42 @@ abstract class JavaHasher<T> implements Hasher<T> {
 	abstract int computeHash(T value);
 
 	private final static class ObjectHasher<T> extends JavaHasher<T> {
-
-		@Override
-		int computeHash(T value) {
-			return value == null ? 0 : value.hashCode();
-		}
-
+		@Override int computeHash(T value) { return value == null ? 0 : value.hashCode(); }
 	}
 
 	private final static class IdentityHasher<T> extends JavaHasher<T> {
+		@Override int computeHash(T value) { return System.identityHashCode(value); }
+	}
 
-		@Override
-		int computeHash(T value) {
-			return System.identityHashCode(value);
-		}
+	private final static class BytesHasher extends JavaHasher<byte[]> {
+		@Override int computeHash(byte[] value) { return Arrays.hashCode(value); }
+	}
 
+	private final static class ShortsHasher extends JavaHasher<short[]> {
+		@Override int computeHash(short[] value) { return Arrays.hashCode(value); }
+	}
+
+	private final static class IntsHasher extends JavaHasher<int[]> {
+		@Override int computeHash(int[] value) { return Arrays.hashCode(value); }
+	}
+
+	private final static class LongsHasher extends JavaHasher<long[]> {
+		@Override int computeHash(long[] value) { return Arrays.hashCode(value); }
+	}
+
+	private final static class BooleansHasher extends JavaHasher<boolean[]> {
+		@Override int computeHash(boolean[] value) { return Arrays.hashCode(value); }
+	}
+
+	private final static class CharsHasher extends JavaHasher<char[]> {
+		@Override int computeHash(char[] value) { return Arrays.hashCode(value); }
+	}
+
+	private final static class FloatsHasher extends JavaHasher<float[]> {
+		@Override int computeHash(float[] value) { return Arrays.hashCode(value); }
+	}
+
+	private final static class DoublesHasher extends JavaHasher<double[]> {
+		@Override int computeHash(double[] value) { return Arrays.hashCode(value); }
 	}
 }

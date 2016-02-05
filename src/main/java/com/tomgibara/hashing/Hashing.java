@@ -21,6 +21,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
+import java.util.Arrays;
 
 /**
  * The main entry point for this API and provides a common basis for the
@@ -61,6 +62,102 @@ public interface Hashing<T> {
 		return JavaHasher.identity();
 	}
 
+	/**
+	 * A hasher which returns <code>Arrays.hashCode(byte[])</code>. The hasher
+	 * returns zero for <code>null</code>.
+	 * 
+	 * @return a hasher which is consistent with
+	 *         <code>Arrays.hashCode(byte[])</code>
+	 */
+
+	static Hasher<byte[]> bytesHasher() {
+		return JavaHasher.bytesHasher;
+	}
+	
+	/**
+	 * A hasher which returns <code>Arrays.hashCode(short[])</code>. The hasher
+	 * returns zero for <code>null</code>.
+	 * 
+	 * @return a hasher which is consistent with
+	 *         <code>Arrays.hashCode(short[])</code>
+	 */
+
+	static Hasher<short[]> shortsHasher() {
+		return JavaHasher.shortsHasher;
+	}
+	
+	/**
+	 * A hasher which returns <code>Arrays.hashCode(int[])</code>. The hasher
+	 * returns zero for <code>null</code>.
+	 * 
+	 * @return a hasher which is consistent with
+	 *         <code>Arrays.hashCode(int[])</code>
+	 */
+
+	static Hasher<int[]> intsHasher() {
+		return JavaHasher.intsHasher;
+	}
+	
+	/**
+	 * A hasher which returns <code>Arrays.hashCode(long[])</code>. The hasher
+	 * returns zero for <code>null</code>.
+	 * 
+	 * @return a hasher which is consistent with
+	 *         <code>Arrays.hashCode(long[])</code>
+	 */
+
+	static Hasher<long[]> longsHasher() {
+		return JavaHasher.longsHasher;
+	}
+
+	/**
+	 * A hasher which returns <code>Arrays.hashCode(boolean[])</code>. The
+	 * hasher returns zero for <code>null</code>.
+	 * 
+	 * @return a hasher which is consistent with
+	 *         <code>Arrays.hashCode(boolean[])</code>
+	 */
+
+	static Hasher<boolean[]> booleansHasher() {
+		return JavaHasher.booleansHasher;
+	}
+	
+	/**
+	 * A hasher which returns <code>Arrays.hashCode(char[])</code>. The hasher
+	 * returns zero for <code>null</code>.
+	 * 
+	 * @return a hasher which is consistent with
+	 *         <code>Arrays.hashCode(char[])</code>
+	 */
+
+	static Hasher<char[]> charsHasher() {
+		return JavaHasher.charsHasher;
+	}
+	
+	/**
+	 * A hasher which returns <code>Arrays.hashCode(float[])</code>. The hasher
+	 * returns zero for <code>null</code>.
+	 * 
+	 * @return a hasher which is consistent with
+	 *         <code>Arrays.hashCode(float[])</code>
+	 */
+
+	static Hasher<float[]> floatsHasher() {
+		return JavaHasher.floatsHasher;
+	}
+	
+	/**
+	 * A hasher which returns <code>Arrays.hashCode(double[])</code>. The hasher
+	 * returns zero for <code>null</code>.
+	 * 
+	 * @return a hasher which is consistent with
+	 *         <code>Arrays.hashCode(double[])</code>
+	 */
+
+	static Hasher<double[]> doublesHasher() {
+		return JavaHasher.doublesHasher;
+	}
+	
 	/**
 	 * A hasher which applies the Murmur3 32-bit hash function to streams.
 	 *
