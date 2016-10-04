@@ -21,7 +21,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
-import java.util.Arrays;
 
 /**
  * The main entry point for this API and provides a common basis for the
@@ -45,7 +44,7 @@ public interface Hashing<T> {
 	 */
 
 	static <T> Hasher<T> objectHasher() {
-		return JavaHasher.object();
+		return IntHasher.object();
 	}
 
 	/**
@@ -59,7 +58,7 @@ public interface Hashing<T> {
 	 */
 
 	static <T> Hasher<T> identityHasher() {
-		return JavaHasher.identity();
+		return IntHasher.identity();
 	}
 
 	/**
@@ -71,7 +70,7 @@ public interface Hashing<T> {
 	 */
 
 	static Hasher<byte[]> bytesHasher() {
-		return JavaHasher.bytesHasher;
+		return IntHasher.bytesHasher;
 	}
 	
 	/**
@@ -83,7 +82,7 @@ public interface Hashing<T> {
 	 */
 
 	static Hasher<short[]> shortsHasher() {
-		return JavaHasher.shortsHasher;
+		return IntHasher.shortsHasher;
 	}
 	
 	/**
@@ -95,7 +94,7 @@ public interface Hashing<T> {
 	 */
 
 	static Hasher<int[]> intsHasher() {
-		return JavaHasher.intsHasher;
+		return IntHasher.intsHasher;
 	}
 	
 	/**
@@ -107,7 +106,7 @@ public interface Hashing<T> {
 	 */
 
 	static Hasher<long[]> longsHasher() {
-		return JavaHasher.longsHasher;
+		return IntHasher.longsHasher;
 	}
 
 	/**
@@ -119,7 +118,7 @@ public interface Hashing<T> {
 	 */
 
 	static Hasher<boolean[]> booleansHasher() {
-		return JavaHasher.booleansHasher;
+		return IntHasher.booleansHasher;
 	}
 	
 	/**
@@ -131,7 +130,7 @@ public interface Hashing<T> {
 	 */
 
 	static Hasher<char[]> charsHasher() {
-		return JavaHasher.charsHasher;
+		return IntHasher.charsHasher;
 	}
 	
 	/**
@@ -143,7 +142,7 @@ public interface Hashing<T> {
 	 */
 
 	static Hasher<float[]> floatsHasher() {
-		return JavaHasher.floatsHasher;
+		return IntHasher.floatsHasher;
 	}
 	
 	/**
@@ -155,7 +154,24 @@ public interface Hashing<T> {
 	 */
 
 	static Hasher<double[]> doublesHasher() {
-		return JavaHasher.doublesHasher;
+		return IntHasher.doublesHasher;
+	}
+
+	/**
+	 * A hasher that generates its hash codes directly from the supplied
+	 * <code>int</code> function. This method provides a simple way to convert
+	 * an existing integer function. The returned hasher will have a size of
+	 * {@link HashSize#INT_SIZE}. Null values are support only if they are
+	 * supported by the prehash.
+	 * 
+	 * @param prehash
+	 *            a function mapping values to ints.
+	 * @return the prehash as a hasher
+	 */
+
+	static <E> Hasher<E> intDerivedHasher(IntPrehash<E> prehash) {
+		if (prehash == null) throw new IllegalArgumentException("null prehash");
+		return new IntHasher<>(prehash);
 	}
 	
 	/**
