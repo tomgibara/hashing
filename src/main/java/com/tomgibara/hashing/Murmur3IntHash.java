@@ -67,7 +67,7 @@ final class Murmur3IntHash implements Hash {
 
 	@Override
 	public byte[] bytesHashValue(WriteStream s) {
-		return AbstractHashCode.longToBytes(longHashValue(s));
+		return AbstractHashCode.intToBytes(intHashValue(s));
 	}
 
 	@Override

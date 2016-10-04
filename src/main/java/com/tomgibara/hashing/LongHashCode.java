@@ -55,7 +55,7 @@ final class LongHashCode extends AbstractHashCode {
 
 	@Override
 	public byte[] bytesValue() {
-		return longToBytes(longValue);
+		return trim(longToBytes(longValue));
 	}
 
 	@Override

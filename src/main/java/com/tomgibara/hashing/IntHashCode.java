@@ -55,7 +55,7 @@ final class IntHashCode extends AbstractHashCode {
 
 	@Override
 	public byte[] bytesValue() {
-		return intToBytes(intValue);
+		return trim(intToBytes(intValue));
 	}
 
 	@Override

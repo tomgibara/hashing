@@ -58,7 +58,7 @@ class DistinctHasher<E> implements Hasher<E> {
 		int[] intValues = longSized ?
 				choices.choiceAsArray(hasher.longHashValue(value)) :
 				choices.choiceAsArray(hasher.bigHashValue(value));
-		return new IntsHashCode(intValues);
+		return new IntsHashCode(size, intValues);
 	}
 
 	// object methods

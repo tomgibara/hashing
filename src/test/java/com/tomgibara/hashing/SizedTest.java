@@ -45,6 +45,7 @@ public class SizedTest extends HashingTest {
 			testCorrectlySizedInts(value, size, 1000);
 			testCorrectlySizedLongs(value, size, 1000);
 			testCorrectlySizedBigs(value, size, 1000);
+			testCorrectlySizedBytes(value, size, 1000);
 		}
 	}
 

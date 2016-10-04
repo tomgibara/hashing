@@ -58,6 +58,7 @@ public class Murmur3IntHashTest extends HashingTest {
 			testCorrectlySizedInts(hasher.hash(i), size, 1);
 			testCorrectlySizedLongs(hasher.hash(i), size, 1);
 			testCorrectlySizedBigs(hasher.hash(i), size, 1);
+			testCorrectlySizedBytes(hasher.hash(i), size, 1);
 		}
 	}
 

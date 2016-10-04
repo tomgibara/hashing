@@ -42,6 +42,7 @@ public class TestDistinctHasher extends HashingTest {
 			testCorrectlySizedInts(hasher.hash(i), hasher.getSize(), 3);
 			testCorrectlySizedLongs(hasher.hash(i), hasher.getSize(), 3);
 			testCorrectlySizedBigs(hasher.hash(i), hasher.getSize(), 3);
+			testCorrectlySizedBytes(hasher.hash(i), hasher.getSize(), 3);
 		}
 	}
 

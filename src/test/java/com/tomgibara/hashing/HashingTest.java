@@ -63,6 +63,16 @@ public abstract class HashingTest extends TestCase {
 		}
 	}
 
+	void testCorrectlySizedBytes(HashCode value, HashSize size, int quantity) {
+		byte[][] bytes = new byte[quantity][];
+		for (int j = 0; j < quantity; j++) {
+			bytes[j] = value.bytesValue();
+		}
+		for (int j = 0; j < quantity; j++) {
+			assertEquals(size.getBytes(), bytes[j].length);
+		}
+	}
+
 	void testDistribution(int... values) {
 		int[] counts = new int[32];
 		for (int value : values) {

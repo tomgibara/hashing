@@ -29,6 +29,7 @@ public class JavaHasherTest extends HashingTest {
 			testCorrectlySizedInts(hasher.hash(str), size, 1);
 			testCorrectlySizedLongs(hasher.hash(str), size, 1);
 			testCorrectlySizedBigs(hasher.hash(str), size, 1);
+			testCorrectlySizedBytes(hasher.hash(str), size, 1);
 		}
 	}
 
@@ -43,6 +44,7 @@ public class JavaHasherTest extends HashingTest {
 			testCorrectlySizedInts(hasher.hash(str), size, 1);
 			testCorrectlySizedLongs(hasher.hash(str), size, 1);
 			testCorrectlySizedBigs(hasher.hash(str), size, 1);
+			testCorrectlySizedBytes(hasher.hash(str), size, 1);
 		}
 	}
 

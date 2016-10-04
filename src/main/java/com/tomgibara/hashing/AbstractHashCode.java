@@ -111,6 +111,12 @@ abstract class AbstractHashCode implements HashCode {
 		this.size = size;
 	}
 
+	byte[] trim(byte[] bytes) {
+		int length = bytes.length;
+		int bs = size.getBytes();
+		return bs == bytes.length ? bytes : Arrays.copyOfRange(bytes, length - bs, length);
+	}
+
 	@Override
 	public HashSize size() {
 		return size;

@@ -95,7 +95,7 @@ final class IntsHasher<T> implements Hasher<T> {
 
 		@Override
 		public byte[] bytesValue() {
-			return intToBytes(intValue());
+			return trim(intToBytes(intValue()));
 		}
 
 		@Override

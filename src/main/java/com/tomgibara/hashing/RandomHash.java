@@ -161,10 +161,10 @@ class RandomHash implements Hash {
 				switch (type) {
 				case INT:
 				case FULL_INT:
-					return intToBytes(intValue());
+					return trim(intToBytes(intValue()));
 				case LONG:
 				case LONG_BITS:
-					return longToBytes(longValue());
+					return trim(longToBytes(longValue()));
 				case BIG_BYTES:
 					byte[] bytes = new byte[size.getBytes()];
 					random.nextBytes(bytes);

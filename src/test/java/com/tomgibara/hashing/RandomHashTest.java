@@ -47,6 +47,7 @@ public class RandomHashTest extends HashingTest {
 			testCorrectlySizedInts(h, s, quantity);
 			testCorrectlySizedLongs(h, s, quantity);
 			testCorrectlySizedBigs(h, s, quantity);
+			testCorrectlySizedBytes(h, s, quantity);
 		}
 	}
 
