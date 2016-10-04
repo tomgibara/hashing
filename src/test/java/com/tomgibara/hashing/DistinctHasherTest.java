@@ -19,7 +19,7 @@ package com.tomgibara.hashing;
 import java.util.Random;
 
 
-public class TestDistinctHasher extends HashingTest {
+public class DistinctHasherTest extends HashingTest {
 
 	public void testDistinct() {
 		Hasher<Object> hasher = Hashing.identityHasher().distinct(3, HashSize.fromInt(1000));
