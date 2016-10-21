@@ -87,6 +87,9 @@ public class UsabililtyTest extends TestCase {
 			                  // all guaranteed to be distinct
 		}
 
+		// derive hashes from integer valued functions
+		Hasher<Point> simple = Hashing.intDerivedHasher(pt -> pt.x + pt.y);
+
 		// produce hashes from message digests
 		Hash sha1 = Hashing.SHA_1().asHash();
 
@@ -105,6 +108,7 @@ public class UsabililtyTest extends TestCase {
 		assertEquals(System.identityHashCode(str), ident.intHashValue(str));
 		assertFalse(murmur.intHashValue(str) == murmurSafe.intHashValue(str));
 		assertTrue(shortMurmur.intHashValue(str) < 65536);
+		assertEquals(5, simple.hash(new Point(2,3)).intValue());
 	}
 
 }

@@ -87,6 +87,9 @@ Hash secure = Hashing.prng("SHA1PRNG", HashSize.fromByteLength(16));
 
 // ... with arbitrarily large hash codes
 secure.hasher(someStream).bytesHashValue(str); // 128 bit hash code
+
+// derive hashes from integer valued functions
+Hasher<Point> simple = Hashing.intDerivedHasher(pt -> pt.x + pt.y);
 ```
 
 Comparison with Guava
@@ -102,6 +105,12 @@ currently have. Any of these may be necessary for your application:
    (useful for probabalistic data structures such as Bloom filters).
  * Hashes that do not necessarily span an exact number of bits.
 
+Documentation
+-------------
+
+Comprehensive javadocs accompany the release; they may be browsed online at
+[javadoc.io][2].
+
 Usage
 -----
 
@@ -109,18 +118,24 @@ The hashing library is available from the Maven central repository:
 
 > Group ID:    `com.tomgibara.hashing`
 > Artifact ID: `hashing`
-> Version:     `2.0.0`
+> Version:     `2.1.0`
 
 The Maven dependency being:
 
     <dependency>
       <groupId>com.tomgibara.hashing</groupId>
       <artifactId>hashing</artifactId>
-      <version>2.0.0</version>
+      <version>2.1.0</version>
     </dependency>
 
 Release History
 ---------------
+
+**2016.10.22** Version 2.1.0
+
+ * Fixes bug where the Murmur3 hash was returning 8 bytes and not 4.
+ * Fixes Java and identity hashes to return positive long representations
+ * Adds `Hashing.intDerivedHasher()` to derive hashes from int valued functions
 
 **2015.12.10** Version 2.0.0
 
@@ -140,3 +155,4 @@ Initial release
 
 [0]: https://github.com/tomgibara/streams
 [1]: https://github.com/google/guava
+[2]: http://www.javadoc.io/doc/com.tomgibara.hashing/hashing
