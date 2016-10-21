@@ -71,4 +71,15 @@ public class HashCodeTest extends HashingTest {
 		Assert.assertArrayEquals(e, bs);
 	}
 
+	public void testFromBigs() {
+		HashSize size = HashSize.fromByteLength(9);
+		BigInteger i = BigInteger.valueOf(Long.MAX_VALUE);
+		BigInteger i2 = i.add(i);
+		BigInteger i3 = i2.add(i);
+		HashCode code = HashCode.fromBigs(size, i, i2, i3);
+		assertEquals(size, code.size());
+		assertEquals(i, code.bigValue());
+		assertEquals(i2, code.bigValue());
+		assertEquals(i3, code.bigValue());
+	}
 }

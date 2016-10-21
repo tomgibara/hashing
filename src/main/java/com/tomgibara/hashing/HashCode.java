@@ -97,6 +97,8 @@ public interface HashCode {
 	/**
 	 * A hash value consisting of a multiplicity of big integer values.
 	 *
+	 * @param size
+	 *            the size of hash code to create
 	 * @param bigValues
 	 *            the big hash values
 	 * @return a hash code
@@ -107,9 +109,9 @@ public interface HashCode {
 		if (bigValues == null) throw new IllegalArgumentException("null bigValues");
 		for (BigInteger big : bigValues) {
 			if (big == null) throw new IllegalArgumentException("null big value");
-			if (size.containsBigValue(big)) throw new IllegalArgumentException("invalid big value");
+			if (!size.containsBigValue(big)) throw new IllegalArgumentException("invalid big value");
 		}
-		return new BigsHashCode(HashSize.LONG_SIZE, bigValues);
+		return new BigsHashCode(size, bigValues);
 	}
 
 	byte[] bytesValue();

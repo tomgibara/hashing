@@ -136,6 +136,7 @@ Release History
  * Fixes bug where the Murmur3 hash was returning 8 bytes and not 4.
  * Fixes Java and identity hashes to return positive long representations
  * Adds `Hashing.intDerivedHasher()` to derive hashes from int valued functions
+ * Fixes `HashCode.fromBigs()` to properly honour supplied hash size.
 
 **2015.12.10** Version 2.0.0
 
