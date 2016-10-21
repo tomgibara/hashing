@@ -164,12 +164,14 @@ public interface Hashing<T> {
 	 * {@link HashSize#INT_SIZE}. Null values are support only if they are
 	 * supported by the prehash.
 	 * 
+	 * @param <T>
+	 *            the type of object to be hashed
 	 * @param prehash
 	 *            a function mapping values to ints.
 	 * @return the prehash as a hasher
 	 */
 
-	static <E> Hasher<E> intDerivedHasher(IntPrehash<E> prehash) {
+	static <T> Hasher<T> intDerivedHasher(IntPrehash<T> prehash) {
 		if (prehash == null) throw new IllegalArgumentException("null prehash");
 		return new IntHasher<>(prehash);
 	}
